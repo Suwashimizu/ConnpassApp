@@ -22,6 +22,24 @@ allprojects {
     }
 }
 
+project.ext {
+    appcompatVersion = "27.1"
+    constraintLayoutVersion = "1.1.0"
+    retrofitVersion = "2.2.0"
+    okhttpVersion = "3.4.1"
+    rxJavaVersion = "2.0.1"
+    stethoVersion = "1.5.0"
+    loggerVersion = "2.0.0"
+    threetenabpVersion = "1.0.5"
+
+    mockitoVersion = "1.10.19"
+    mockitoKotlinVersion = "2.0.0-RC1"
+    assertjCoreVersion = "3.5.2"
+
+    moshiVersion = "1.7.0"
+
+}
+
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
