@@ -1,6 +1,7 @@
 package org.suwashizmu.connpassapp.entity
 
-import java.util.*
+import org.threeten.bp.ZonedDateTime
+
 
 /**
  * Created by KEKE on 2018/10/02.
@@ -12,8 +13,8 @@ data class Event(
         val description: String,
         val eventUtl: String,
         val twitterHashTag: String,
-        val startedAt: Date,
-        val endedAt: Date,
+        val startedAt: ZonedDateTime,
+        val endedAt: ZonedDateTime,
         val limit: Int,
         //seriesは別Obj
         val address: String,
