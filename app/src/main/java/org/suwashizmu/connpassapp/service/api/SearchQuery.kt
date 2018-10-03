@@ -7,15 +7,15 @@ package org.suwashizmu.connpassapp.service.api
  * [https://stackoverflow.com/questions/36140791/how-to-implement-builder-pattern-in-kotlin]
  */
 class SearchQuery(
-        val eventId: Int?,
-        val keyword: String?,
-        val keywordOr: String?,
-        val ym: Int?,
-        val ymd: Int?,
-        val nickname: String?,
-        val ownerNickname: String?,
-        val seriesId: Int?,
-        val start: Int,
+        private val eventId: Int?,
+        private val keyword: String?,
+        private val keywordOr: String?,
+        private val ym: Int?,
+        private val ymd: Int?,
+        private val nickname: String?,
+        private val ownerNickname: String?,
+        private val seriesId: Int?,
+        private val start: Int,
         val order: Int,
         val count: Int) {
     private constructor(builder: Builder) : this(
@@ -33,6 +33,25 @@ class SearchQuery(
 
     companion object {
         inline fun build(block: Builder.() -> Unit) = Builder().apply(block).build()
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    fun toMap(): Map<String, String> {
+        val map = mapOf(
+                "event_id" to eventId?.toString(),
+                "keyword" to keyword,
+                "keyword_or" to keywordOr,
+                "ym" to ym?.toString(),
+                "ymd" to ymd?.toString(),
+                "nickname" to nickname,
+                "owner_nickname" to ownerNickname,
+                "series_id" to seriesId?.toString(),
+                "start" to start.toString(),
+                "order" to order.toString(),
+                "count" to count.toString()
+        )
+
+        return map.filterValues { it != null } as Map<String, String>
     }
 
     class Builder {
