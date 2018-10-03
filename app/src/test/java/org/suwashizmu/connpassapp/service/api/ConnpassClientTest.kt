@@ -24,16 +24,16 @@ class ConnpassClientTest {
         }
     }
 
-    //    @Ignore
+    @Ignore
     @Test
     fun `search event with search query`() {
         val service = ConnpassClient.service
         val query = SearchQuery.build {
-            keyword = "python"
+            keyword = setOf("python", "kotlin")
         }
 
         val test = service.searchEvents(query.toMap()).test()
-        
+
         test.assertNoErrors()
 
         test.assertValue {

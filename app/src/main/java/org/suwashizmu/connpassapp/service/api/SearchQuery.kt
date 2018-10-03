@@ -8,13 +8,13 @@ package org.suwashizmu.connpassapp.service.api
  */
 class SearchQuery(
         private val eventId: Int?,
-        private val keyword: String?,
-        private val keywordOr: String?,
-        private val ym: Int?,
-        private val ymd: Int?,
-        private val nickname: String?,
-        private val ownerNickname: String?,
-        private val seriesId: Int?,
+        private val keyword: Set<String>?,
+        private val keywordOr: Set<String>?,
+        private val ym: Set<Int>?,
+        private val ymd: Set<Int>?,
+        private val nickname: Set<String>?,
+        private val ownerNickname: Set<String>?,
+        private val seriesId: Set<Int>?,
         private val start: Int,
         val order: Int,
         val count: Int) {
@@ -39,13 +39,13 @@ class SearchQuery(
     fun toMap(): Map<String, String> {
         val map = mapOf(
                 "event_id" to eventId?.toString(),
-                "keyword" to keyword,
-                "keyword_or" to keywordOr,
-                "ym" to ym?.toString(),
-                "ymd" to ymd?.toString(),
-                "nickname" to nickname,
-                "owner_nickname" to ownerNickname,
-                "series_id" to seriesId?.toString(),
+                "keyword" to keyword?.joinToString(separator = ","),
+                "keyword_or" to keywordOr?.joinToString(separator = ","),
+                "ym" to ym?.joinToString(separator = ","),
+                "ymd" to ymd?.joinToString(separator = ","),
+                "nickname" to nickname?.joinToString(separator = ","),
+                "owner_nickname" to ownerNickname?.joinToString(separator = ","),
+                "series_id" to seriesId?.joinToString(separator = ","),
                 "start" to start.toString(),
                 "order" to order.toString(),
                 "count" to count.toString()
@@ -57,13 +57,13 @@ class SearchQuery(
     class Builder {
 
         var eventId: Int? = null
-        var keyword: String? = null
-        var keywordOr: String? = null
-        var ym: Int? = null
-        var ymd: Int? = null
-        var nickname: String? = null
-        var ownerNickname: String? = null
-        var seriesId: Int? = null
+        var keyword: Set<String>? = null
+        var keywordOr: Set<String>? = null
+        var ym: Set<Int>? = null
+        var ymd: Set<Int>? = null
+        var nickname: Set<String>? = null
+        var ownerNickname: Set<String>? = null
+        var seriesId: Set<Int>? = null
         var start: Int = 1
         /*
         検索結果の表示順を、更新日時順、開催日時順、新着順で指定します。 | 1: 更新日時順
