@@ -36,7 +36,7 @@ data class Event(
         @Json(name = "event_id")
         val eventId: Int,
         val address: String,
-        val limit: Int,
+        val limit: Int?,
         val accepted: Int,
         val catch: String,
         val place: String,

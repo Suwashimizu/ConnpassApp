@@ -12,7 +12,7 @@ class EventMapper {
             searchResult.events.map {
                 Event(id = it.eventId,
                         address = it.address,
-                        limit = it.limit,
+                        limit = it.limit ?: -1,
                         accepted = it.accepted,
                         catch = it.catch,
                         description = it.description,
