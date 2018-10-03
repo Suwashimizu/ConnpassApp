@@ -25,9 +25,10 @@ allprojects {
 project.ext {
     appcompatVersion = "27.1"
     constraintLayoutVersion = "1.1.0"
-    retrofitVersion = "2.2.0"
+    retrofitVersion = "2.4.0"
     okhttpVersion = "3.4.1"
-    rxJavaVersion = "2.0.1"
+    rxJavaVersion = "2.2.2"
+    rxKotlinVersion = "2.3.0"
     stethoVersion = "1.5.0"
     loggerVersion = "2.0.0"
     threetenabpVersion = "1.0.5"
