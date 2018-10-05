@@ -9,5 +9,5 @@ package org.suwashizmu.connpassapp.module.input
  * data classならcopyで良い気がする
  */
 data class EventSearchInputData(
-        var keyword: String = "",
+        var keyword: Set<String> = emptySet(),
         val ym: Int = -1)
