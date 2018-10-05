@@ -5,6 +5,8 @@ package org.suwashizmu.connpassapp.module.output
  * 検索結果の出力用データ
  */
 data class EventSearchOutputData(
-        val title: String,
-        val catch: String,
-        val description: String)
+        val eventList: Collection<OutputEvent>) {
+    data class OutputEvent(val title: String,
+                           val catch: String,
+                           val description: String)
+}

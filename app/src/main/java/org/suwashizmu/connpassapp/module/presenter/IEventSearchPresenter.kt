@@ -7,5 +7,5 @@ import org.suwashizmu.connpassapp.module.output.EventSearchOutputData
  */
 interface IEventSearchPresenter {
 
-    fun complate(outputData: EventSearchOutputData)
+    fun complete(outputData: EventSearchOutputData)
 }
