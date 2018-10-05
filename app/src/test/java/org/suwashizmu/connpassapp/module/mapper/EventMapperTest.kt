@@ -1,4 +1,4 @@
-package org.suwashizmu.connpassapp.mapper
+package org.suwashizmu.connpassapp.module.mapper
 
 import com.squareup.moshi.JsonAdapter
 import org.assertj.core.api.Assertions.assertThat

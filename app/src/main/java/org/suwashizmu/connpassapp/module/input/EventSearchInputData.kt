@@ -1,4 +1,4 @@
-package org.suwashizmu.connpassapp.input
+package org.suwashizmu.connpassapp.module.input
 
 /**
  * Created by KEKE on 2018/10/05.

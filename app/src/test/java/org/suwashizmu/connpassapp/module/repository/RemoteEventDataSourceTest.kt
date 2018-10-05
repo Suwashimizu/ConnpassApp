@@ -1,4 +1,4 @@
-package org.suwashizmu.connpassapp.repository
+package org.suwashizmu.connpassapp.module.repository
 
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.doReturn

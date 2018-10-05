@@ -1,8 +1,8 @@
-package org.suwashizmu.connpassapp.repository
+package org.suwashizmu.connpassapp.module.repository
 
 import io.reactivex.Single
-import org.suwashizmu.connpassapp.entity.Event
-import org.suwashizmu.connpassapp.mapper.EventMapper
+import org.suwashizmu.connpassapp.module.entity.Event
+import org.suwashizmu.connpassapp.module.mapper.EventMapper
 import org.suwashizmu.connpassapp.service.api.ConnpassService
 import org.suwashizmu.connpassapp.service.api.SearchQuery
 

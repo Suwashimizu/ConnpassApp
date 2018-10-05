@@ -1,6 +1,6 @@
-package org.suwashizmu.connpassapp.usecase
+package org.suwashizmu.connpassapp.module.usecase
 
-import org.suwashizmu.connpassapp.input.EventSearchInputData
+import org.suwashizmu.connpassapp.module.input.EventSearchInputData
 
 /**
  * Created by KEKE on 2018/10/05.

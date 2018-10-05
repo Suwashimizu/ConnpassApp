@@ -1,6 +1,6 @@
-package org.suwashizmu.connpassapp.mapper
+package org.suwashizmu.connpassapp.module.mapper
 
-import org.suwashizmu.connpassapp.entity.Event
+import org.suwashizmu.connpassapp.module.entity.Event
 import org.suwashizmu.connpassapp.service.api.SearchResult
 import org.threeten.bp.ZonedDateTime
 

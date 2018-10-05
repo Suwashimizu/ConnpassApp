@@ -1,4 +1,4 @@
-package org.suwashizmu.connpassapp.entity
+package org.suwashizmu.connpassapp.module.entity
 
 import com.squareup.moshi.JsonAdapter
 import org.junit.Test

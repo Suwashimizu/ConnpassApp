@@ -1,4 +1,4 @@
-package org.suwashizmu.connpassapp.entity
+package org.suwashizmu.connpassapp.module.entity
 
 import org.threeten.bp.ZonedDateTime
 
