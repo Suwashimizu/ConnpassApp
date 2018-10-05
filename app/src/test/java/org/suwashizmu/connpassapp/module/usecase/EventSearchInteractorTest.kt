@@ -1,11 +1,9 @@
 package org.suwashizmu.connpassapp.module.usecase
 
-import com.nhaarman.mockitokotlin2.any
-import com.nhaarman.mockitokotlin2.doReturn
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.verify
+import com.nhaarman.mockitokotlin2.*
 import io.reactivex.Single
 import io.reactivex.android.plugins.RxAndroidPlugins
+import io.reactivex.plugins.RxJavaPlugins
 import io.reactivex.schedulers.Schedulers
 import org.junit.Before
 import org.junit.Test
@@ -14,9 +12,18 @@ import org.suwashizmu.connpassapp.module.input.EventSearchInputData
 import org.suwashizmu.connpassapp.module.presenter.IEventSearchPresenter
 import org.suwashizmu.connpassapp.module.repository.EventRepository
 import org.threeten.bp.ZonedDateTime
+import java.net.UnknownHostException
 
 /**
  * Created by KEKE on 2018/10/06.
+ *
+ * Interactorのテスト
+ *
+ * - repositoryへの正当な呼び出し
+ * - errorハンドリング
+ * - outputへ正しくデータを受け渡せているか(これはmapperでいい気ガス)
+ *
+ * RxのSchedulersの差し替えが必要だったり少しテクニシャン
  */
 class EventSearchInteractorTest {
 
@@ -44,9 +51,13 @@ class EventSearchInteractorTest {
 
     private val interactor = EventSearchInteractor(repository, presenter)
 
+    private fun makeInteractor(repository: EventRepository): EventSearchInteractor = EventSearchInteractor(repository, presenter)
+
     @Before
     fun setup() {
+        //Schedulersの差し替え
         RxAndroidPlugins.setInitMainThreadSchedulerHandler { Schedulers.trampoline() }
+        RxJavaPlugins.setIoSchedulerHandler { Schedulers.trampoline() }
     }
 
     @Test
@@ -57,5 +68,19 @@ class EventSearchInteractorTest {
         verify(repository).findEvent(any())
 
         verify(presenter).complete(any())
+    }
+
+    @Test
+    fun `search error`() {
+
+        val errorRepository: EventRepository = mock {
+            on { findEvent(any()) } doReturn Single.error(UnknownHostException("unknownHost"))
+        }
+
+        makeInteractor(errorRepository).search(EventSearchInputData(keyword = setOf("kotlin"), ym = 201802))
+
+        verify(errorRepository).findEvent(any())
+
+        verify(presenter, never()).complete(any())
     }
 }
