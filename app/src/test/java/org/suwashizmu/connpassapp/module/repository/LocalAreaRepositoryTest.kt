@@ -1,12 +1,12 @@
 package org.suwashizmu.connpassapp.module.repository
 
+import android.support.v7.app.AppCompatActivity
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Robolectric
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
-import org.suwashizmu.connpassapp.MainActivity
 import org.suwashizmu.connpassapp.module.entity.Area
 import org.suwashizmu.connpassapp.module.repository.local.LocalAreaRepository
 
@@ -18,7 +18,7 @@ import org.suwashizmu.connpassapp.module.repository.local.LocalAreaRepository
 class LocalAreaRepositoryTest {
 
     //roborectricを使用したContext,perfへの書き込み読み込みが可能,mockでは無いのでverifyは使えない,spyもMainActivityがfinalClassのため使えなかった
-    private val roboContext = Robolectric.setupActivity(MainActivity::class.java)
+    private val roboContext = Robolectric.setupActivity(AppCompatActivity::class.java)
     private val repository = LocalAreaRepository(roboContext)
 
     @Test

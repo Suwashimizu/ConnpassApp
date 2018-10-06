@@ -1,10 +1,10 @@
-package org.suwashizmu.connpassapp
+package org.suwashizmu.connpassapp.view
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
-import org.suwashizmu.connpassapp.module.controller.AreaSelectController
+import org.suwashizmu.connpassapp.R
 import org.suwashizmu.connpassapp.module.controller.EventSearchController
 import org.suwashizmu.connpassapp.module.presenter.AreaSelectPresenter
 import org.suwashizmu.connpassapp.module.presenter.EventSearchPresenter
@@ -12,42 +12,41 @@ import org.suwashizmu.connpassapp.module.repository.local.LocalAreaRepository
 import org.suwashizmu.connpassapp.module.repository.remote.RemoteEventDataSource
 import org.suwashizmu.connpassapp.module.usecase.AreaSelectInteractor
 import org.suwashizmu.connpassapp.module.usecase.EventSearchInteractor
-import org.suwashizmu.connpassapp.module.view.AreaSelectViewModel
-import org.suwashizmu.connpassapp.module.view.IAreaSelectView
 import org.suwashizmu.connpassapp.module.view.ISearchEventView
 import org.suwashizmu.connpassapp.module.view.SearchEventViewModel
 import org.suwashizmu.connpassapp.service.api.ConnpassClient
 
 
-open class MainActivity : AppCompatActivity(), ISearchEventView, IAreaSelectView {
+open class MainActivity : AppCompatActivity(), ISearchEventView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
-        Logger.addLogAdapter(AndroidLogAdapter())
-
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        Logger.addLogAdapter(AndroidLogAdapter())
 
-        val eventSearchController = EventSearchController(EventSearchInteractor(
-                RemoteEventDataSource(ConnpassClient.service),
-                EventSearchPresenter(this)
-        ))
+        if (savedInstanceState == null) {
+            val eventSearchController = EventSearchController(EventSearchInteractor(
+                    RemoteEventDataSource(ConnpassClient.service),
+                    EventSearchPresenter(this)
+            ))
 
-        eventSearchController.eventSearch("kotlin")
+            eventSearchController.eventSearch("kotlin")
 
-        val areaSelectController = AreaSelectController(AreaSelectInteractor(
-                AreaSelectPresenter(this),
-                LocalAreaRepository(this)
-        ))
+            val fragment = WizardFragment.newInstance()
+            supportFragmentManager.beginTransaction()
+                    .add(R.id.container, fragment)
+                    .commit()
 
-        areaSelectController.fetchAreaList()
+            val presenter = AreaSelectPresenter().apply {
+                view = fragment
+                useCase = AreaSelectInteractor(this, LocalAreaRepository(this@MainActivity))
+            }
+            fragment.presenter = presenter
+        }
+
     }
 
     override fun updated(viewModel: SearchEventViewModel) {
-        Logger.d("updated!")
-    }
-
-    override fun update(viewModel: AreaSelectViewModel) {
         Logger.d("updated!")
     }
 }
