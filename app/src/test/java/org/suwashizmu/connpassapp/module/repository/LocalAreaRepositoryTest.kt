@@ -1,34 +1,24 @@
 package org.suwashizmu.connpassapp.module.repository
 
-import android.content.Context
-import android.content.SharedPreferences
-import com.nhaarman.mockitokotlin2.any
-import com.nhaarman.mockitokotlin2.doReturn
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.verify
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.Robolectric
+import org.robolectric.RobolectricTestRunner
+import org.robolectric.annotation.Config
+import org.suwashizmu.connpassapp.MainActivity
 import org.suwashizmu.connpassapp.module.entity.Area
 
 /**
  * Created by KEKE on 2018/10/06.
  */
+@RunWith(RobolectricTestRunner::class)
+@Config(sdk = [21])
 class LocalAreaRepositoryTest {
 
-    //preferenceのmockを生成する,roborectoriでも良いかも
-    private val editor: SharedPreferences.Editor = mock {
-        on { putInt(any(), any()) } doReturn it
-    }
-
-    private val pref: SharedPreferences = mock {
-        on { edit() } doReturn editor
-    }
-
-    private val context: Context = mock {
-        on { getSharedPreferences("area", Context.MODE_PRIVATE) } doReturn pref
-    }
-
-    private val repository = LocalAreaRepository(context)
+    //roborectricを使用したContext,perfへの書き込み読み込みが可能,mockでは無いのでverifyは使えない,spyもMainActivityがfinalClassのため使えなかった
+    private val roboContext = Robolectric.setupActivity(MainActivity::class.java)
+    private val repository = LocalAreaRepository(roboContext)
 
     @Test
     fun getAreaList() {
@@ -36,14 +26,24 @@ class LocalAreaRepositoryTest {
     }
 
     @Test
-    fun save() {
+    fun `getArea is null when not save`() {
+
+        val repository = LocalAreaRepository(roboContext)
+        val area = repository.getArea()
+
+        assertThat(area).isNull()
+    }
+
+    @Test
+    fun `getArea is FUKUOKA when fukuoka saved`() {
+
+        val repository = LocalAreaRepository(roboContext)
+
         repository.save(Area.FUKUOKA)
 
-        val key = "area"
-        val mode = Context.MODE_PRIVATE
+        val area = repository.getArea()
 
-        verify(context.getSharedPreferences(key, mode)).edit()
-        verify(context.getSharedPreferences(key, mode).edit().putInt(any(), any())).apply()
-        verify(context.getSharedPreferences(key, mode).edit().putInt(any(), any())).apply()
+        assertThat(area).isEqualTo(Area.FUKUOKA)
     }
+
 }

@@ -13,7 +13,7 @@ import org.suwashizmu.connpassapp.module.view.SearchEventViewModel
 import org.suwashizmu.connpassapp.service.api.ConnpassClient
 
 
-class MainActivity : AppCompatActivity(), ISearchEventView {
+open class MainActivity : AppCompatActivity(), ISearchEventView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
 

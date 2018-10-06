@@ -8,4 +8,5 @@ import org.suwashizmu.connpassapp.module.entity.Area
 interface AreaRepository {
     fun getAreaList(): Collection<Area>
     fun save(area: Area)
+    fun getArea(): Area?
 }
