@@ -9,9 +9,19 @@ import org.suwashizmu.connpassapp.module.view.IAreaSelectView
  */
 class AreaSelectPresenter(private val view: IAreaSelectView) : IAreaSelectPresenter {
 
+    private val viewModel = AreaSelectViewModel()
+
+    override fun completeAreaList(list: Collection<Area>) {
+
+        viewModel.areaList = list
+
+        view.update(viewModel)
+    }
+
     override fun completeSelected(area: Area) {
 
-        val viewModel = AreaSelectViewModel(area)
+        viewModel.selectedArea = area
+
         view.update(viewModel)
     }
 }

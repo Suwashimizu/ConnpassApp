@@ -1,5 +1,6 @@
 package org.suwashizmu.connpassapp.module.usecase
 
+import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.eq
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
@@ -24,6 +25,7 @@ class AreaSelectInteractorTest {
         interactor.getAreaList()
 
         verify(repository).getAreaList()
+        verify(presenter).completeAreaList(any())
     }
 
     @Test

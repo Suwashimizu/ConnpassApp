@@ -1,6 +1,5 @@
 package org.suwashizmu.connpassapp.module.usecase
 
-import org.suwashizmu.connpassapp.module.entity.Area
 import org.suwashizmu.connpassapp.module.input.AreaSelectInputData
 import org.suwashizmu.connpassapp.module.presenter.IAreaSelectPresenter
 import org.suwashizmu.connpassapp.module.repository.AreaRepository
@@ -11,7 +10,7 @@ import org.suwashizmu.connpassapp.module.repository.AreaRepository
 class AreaSelectInteractor(private val presenter: IAreaSelectPresenter,
                            private val repository: AreaRepository) : IAreaSelectUseCase {
 
-    override fun getAreaList(): Collection<Area> = repository.getAreaList()
+    override fun getAreaList() = presenter.completeAreaList(repository.getAreaList())
 
     override fun select(inputData: AreaSelectInputData) {
         repository.save(inputData.area)

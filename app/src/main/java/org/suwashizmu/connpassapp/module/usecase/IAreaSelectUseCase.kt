@@ -1,6 +1,5 @@
 package org.suwashizmu.connpassapp.module.usecase
 
-import org.suwashizmu.connpassapp.module.entity.Area
 import org.suwashizmu.connpassapp.module.input.AreaSelectInputData
 
 /**
@@ -8,7 +7,7 @@ import org.suwashizmu.connpassapp.module.input.AreaSelectInputData
  */
 interface IAreaSelectUseCase {
 
-    fun getAreaList(): Collection<Area>
+    fun getAreaList()
 
     fun select(inputData: AreaSelectInputData)
 }

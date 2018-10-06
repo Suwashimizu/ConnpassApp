@@ -16,6 +16,13 @@ class AreaSelectPresenterTest {
     private val presenter = AreaSelectPresenter(view)
 
     @Test
+    fun `completeAreaList`() {
+        presenter.completeAreaList(Area.values().toList())
+
+        verify(view).update(any())
+    }
+
+    @Test
     fun completeSelected() {
         presenter.completeSelected(Area.TOKYO)
 
