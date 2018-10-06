@@ -5,7 +5,7 @@ import org.suwashizmu.connpassapp.module.input.AreaSelectInputData
 /**
  * Created by KEKE on 2018/10/06.
  */
-interface IAreaSeleceUseCase {
+interface IAreaSelectUseCase {
 
     fun select(area: AreaSelectInputData)
 }
