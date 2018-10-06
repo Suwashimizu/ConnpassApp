@@ -5,14 +5,13 @@ import org.suwashizmu.connpassapp.module.input.AreaSelectInputData
 import org.suwashizmu.connpassapp.module.router.IWizardRouter
 import org.suwashizmu.connpassapp.module.usecase.IAreaSelectUseCase
 import org.suwashizmu.connpassapp.module.view.AreaSelectViewModel
-import org.suwashizmu.connpassapp.module.view.IAreaSelectView
 
 /**
  * Created by KEKE on 2018/10/06.
  */
 class AreaSelectPresenter : IAreaSelectPresenter {
 
-    override var view: IAreaSelectView? = null
+    override var subject: AreaSelectSubject? = null
 
     override var useCase: IAreaSelectUseCase? = null
 
@@ -25,13 +24,14 @@ class AreaSelectPresenter : IAreaSelectPresenter {
     }
 
     override fun onResume() {
+
     }
 
     override fun onPause() {
     }
 
     override fun onDesutroy() {
-        view = null
+        subject = null
         useCase = null
         router = null
     }
@@ -48,14 +48,12 @@ class AreaSelectPresenter : IAreaSelectPresenter {
     override fun completeAreaList(list: Collection<Area>) {
 
         viewModel.areaList = list
-
-        view?.update(viewModel)
+        subject?.update(viewModel)
     }
 
     override fun completeSelected(area: Area) {
 
         viewModel.selectedArea = area
-
-        view?.update(viewModel)
+        subject?.update(viewModel)
     }
 }

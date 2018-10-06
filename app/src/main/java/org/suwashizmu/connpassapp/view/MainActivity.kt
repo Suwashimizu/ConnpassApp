@@ -35,7 +35,6 @@ open class MainActivity : AppCompatActivity(), ISearchEventView {
                     .commit()
 
             val presenter = AreaSelectPresenter().apply {
-                view = fragment
                 useCase = AreaSelectInteractor(this, LocalAreaRepository(this@MainActivity))
             }
             fragment.presenter = presenter

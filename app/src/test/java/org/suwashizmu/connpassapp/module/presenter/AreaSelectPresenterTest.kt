@@ -8,18 +8,18 @@ import org.junit.Test
 import org.suwashizmu.connpassapp.module.entity.Area
 import org.suwashizmu.connpassapp.module.input.AreaSelectInputData
 import org.suwashizmu.connpassapp.module.usecase.IAreaSelectUseCase
-import org.suwashizmu.connpassapp.module.view.IAreaSelectView
 
 /**
  * Created by KEKE on 2018/10/06.
  */
 class AreaSelectPresenterTest {
 
-    private val view: IAreaSelectView = mock()
     private val useCase: IAreaSelectUseCase = mock()
 
+    private val subject: AreaSelectSubject = mock()
+
     private val presenter = AreaSelectPresenter().apply {
-        view = this@AreaSelectPresenterTest.view
+        subject = this@AreaSelectPresenterTest.subject
         useCase = this@AreaSelectPresenterTest.useCase
     }
 
@@ -27,14 +27,14 @@ class AreaSelectPresenterTest {
     fun `completeAreaList`() {
         presenter.completeAreaList(Area.values().toList())
 
-        verify(view).update(any())
+        verify(subject).update(any())
     }
 
     @Test
     fun completeSelected() {
         presenter.completeSelected(Area.TOKYO)
 
-        verify(view).update(any())
+        verify(subject).update(any())
     }
 
     @Test

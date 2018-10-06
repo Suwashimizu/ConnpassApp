@@ -7,9 +7,12 @@ import android.support.v4.app.Fragment
 import android.view.*
 import android.widget.ArrayAdapter
 import com.orhanobut.logger.Logger
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxkotlin.addTo
 import org.suwashizmu.connpassapp.R
 import org.suwashizmu.connpassapp.databinding.WizardFragBinding
 import org.suwashizmu.connpassapp.module.entity.Area
+import org.suwashizmu.connpassapp.module.presenter.AreaSelectSubject
 import org.suwashizmu.connpassapp.module.presenter.IAreaSelectPresenter
 import org.suwashizmu.connpassapp.module.view.AreaSelectViewModel
 import org.suwashizmu.connpassapp.module.view.IAreaSelectView
@@ -22,6 +25,10 @@ class WizardFragment : Fragment(), IAreaSelectView {
     companion object {
         fun newInstance(): WizardFragment = WizardFragment()
     }
+
+    //ViewModelの変化を監視
+    private val disposable = CompositeDisposable()
+    private val subject = AreaSelectSubject()
 
     override var presenter: IAreaSelectPresenter? = null
 
@@ -41,16 +48,23 @@ class WizardFragment : Fragment(), IAreaSelectView {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
-        presenter?.fetchAreaList()
+        presenter?.subject = subject
     }
 
     override fun onResume() {
         super.onResume()
+
+        subject.observable
+                .subscribe(this::update)
+                .addTo(disposable)
+
+        presenter?.fetchAreaList()
     }
 
     override fun onPause() {
         super.onPause()
+
+        disposable.clear()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
@@ -70,6 +84,7 @@ class WizardFragment : Fragment(), IAreaSelectView {
         return super.onOptionsItemSelected(item)
     }
 
+    //region IAreaSelectView
     override fun update(viewModel: AreaSelectViewModel) {
 
         Logger.d(viewModel)
@@ -78,4 +93,5 @@ class WizardFragment : Fragment(), IAreaSelectView {
             binding.spinner.adapter = ArrayAdapter(requireActivity(), android.R.layout.simple_list_item_1, viewModel.areaList.toMutableList())
         }
     }
+    //endregion IAreaSelectView
 }
