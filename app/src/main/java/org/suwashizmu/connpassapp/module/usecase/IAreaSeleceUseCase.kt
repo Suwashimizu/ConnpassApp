@@ -1,11 +1,11 @@
 package org.suwashizmu.connpassapp.module.usecase
 
-import org.suwashizmu.connpassapp.module.entity.Area
+import org.suwashizmu.connpassapp.module.input.AreaSelectInputData
 
 /**
  * Created by KEKE on 2018/10/06.
  */
 interface IAreaSeleceUseCase {
 
-    fun select(area: Area)
+    fun select(area: AreaSelectInputData)
 }
