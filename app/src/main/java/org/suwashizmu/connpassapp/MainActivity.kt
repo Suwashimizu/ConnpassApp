@@ -8,8 +8,8 @@ import org.suwashizmu.connpassapp.module.controller.AreaSelectController
 import org.suwashizmu.connpassapp.module.controller.EventSearchController
 import org.suwashizmu.connpassapp.module.presenter.AreaSelectPresenter
 import org.suwashizmu.connpassapp.module.presenter.EventSearchPresenter
-import org.suwashizmu.connpassapp.module.repository.LocalAreaRepository
-import org.suwashizmu.connpassapp.module.repository.RemoteEventDataSource
+import org.suwashizmu.connpassapp.module.repository.local.LocalAreaRepository
+import org.suwashizmu.connpassapp.module.repository.remote.RemoteEventDataSource
 import org.suwashizmu.connpassapp.module.usecase.AreaSelectInteractor
 import org.suwashizmu.connpassapp.module.usecase.EventSearchInteractor
 import org.suwashizmu.connpassapp.module.view.AreaSelectViewModel

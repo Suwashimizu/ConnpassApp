@@ -8,6 +8,7 @@ import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 import org.suwashizmu.connpassapp.MainActivity
 import org.suwashizmu.connpassapp.module.entity.Area
+import org.suwashizmu.connpassapp.module.repository.local.LocalAreaRepository
 
 /**
  * Created by KEKE on 2018/10/06.

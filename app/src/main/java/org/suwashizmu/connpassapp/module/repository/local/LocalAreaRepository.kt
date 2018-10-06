@@ -1,7 +1,8 @@
-package org.suwashizmu.connpassapp.module.repository
+package org.suwashizmu.connpassapp.module.repository.local
 
 import android.content.Context
 import org.suwashizmu.connpassapp.module.entity.Area
+import org.suwashizmu.connpassapp.module.repository.AreaRepository
 
 /**
  * Created by KEKE on 2018/10/06.
