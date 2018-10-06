@@ -5,16 +5,11 @@ import android.support.v7.app.AppCompatActivity
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
 import org.suwashizmu.connpassapp.R
-import org.suwashizmu.connpassapp.module.controller.EventSearchController
 import org.suwashizmu.connpassapp.module.presenter.AreaSelectPresenter
-import org.suwashizmu.connpassapp.module.presenter.EventSearchPresenter
 import org.suwashizmu.connpassapp.module.repository.local.LocalAreaRepository
-import org.suwashizmu.connpassapp.module.repository.remote.RemoteEventDataSource
 import org.suwashizmu.connpassapp.module.usecase.AreaSelectInteractor
-import org.suwashizmu.connpassapp.module.usecase.EventSearchInteractor
 import org.suwashizmu.connpassapp.module.view.ISearchEventView
 import org.suwashizmu.connpassapp.module.view.SearchEventViewModel
-import org.suwashizmu.connpassapp.service.api.ConnpassClient
 
 
 open class MainActivity : AppCompatActivity(), ISearchEventView {
@@ -25,12 +20,14 @@ open class MainActivity : AppCompatActivity(), ISearchEventView {
         Logger.addLogAdapter(AndroidLogAdapter())
 
         if (savedInstanceState == null) {
+            /*
             val eventSearchController = EventSearchController(EventSearchInteractor(
                     RemoteEventDataSource(ConnpassClient.service),
                     EventSearchPresenter(this)
             ))
 
             eventSearchController.eventSearch("kotlin")
+            */
 
             val fragment = WizardFragment.newInstance()
             supportFragmentManager.beginTransaction()

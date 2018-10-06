@@ -7,4 +7,7 @@ import org.suwashizmu.connpassapp.module.entity.Area
  */
 class AreaSelectViewModel(
         var areaList: Collection<Area> = emptyList(),
-        var selectedArea: Area? = null)
+        var selectedArea: Area? = null) {
+
+    override fun toString(): String = "AreaListSize:${areaList.size},SelectedArea:$selectedArea"
+}
