@@ -36,6 +36,14 @@ app/src/main/java/org/suwashizmu/connpassapp/module
     └── SearchEventViewModel.kt
 ```
 
+## 組み立て方
+
+Entity→UseCase→Input&Output→
+Repository→DataSource→
+Presenter→ViewModel→Interactor→
+Controller→View
+
+
 
 ## 参考URL
 https://qiita.com/nrslib/items/a5f902c4defc83bd46b8
