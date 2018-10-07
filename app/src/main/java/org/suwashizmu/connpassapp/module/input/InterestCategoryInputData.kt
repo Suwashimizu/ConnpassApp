@@ -5,4 +5,4 @@ import org.suwashizmu.connpassapp.module.entity.InterestCategory
 /**
  * Created by KEKE on 2018/10/08.
  */
-data class InterestCategoryInputData(val interestCategory: InterestCategory)
+data class InterestCategoryInputData(val interestCategory: Set<InterestCategory>)
