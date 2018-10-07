@@ -33,7 +33,7 @@ project.ext {
     loggerVersion = "2.0.0"
     threetenabpVersion = "1.0.5"
 
-    mockitoVersion = "1.10.19"
+    mockitoVersion = "2.8.9"
     mockitoKotlinVersion = "2.0.0-RC1"
     assertjCoreVersion = "3.5.2"
 

@@ -6,6 +6,7 @@ import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
 import io.reactivex.Single
 import org.junit.Test
+import org.suwashizmu.connpassapp.module.repository.remote.RemoteEventDataSource
 import org.suwashizmu.connpassapp.service.api.ConnpassService
 import org.suwashizmu.connpassapp.service.api.SearchResult
 
