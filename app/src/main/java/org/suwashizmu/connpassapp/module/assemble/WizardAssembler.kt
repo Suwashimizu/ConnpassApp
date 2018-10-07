@@ -1,5 +1,12 @@
 package org.suwashizmu.connpassapp.module.assemble
 
+import org.kodein.di.Kodein
+import org.kodein.di.android.AndroidComponentsWeakScope
+import org.kodein.di.generic.*
+import org.suwashizmu.connpassapp.module.presenter.AreaSelectPresenter
+import org.suwashizmu.connpassapp.module.usecase.AreaSelectInteractor
+import org.suwashizmu.connpassapp.module.usecase.IAreaSelectUseCase
+import org.suwashizmu.connpassapp.view.MainActivity
 import org.suwashizmu.connpassapp.view.WizardFragment
 
 /**
@@ -7,21 +14,22 @@ import org.suwashizmu.connpassapp.view.WizardFragment
  */
 class WizardAssembler {
 
-    fun assemble(wizardFragment: WizardFragment) {
+    fun assembleFragment(activity: MainActivity): WizardFragment {
 
+        val kodein = Kodein.lazy {
+            extend(activity.kodein)
 
-        /*
+            //presenterはAndroidComponentsWeakScopeで生成する
+            bind<AreaSelectPresenter>() with scoped(AndroidComponentsWeakScope).singleton { AreaSelectPresenter() }
+            bind<IAreaSelectUseCase>() with provider { AreaSelectInteractor(instance(), instance()) }
+        }
 
+        val presenter: AreaSelectPresenter by kodein.instance()
+        val useCase: IAreaSelectUseCase by kodein.instance()
+        presenter.useCase = useCase
 
-            val fragment = WizardFragment.newInstance()
-            supportFragmentManager.beginTransaction()
-                    .add(R.id.container, fragment)
-                    .commit()
-
-            val presenter = AreaSelectPresenter().apply {
-                useCase = AreaSelectInteractor(this, LocalAreaRepository(this@MainActivity))
-            }
-            fragment.presenter = presenter
-         */
+        return WizardFragment.newInstance().apply {
+            this.presenter = presenter
+        }
     }
 }

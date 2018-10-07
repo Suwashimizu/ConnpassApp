@@ -18,7 +18,7 @@ class MyApplication : Application(), KodeinAware {
     //DIの定義を行う
     override val kodein: Kodein
         get() = Kodein.lazy {
-            //binding処理を記入
+            //binding処理を記入,RepositoryはSingletonで渡す
             bind<AreaRepository>() with singleton { LocalAreaRepository(this@MyApplication) }
         }
 

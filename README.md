@@ -60,6 +60,10 @@ bind<IAreaSelectPresenter>() with provider { AreaSelectPresenter(instance()) }
 
 controllerのみ抽象を持たないようにする
 
+↓
+
+Presenterのコンストラクタをデフォルトのものに変更
+
 
 ## 参考URL
 https://qiita.com/nrslib/items/a5f902c4defc83bd46b8
