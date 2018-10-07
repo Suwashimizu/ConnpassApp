@@ -55,5 +55,7 @@ class AreaSelectPresenter : IAreaSelectPresenter {
 
         viewModel.selectedArea = area
         subject?.update(viewModel)
+
+        router?.gotoInterestSelect()
     }
 }

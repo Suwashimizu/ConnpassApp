@@ -6,7 +6,9 @@ import android.widget.Toast
 /**
  * Created by KEKE on 2018/10/07.
  */
-class WizardRouter(private val fragment: Fragment) : IWizardRouter {
+class WizardRouter : IWizardRouter {
+    lateinit var fragment: Fragment
+
     override fun gotoInterestSelect() {
         if (fragment.isAdded.not()) return
 
