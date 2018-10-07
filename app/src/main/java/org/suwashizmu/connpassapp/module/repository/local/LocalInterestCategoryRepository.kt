@@ -19,6 +19,7 @@ class LocalInterestCategoryRepository(private val context: Context) : InterestCa
 
     override fun save(vararg interestCategory: InterestCategory) {
         //選択が空のときは？
+        if (interestCategory.isEmpty()) throw IllegalStateException("requires value")
 
         context.getSharedPreferences(KEY_INTEREST_CATEGORY, Context.MODE_PRIVATE)
                 .edit()
@@ -28,7 +29,7 @@ class LocalInterestCategoryRepository(private val context: Context) : InterestCa
     }
 
     override fun getCurrentInterestCategories(): Collection<InterestCategory>? {
-        //idが消えたときは？
+        //idが消えたときは？→消すな,使用不可フラグを追加する
 
         val pref = context.getSharedPreferences(KEY_INTEREST_CATEGORY, Context.MODE_PRIVATE)
 
