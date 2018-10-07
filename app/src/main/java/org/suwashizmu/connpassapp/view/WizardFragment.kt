@@ -12,8 +12,8 @@ import io.reactivex.rxkotlin.addTo
 import org.suwashizmu.connpassapp.R
 import org.suwashizmu.connpassapp.databinding.WizardFragBinding
 import org.suwashizmu.connpassapp.module.entity.Area
+import org.suwashizmu.connpassapp.module.presenter.AreaSelectPresenter
 import org.suwashizmu.connpassapp.module.presenter.AreaSelectSubject
-import org.suwashizmu.connpassapp.module.presenter.IAreaSelectPresenter
 import org.suwashizmu.connpassapp.module.view.AreaSelectViewModel
 import org.suwashizmu.connpassapp.module.view.IAreaSelectView
 
@@ -30,7 +30,7 @@ class WizardFragment : Fragment(), IAreaSelectView {
     private val disposable = CompositeDisposable()
     private val subject = AreaSelectSubject()
 
-    override var presenter: IAreaSelectPresenter? = null
+    override var presenter: AreaSelectPresenter? = null
 
     private lateinit var binding: WizardFragBinding
 

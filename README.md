@@ -43,6 +43,22 @@ Repository→DataSource→
 Presenter→ViewModel→Interactor→
 Controller→View
 
+## 課題
+
+InteracotrとPresenterの循環参照問題  
+
+InteractorとPresenterがお互いを必要としする  
+循環参照となっておりDI出来ない状態となっている
+
+```
+bind<IAreaSelectUseCase>() with provider { AreaSelectInteractor(
+    IAreaSelectPresenter,
+    AreaRepository
+) }
+bind<IAreaSelectPresenter>() with provider { AreaSelectPresenter(instance()) }
+```
+
+controllerのみ抽象を持たないようにする
 
 
 ## 参考URL
