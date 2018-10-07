@@ -19,7 +19,6 @@ open class MainActivity : AppCompatActivity(), KodeinAware, ISearchEventView {
         extend(_parentKodein)
     }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -34,13 +33,14 @@ open class MainActivity : AppCompatActivity(), KodeinAware, ISearchEventView {
             eventSearchController.eventSearch("kotlin")
             */
 
-            val fragment = WizardAssembler().assembleFragment(this)
-
+            //assembleFragmentでfind出来るようにするためcommitNowを使うこと!
             supportFragmentManager.beginTransaction()
-                    .add(R.id.container, fragment)
-                    .commit()
-
+                    .add(R.id.container, WizardFragment.newInstance(), WizardAssembler.TAG_FRAGMENT)
+                    .commitNow()
         }
+
+        //CleanArchitectureで使用するPresenter,Repository,Interactorなどの構築を行う
+        WizardAssembler().assembleFragment(this)
     }
 
     override fun updated(viewModel: SearchEventViewModel) {

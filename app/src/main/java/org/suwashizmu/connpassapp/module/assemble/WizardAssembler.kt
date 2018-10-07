@@ -14,7 +14,11 @@ import org.suwashizmu.connpassapp.view.WizardFragment
  */
 class WizardAssembler {
 
-    fun assembleFragment(activity: MainActivity): WizardFragment {
+    companion object {
+        const val TAG_FRAGMENT = "wizard"
+    }
+
+    fun assembleFragment(activity: MainActivity) {
 
         val kodein = Kodein.lazy {
             extend(activity.kodein)
@@ -28,8 +32,8 @@ class WizardAssembler {
         val useCase: IAreaSelectUseCase by kodein.instance()
         presenter.useCase = useCase
 
-        return WizardFragment.newInstance().apply {
-            this.presenter = presenter
-        }
+        val f = activity.supportFragmentManager
+                .findFragmentByTag(TAG_FRAGMENT) as WizardFragment
+        f.presenter = presenter
     }
 }
