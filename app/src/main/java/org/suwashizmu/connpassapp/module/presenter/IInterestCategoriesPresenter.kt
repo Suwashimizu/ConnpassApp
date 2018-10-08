@@ -13,6 +13,7 @@ interface IInterestCategoriesPresenter : IInterestCategoriesController {
 
     var selectUseCase: InterestCategorySelectUseCase?
     var getUseCase: InterestCategoriesGetUseCase?
+    var subject: InterestCategoriesSubject
 
     fun completeInterestCategories(list: Collection<InterestCategory>)
 

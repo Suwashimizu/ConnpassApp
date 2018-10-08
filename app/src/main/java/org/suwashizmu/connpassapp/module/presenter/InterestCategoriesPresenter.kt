@@ -15,6 +15,7 @@ class InterestCategoriesPresenter : IInterestCategoriesPresenter {
 
     override var selectUseCase: InterestCategorySelectUseCase? = null
     override var getUseCase: InterestCategoriesGetUseCase? = null
+    override var subject: InterestCategoriesSubject = InterestCategoriesSubject
 
     override fun fetchInterestCategories() {
         getUseCase?.getInterestCategories()
@@ -27,11 +28,18 @@ class InterestCategoriesPresenter : IInterestCategoriesPresenter {
 
 
     override fun completeInterestCategories(list: Collection<InterestCategory>) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
+        viewModel.interestCategories = list
+
+        subject.update(viewModel)
+
     }
 
     override fun completeEntry(vararg interestCategory: InterestCategory) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
+        viewModel.selectCategories = interestCategory.toList()
+
+        subject.update(viewModel)
     }
 
 }

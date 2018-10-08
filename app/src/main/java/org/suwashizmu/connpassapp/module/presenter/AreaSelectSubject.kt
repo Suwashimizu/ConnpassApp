@@ -9,7 +9,7 @@ import org.suwashizmu.connpassapp.module.view.AreaSelectViewModel
  *
  * ViewModelの変更を通知するObserver
  */
-class AreaSelectSubject {
+object AreaSelectSubject {
 
     private val subject: PublishSubject<AreaSelectViewModel> = PublishSubject.create()
     val observable: Observable<AreaSelectViewModel> = subject

@@ -18,11 +18,13 @@ class InterestCategoriesPresenterTest {
     private val selectUseCase: InterestCategorySelectUseCase = mock()
 
     private val presenter = InterestCategoriesPresenter()
+    private val subject: InterestCategoriesSubject = mock()
 
     @Before
     fun setup() {
         presenter.getUseCase = getUseCase
         presenter.selectUseCase = selectUseCase
+        presenter.subject = subject
     }
 
     @Test
@@ -41,9 +43,17 @@ class InterestCategoriesPresenterTest {
 
     @Test
     fun completeInterestCategories() {
+        //subjectのTest
+        presenter.completeInterestCategories(listOf(InterestCategory.RUBY, InterestCategory.AI))
+
+        verify(subject).update(any())
     }
 
     @Test
     fun completeEntry() {
+        //subjectのTest
+        presenter.completeEntry(InterestCategory.AI, InterestCategory.C_SHAPE)
+
+        verify(subject).update(any())
     }
 }

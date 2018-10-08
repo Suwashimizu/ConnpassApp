@@ -28,7 +28,7 @@ class WizardFragment : Fragment(), IAreaSelectView {
 
     //ViewModelの変化を監視
     private val disposable = CompositeDisposable()
-    private val subject = AreaSelectSubject()
+    private val subject = AreaSelectSubject
 
     override var presenter: AreaSelectPresenter? = null
 
