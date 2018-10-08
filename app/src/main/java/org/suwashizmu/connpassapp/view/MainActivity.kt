@@ -46,4 +46,8 @@ open class MainActivity : AppCompatActivity(), KodeinAware, ISearchEventView {
     override fun updated(viewModel: SearchEventViewModel) {
         Logger.d("updated!")
     }
+
+    fun assembleWizardInterestFragment(fragment: WizardInterestFragment) {
+        WizardAssembler().assembleInterestCategories(this, fragment)
+    }
 }
