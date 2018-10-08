@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment
 import android.view.*
 import android.widget.ArrayAdapter
 import android.widget.ListView
+import android.widget.Toast
 import com.orhanobut.logger.Logger
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
@@ -103,6 +104,10 @@ class WizardInterestFragment : Fragment(), IInterestCategoriesView {
         if (binding.listView.adapter == null) {
             binding.listView.adapter = ArrayAdapter(requireActivity(), android.R.layout.simple_list_item_multiple_choice, viewModel.interestCategories.toMutableList())
             binding.listView.choiceMode = ListView.CHOICE_MODE_MULTIPLE
+        }
+
+        if (viewModel.inputState == InterestCategoriesViewModel.InputState.ERROR) {
+            Toast.makeText(activity, "Errorです", Toast.LENGTH_SHORT).show()
         }
     }
     //endregion IInterestCategoriesView

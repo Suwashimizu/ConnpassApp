@@ -1,13 +1,14 @@
 package org.suwashizmu.connpassapp.module.presenter
 
-import com.nhaarman.mockitokotlin2.any
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.verify
+import com.nhaarman.mockitokotlin2.*
+import io.reactivex.Observable
 import org.junit.Before
 import org.junit.Test
 import org.suwashizmu.connpassapp.module.entity.InterestCategory
+import org.suwashizmu.connpassapp.module.output.InterestCateoriesOutput
 import org.suwashizmu.connpassapp.module.usecase.InterestCategoriesGetUseCase
 import org.suwashizmu.connpassapp.module.usecase.InterestCategorySelectUseCase
+import org.suwashizmu.connpassapp.module.view.InterestCategoriesViewModel
 
 /**
  * Created by KEKE on 2018/10/08.
@@ -18,7 +19,11 @@ class InterestCategoriesPresenterTest {
     private val selectUseCase: InterestCategorySelectUseCase = mock()
 
     private val presenter = InterestCategoriesPresenter()
-    private val subject: InterestCategoriesSubject = mock()
+    private val subject: InterestCategoriesSubject = mock {
+        on { observable } doReturn Observable.just(InterestCategoriesViewModel().apply {
+            inputState = InterestCategoriesViewModel.InputState.COMPLETE
+        })
+    }
 
     @Before
     fun setup() {
@@ -50,10 +55,34 @@ class InterestCategoriesPresenterTest {
     }
 
     @Test
-    fun completeEntry() {
+    fun `completeEntry when complete`() {
         //subjectのTest
-        presenter.completeEntry(InterestCategory.AI, InterestCategory.C_SHAPE)
+        val test = subject.observable.test()
+        val output = InterestCateoriesOutput(setOf(InterestCategory.AI, InterestCategory.C_SHAPE), true)
+
+        presenter.completeEntry(output)
 
         verify(subject).update(any())
+
+        test.assertNoErrors()
+        test.assertValue { it.inputState == InterestCategoriesViewModel.InputState.COMPLETE }
+    }
+
+    @Test
+    fun `completeEntry when Error`() {
+
+        //Errorを返す時
+        whenever(subject.observable).doReturn(Observable.just(InterestCategoriesViewModel().apply { inputState = InterestCategoriesViewModel.InputState.ERROR }))
+
+        //subjectのTest
+        val test = subject.observable.test()
+        val output = InterestCateoriesOutput(setOf(InterestCategory.AI, InterestCategory.C_SHAPE), true)
+
+        presenter.completeEntry(output)
+
+        verify(subject).update(any())
+
+        test.assertNoErrors()
+        test.assertValue { it.inputState == InterestCategoriesViewModel.InputState.ERROR }
     }
 }
