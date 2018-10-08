@@ -30,7 +30,7 @@ class AreaSelectPresenter : IAreaSelectPresenter {
     override fun onPause() {
     }
 
-    override fun onDesutroy() {
+    override fun onDestroy() {
         subject = null
         useCase = null
         router = null

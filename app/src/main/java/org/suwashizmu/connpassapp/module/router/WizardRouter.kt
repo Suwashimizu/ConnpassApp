@@ -13,6 +13,8 @@ import org.suwashizmu.connpassapp.view.WizardInterestFragment
 class WizardRouter : IWizardRouter {
     lateinit var fragment: Fragment
 
+    private val assembler = WizardAssembler()
+
     override fun gotoInterestSelect() {
         if (fragment.isAdded.not()) return
 
@@ -27,7 +29,8 @@ class WizardRouter : IWizardRouter {
                 ?.addToBackStack(null)
                 ?.commit()
 
-        val mainActivity = fragment.activity as? MainActivity
-        mainActivity?.assembleWizardInterestFragment(nextFragment)
+        val mainActivity = fragment.activity as? MainActivity ?: return
+        
+        assembler.assembleInterestCategories(mainActivity, nextFragment)
     }
 }

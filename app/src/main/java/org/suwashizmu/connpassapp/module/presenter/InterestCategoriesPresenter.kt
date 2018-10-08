@@ -42,4 +42,20 @@ class InterestCategoriesPresenter : IInterestCategoriesPresenter {
         subject.update(viewModel)
     }
 
+    //region BasePresenter
+    override fun onCreate() {
+    }
+
+    override fun onResume() {
+    }
+
+    override fun onPause() {
+    }
+
+    override fun onDestroy() {
+
+        selectUseCase = null
+        getUseCase = null
+    }
+    //endregion BasePresenter
 }

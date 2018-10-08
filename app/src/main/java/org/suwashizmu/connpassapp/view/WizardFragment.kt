@@ -84,6 +84,13 @@ class WizardFragment : Fragment(), IAreaSelectView {
         return super.onOptionsItemSelected(item)
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter?.onDestroy()
+
+        presenter = null
+    }
+
     //region IAreaSelectView
     override fun update(viewModel: AreaSelectViewModel) {
 

@@ -9,7 +9,7 @@ import org.suwashizmu.connpassapp.module.usecase.InterestCategorySelectUseCase
  * Created by KEKE on 2018/10/08.
  * controllerも兼ねる
  */
-interface IInterestCategoriesPresenter : IInterestCategoriesController {
+interface IInterestCategoriesPresenter : BasePresenter, IInterestCategoriesController {
 
     var selectUseCase: InterestCategorySelectUseCase?
     var getUseCase: InterestCategoriesGetUseCase?

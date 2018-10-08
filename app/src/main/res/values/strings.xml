@@ -2,6 +2,7 @@
     <string name="app_name">ConnpassApp</string>
 
     <string name="wizard_area_select">知りたいイベントが開催されている地域を選びましょう</string>
+    <string name="wizard_interest_categories">興味のある分野を選びましょう</string>
 
     <string name="next">次へ</string>
 </resources>

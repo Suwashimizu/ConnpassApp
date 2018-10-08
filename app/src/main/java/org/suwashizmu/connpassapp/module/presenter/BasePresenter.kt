@@ -13,5 +13,5 @@ interface BasePresenter {
 
     fun onPause()
 
-    fun onDesutroy()
+    fun onDestroy()
 }
