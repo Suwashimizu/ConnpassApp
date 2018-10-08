@@ -91,6 +91,10 @@ class WizardFragment : Fragment(), IAreaSelectView {
 
         if (binding.spinner.adapter == null) {
             binding.spinner.adapter = ArrayAdapter(requireActivity(), android.R.layout.simple_list_item_1, viewModel.areaList.toMutableList())
+
+            //選択位置の復元
+            val currentPosition = viewModel.areaList.indexOfFirst { it.id == viewModel.selectedArea?.id }
+            binding.spinner.setSelection(currentPosition)
         }
     }
     //endregion IAreaSelectView
