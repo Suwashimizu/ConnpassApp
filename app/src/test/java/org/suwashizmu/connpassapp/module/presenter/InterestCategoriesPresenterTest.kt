@@ -56,33 +56,32 @@ class InterestCategoriesPresenterTest {
 
     @Test
     fun `completeEntry when complete`() {
-        //subjectのTest
-        val test = subject.observable.test()
         val output = InterestCateoriesOutput(setOf(InterestCategory.AI, InterestCategory.C_SHAPE), true)
 
         presenter.completeEntry(output)
 
-        verify(subject).update(any())
+        //completeしている
+        val viewModel = InterestCategoriesViewModel(
+                inputState = InterestCategoriesViewModel.InputState.COMPLETE,
+                selectCategories = setOf(InterestCategory.AI, InterestCategory.C_SHAPE)
+        )
 
-        test.assertNoErrors()
-        test.assertValue { it.inputState == InterestCategoriesViewModel.InputState.COMPLETE }
+        verify(subject).update(eq(viewModel))
+
     }
 
     @Test
     fun `completeEntry when Error`() {
-
-        //Errorを返す時
-        whenever(subject.observable).doReturn(Observable.just(InterestCategoriesViewModel().apply { inputState = InterestCategoriesViewModel.InputState.ERROR }))
-
-        //subjectのTest
-        val test = subject.observable.test()
-        val output = InterestCateoriesOutput(setOf(InterestCategory.AI, InterestCategory.C_SHAPE), true)
+        val output = InterestCateoriesOutput(emptySet(), false)
 
         presenter.completeEntry(output)
 
-        verify(subject).update(any())
+        //completeしていなければErrorとなる
+        val viewModel = InterestCategoriesViewModel(
+                inputState = InterestCategoriesViewModel.InputState.ERROR,
+                selectCategories = emptySet()
+        )
 
-        test.assertNoErrors()
-        test.assertValue { it.inputState == InterestCategoriesViewModel.InputState.ERROR }
+        verify(subject).update(eq(viewModel))
     }
 }
