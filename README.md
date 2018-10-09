@@ -6,7 +6,7 @@ https://connpass.com/about/api/
 
 ## CleanArchitecture
 
-module以下にCleanArchitectureに関するものを纏めています
+module以下にCleanArchitectureに関するものを纏めています  
 mapperは本来含まれていませんがTestableにするため追加してます
 
 
@@ -48,5 +48,5 @@ Controller→View
 ## 参考URL
 https://qiita.com/nrslib/items/a5f902c4defc83bd46b8
 
-OutputPortを定義してないのが不明瞭でしたが
-概ね上から順に実装していけばテスト書きつつ進めることができました:bow:
+OutputPortを定義してないのが不明瞭でしたが  
+概ね上から順に実装していけばテスト書きつつ進めることができました:bow:  
