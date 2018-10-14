@@ -1,7 +1,6 @@
 package org.suwashizmu.connpassapp.module.router
 
 import android.support.v4.app.Fragment
-import android.widget.Toast
 import org.suwashizmu.connpassapp.R
 import org.suwashizmu.connpassapp.module.assemble.WizardAssembler
 import org.suwashizmu.connpassapp.view.MainActivity
@@ -18,8 +17,6 @@ class WizardRouter : IWizardRouter {
     override fun gotoInterestSelect() {
         if (fragment.isAdded.not()) return
 
-        Toast.makeText(fragment.requireActivity(), "goto NextView!", Toast.LENGTH_SHORT).show()
-
         val nextFragment = WizardInterestFragment.newInstance()
 
         fragment.fragmentManager
@@ -30,7 +27,11 @@ class WizardRouter : IWizardRouter {
                 ?.commit()
 
         val mainActivity = fragment.activity as? MainActivity ?: return
-        
+
         assembler.assembleInterestCategories(mainActivity, nextFragment)
+    }
+
+    override fun gotoEnventList() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }

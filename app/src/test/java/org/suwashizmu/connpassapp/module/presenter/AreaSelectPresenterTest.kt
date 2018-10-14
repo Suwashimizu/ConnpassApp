@@ -7,6 +7,7 @@ import com.nhaarman.mockitokotlin2.verify
 import org.junit.Test
 import org.suwashizmu.connpassapp.module.entity.Area
 import org.suwashizmu.connpassapp.module.input.AreaSelectInputData
+import org.suwashizmu.connpassapp.module.router.IWizardRouter
 import org.suwashizmu.connpassapp.module.usecase.IAreaSelectUseCase
 
 /**
@@ -15,12 +16,14 @@ import org.suwashizmu.connpassapp.module.usecase.IAreaSelectUseCase
 class AreaSelectPresenterTest {
 
     private val useCase: IAreaSelectUseCase = mock()
+    private val router: IWizardRouter = mock()
 
     private val subject: AreaSelectSubject = mock()
 
     private val presenter = AreaSelectPresenter().apply {
         subject = this@AreaSelectPresenterTest.subject
         useCase = this@AreaSelectPresenterTest.useCase
+        router = this@AreaSelectPresenterTest.router
     }
 
     @Test
@@ -35,6 +38,7 @@ class AreaSelectPresenterTest {
         presenter.completeSelected(Area.TOKYO)
 
         verify(subject).update(any())
+        verify(router).gotoInterestSelect()
     }
 
     @Test

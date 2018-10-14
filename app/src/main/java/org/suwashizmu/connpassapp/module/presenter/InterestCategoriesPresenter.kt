@@ -39,9 +39,13 @@ class InterestCategoriesPresenter : IInterestCategoriesPresenter {
     override fun completeEntry(output: InterestCateoriesOutput) {
 
         viewModel.selectCategories = output.selectedCategories
+        //viewModel.inputStateの初期はWait
         viewModel.inputState = if (output.isComplete) InterestCategoriesViewModel.InputState.COMPLETE else InterestCategoriesViewModel.InputState.ERROR
 
         subject.update(viewModel)
+        if (output.isComplete) {
+
+        }
     }
 
     //region BasePresenter

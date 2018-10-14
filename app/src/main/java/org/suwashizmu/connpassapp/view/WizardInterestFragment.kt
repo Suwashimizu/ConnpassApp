@@ -74,7 +74,7 @@ class WizardInterestFragment : Fragment(), IInterestCategoriesView {
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         super.onCreateOptionsMenu(menu, inflater)
-        inflater?.inflate(R.menu.wizard_area, menu)
+        inflater?.inflate(R.menu.wizard_interest, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
@@ -106,8 +106,14 @@ class WizardInterestFragment : Fragment(), IInterestCategoriesView {
             binding.listView.choiceMode = ListView.CHOICE_MODE_MULTIPLE
         }
 
-        if (viewModel.inputState == InterestCategoriesViewModel.InputState.ERROR) {
-            Toast.makeText(activity, "Errorです", Toast.LENGTH_SHORT).show()
+        when (viewModel.inputState) {
+            InterestCategoriesViewModel.InputState.ERROR -> Toast.makeText(activity, "Errorです", Toast.LENGTH_SHORT).show()
+            InterestCategoriesViewModel.InputState.WAIT -> {
+
+            }
+            InterestCategoriesViewModel.InputState.COMPLETE -> {
+
+            }
         }
     }
     //endregion IInterestCategoriesView
