@@ -59,7 +59,11 @@ class WizardAssembler {
             //presenterはAndroidComponentsWeakScopeなので同一のインスタンスが返ってくる
             bind<InterestCategoriesGetUseCase>() with provider { InterestCategoriesGetInteractor(presenter = instance(), repository = instance()) }
             bind<InterestCategorySelectUseCase>() with provider { InterestCategorySelectInteractor(presenter = instance(), repository = instance()) }
-            bind<IWizardRouter>() with scoped(AndroidComponentsWeakScope).singleton { WizardRouter() }
+            bind<IWizardRouter>() with scoped(AndroidComponentsWeakScope).singleton {
+                WizardRouter().apply {
+                    this.fragment = fragment
+                }
+            }
         }
 
         val presenter: IInterestCategoriesPresenter by kodein.instance()
