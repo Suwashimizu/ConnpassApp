@@ -12,8 +12,8 @@ import io.reactivex.rxkotlin.addTo
 import org.suwashizmu.connpassapp.R
 import org.suwashizmu.connpassapp.databinding.WizardFragBinding
 import org.suwashizmu.connpassapp.module.entity.Area
+import org.suwashizmu.connpassapp.module.presenter.AreaSelectPresenter
 import org.suwashizmu.connpassapp.module.presenter.AreaSelectSubject
-import org.suwashizmu.connpassapp.module.presenter.IAreaSelectPresenter
 import org.suwashizmu.connpassapp.module.view.AreaSelectViewModel
 import org.suwashizmu.connpassapp.module.view.IAreaSelectView
 
@@ -28,9 +28,9 @@ class WizardFragment : Fragment(), IAreaSelectView {
 
     //ViewModelの変化を監視
     private val disposable = CompositeDisposable()
-    private val subject = AreaSelectSubject()
+    private val subject = AreaSelectSubject
 
-    override var presenter: IAreaSelectPresenter? = null
+    override var presenter: AreaSelectPresenter? = null
 
     private lateinit var binding: WizardFragBinding
 
@@ -84,6 +84,13 @@ class WizardFragment : Fragment(), IAreaSelectView {
         return super.onOptionsItemSelected(item)
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter?.onDestroy()
+
+        presenter = null
+    }
+
     //region IAreaSelectView
     override fun update(viewModel: AreaSelectViewModel) {
 
@@ -91,6 +98,10 @@ class WizardFragment : Fragment(), IAreaSelectView {
 
         if (binding.spinner.adapter == null) {
             binding.spinner.adapter = ArrayAdapter(requireActivity(), android.R.layout.simple_list_item_1, viewModel.areaList.toMutableList())
+
+            //選択位置の復元
+            val currentPosition = viewModel.areaList.indexOfFirst { it.id == viewModel.selectedArea?.id }
+            binding.spinner.setSelection(currentPosition)
         }
     }
     //endregion IAreaSelectView
