@@ -6,6 +6,7 @@ import org.kodein.di.generic.*
 import org.suwashizmu.connpassapp.module.presenter.AreaSelectPresenter
 import org.suwashizmu.connpassapp.module.presenter.IInterestCategoriesPresenter
 import org.suwashizmu.connpassapp.module.presenter.InterestCategoriesPresenter
+import org.suwashizmu.connpassapp.module.router.IWizardRouter
 import org.suwashizmu.connpassapp.module.router.WizardRouter
 import org.suwashizmu.connpassapp.module.usecase.*
 import org.suwashizmu.connpassapp.view.MainActivity
@@ -58,15 +59,17 @@ class WizardAssembler {
             //presenterはAndroidComponentsWeakScopeなので同一のインスタンスが返ってくる
             bind<InterestCategoriesGetUseCase>() with provider { InterestCategoriesGetInteractor(presenter = instance(), repository = instance()) }
             bind<InterestCategorySelectUseCase>() with provider { InterestCategorySelectInteractor(presenter = instance(), repository = instance()) }
-            bind<WizardRouter>() with scoped(AndroidComponentsWeakScope).singleton { WizardRouter() }
+            bind<IWizardRouter>() with scoped(AndroidComponentsWeakScope).singleton { WizardRouter() }
         }
 
         val presenter: IInterestCategoriesPresenter by kodein.instance()
         val useCase: InterestCategoriesGetUseCase by kodein.instance()
         val selectUseCase: InterestCategorySelectUseCase by kodein.instance()
+        val router: IWizardRouter by kodein.instance()
 
         presenter.getUseCase = useCase
         presenter.selectUseCase = selectUseCase
+        presenter.router = router
 
         fragment.presenter = presenter
 

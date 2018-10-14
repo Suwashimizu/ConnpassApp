@@ -1,6 +1,7 @@
 package org.suwashizmu.connpassapp.module.router
 
 import android.support.v4.app.Fragment
+import com.orhanobut.logger.Logger
 import org.suwashizmu.connpassapp.R
 import org.suwashizmu.connpassapp.module.assemble.WizardAssembler
 import org.suwashizmu.connpassapp.view.MainActivity
@@ -32,6 +33,6 @@ class WizardRouter : IWizardRouter {
     }
 
     override fun gotoEnventList() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        Logger.d("event list")
     }
 }
