@@ -6,5 +6,5 @@ package org.suwashizmu.connpassapp.module.router
 interface IWizardRouter {
     fun gotoInterestSelect()
 
-    fun gotoEnventList()
+    fun gotoEventList()
 }

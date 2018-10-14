@@ -32,7 +32,7 @@ class WizardRouter : IWizardRouter {
         assembler.assembleInterestCategories(mainActivity, nextFragment)
     }
 
-    override fun gotoEnventList() {
+    override fun gotoEventList() {
         Logger.d("event list")
     }
 }
