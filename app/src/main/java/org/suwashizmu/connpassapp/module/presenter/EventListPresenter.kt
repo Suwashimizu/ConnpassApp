@@ -1,19 +1,23 @@
 package org.suwashizmu.connpassapp.module.presenter
 
+import org.suwashizmu.connpassapp.module.controller.IEventListController
+import org.suwashizmu.connpassapp.module.input.EventSearchInputData
 import org.suwashizmu.connpassapp.module.output.EventSearchOutputData
 import org.suwashizmu.connpassapp.module.router.IEventListRouter
+import org.suwashizmu.connpassapp.module.usecase.IEventSearchUseCase
 
 /**
  * Created by KEKE
  */
-class EventListPresenter : IEventListPresenter {
+class EventListPresenter : IEventListPresenter, IEventListController {
 
     //subject
     //var useCase: IEventListUseCase?
+    override var useCase: IEventSearchUseCase? = null
     override var router: IEventListRouter? = null
 
     override fun onCreate() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        useCase?.search(EventSearchInputData(emptySet(), 200))
     }
 
     override fun onResume() {
