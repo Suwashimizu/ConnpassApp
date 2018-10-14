@@ -1,6 +1,5 @@
 package org.suwashizmu.connpassapp.module.assemble
 
-import android.support.v4.app.Fragment
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.AndroidComponentsWeakScope
@@ -13,13 +12,16 @@ import org.suwashizmu.connpassapp.module.presenter.EventListPresenter
 import org.suwashizmu.connpassapp.module.presenter.IEventListPresenter
 import org.suwashizmu.connpassapp.module.router.EventListRouter
 import org.suwashizmu.connpassapp.module.router.IEventListRouter
+import org.suwashizmu.connpassapp.module.usecase.EventFetchInteractor
+import org.suwashizmu.connpassapp.module.usecase.IEventFetchUseCase
+import org.suwashizmu.connpassapp.view.EventListFragment
 
 /**
  * Created by KEKE
  * CleanArchitectureの構築を行う
  */
 class EventListAssembler {
-    fun assembleEventList(activity: KodeinAware, fragment: Fragment) {
+    fun assembleEventList(activity: KodeinAware, fragment: EventListFragment) {
         val kodein = Kodein.lazy {
             extend(activity.kodein)
 
@@ -27,6 +29,14 @@ class EventListAssembler {
             bind<IEventListPresenter>() with scoped(AndroidComponentsWeakScope).singleton { EventListPresenter() }
 
             //assemble usecase here
+            bind<IEventFetchUseCase>() with scoped(AndroidComponentsWeakScope).singleton {
+                EventFetchInteractor(
+                        presenter = instance(),
+                        areaRepository = instance(),
+                        interestCategoryRepository = instance(),
+                        eventRepository = instance()
+                )
+            }
 
             //
             bind<IEventListRouter>() with scoped(AndroidComponentsWeakScope).singleton { EventListRouter() }
@@ -34,9 +44,9 @@ class EventListAssembler {
 
         val presenter: IEventListPresenter by kodein.instance()
 
-        //presenter.usecase = kodein.direct.instance()
+        presenter.useCase = kodein.direct.instance()
         presenter.router = kodein.direct.instance()
 
-        //fragment.presenter = presenter
+        fragment.presenter = presenter
     }
 }

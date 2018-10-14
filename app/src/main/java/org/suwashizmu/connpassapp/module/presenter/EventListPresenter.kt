@@ -1,18 +1,21 @@
 package org.suwashizmu.connpassapp.module.presenter
 
-import com.orhanobut.logger.Logger
 import org.suwashizmu.connpassapp.module.controller.IEventListController
 import org.suwashizmu.connpassapp.module.output.EventSearchOutputData
 import org.suwashizmu.connpassapp.module.router.IEventListRouter
 import org.suwashizmu.connpassapp.module.usecase.IEventFetchUseCase
+import org.suwashizmu.connpassapp.module.view.EventListViewModel
 
 /**
  * Created by KEKE
  */
 class EventListPresenter : IEventListPresenter, IEventListController {
 
-    //subject
-    //var useCase: IEventListUseCase?
+    private val viewModel = EventListViewModel(
+            emptyList()
+    )
+
+    override var subject: EventListSubject = EventListSubject
     override var useCase: IEventFetchUseCase? = null
     override var router: IEventListRouter? = null
 
@@ -29,11 +32,16 @@ class EventListPresenter : IEventListPresenter, IEventListController {
     }
 
     override fun onDestroy() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
+        useCase = null
+        router = null
     }
 
     override fun complete(eventList: EventSearchOutputData) {
-        Logger.d(eventList)
+
+        //TODO Mapperが必要
+        viewModel.eventList = eventList.eventList.map { EventListViewModel.Event(it.title) }
+        subject.update(viewModel)
     }
 
 }

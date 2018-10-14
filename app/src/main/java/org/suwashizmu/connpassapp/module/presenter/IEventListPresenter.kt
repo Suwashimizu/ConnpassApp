@@ -10,7 +10,7 @@ import org.suwashizmu.connpassapp.module.usecase.IEventFetchUseCase
  */
 interface IEventListPresenter : BasePresenter {
 
-    //subject
+    var subject: EventListSubject
     var useCase: IEventFetchUseCase?
     var router: IEventListRouter?
 

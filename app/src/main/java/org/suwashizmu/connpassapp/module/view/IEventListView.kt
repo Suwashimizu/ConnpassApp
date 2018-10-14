@@ -9,4 +9,6 @@ interface IEventListView {
 
     var presenter: IEventListPresenter?
 
+    fun update(viewModel: EventListViewModel)
+
 }
