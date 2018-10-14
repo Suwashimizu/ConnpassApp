@@ -5,7 +5,6 @@ import io.reactivex.schedulers.Schedulers
 import org.suwashizmu.connpassapp.module.input.EventSearchInputData
 import org.suwashizmu.connpassapp.module.output.EventSearchOutputData
 import org.suwashizmu.connpassapp.module.presenter.IEventListPresenter
-import org.suwashizmu.connpassapp.module.presenter.IEventSearchPresenter
 import org.suwashizmu.connpassapp.module.repository.EventRepository
 
 /**
@@ -22,11 +21,20 @@ class EventListInteractor(private val eventSearchPresenter: IEventListPresenter,
                 .subscribe(
                         { eventList ->
                             eventSearchPresenter.complete(EventSearchOutputData(
-                                    eventList.map { EventSearchOutputData.OutputEvent(it.title, it.catch, it.description) }
+                                    eventList = eventList.map {
+                                        EventSearchOutputData.OutputEvent(
+                                                it.title,
+                                                it.catch,
+                                                it.description)
+                                    },
+                                    error = null
                             ))
                         },
                         { error ->
-                            error.printStackTrace()
+                            eventSearchPresenter.complete(EventSearchOutputData(
+                                    eventList = emptyList(),
+                                    error = error
+                            ))
                         }
                 )
     }

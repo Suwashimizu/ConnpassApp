@@ -5,6 +5,7 @@ import io.reactivex.Single
 import io.reactivex.android.plugins.RxAndroidPlugins
 import io.reactivex.plugins.RxJavaPlugins
 import io.reactivex.schedulers.Schedulers
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
 import org.suwashizmu.connpassapp.module.entity.Event
@@ -49,9 +50,9 @@ class EventSearchInteractorTest {
     }
     private val presenter: IEventSearchPresenter = mock()
 
-    private val interactor = EventSearchInteractor(repository, presenter)
+    private val interactor = EventSearchInteractor(presenter, repository)
 
-    private fun makeInteractor(repository: EventRepository): EventSearchInteractor = EventSearchInteractor(repository, presenter)
+    private fun makeInteractor(presenter: IEventSearchPresenter, repository: EventRepository): EventSearchInteractor = EventSearchInteractor(presenter, repository)
 
     @Before
     fun setup() {
@@ -77,10 +78,14 @@ class EventSearchInteractorTest {
             on { findEvent(any()) } doReturn Single.error(UnknownHostException("unknownHost"))
         }
 
-        makeInteractor(errorRepository).search(EventSearchInputData(keyword = setOf("kotlin"), ym = 201802))
+        val presenter: IEventSearchPresenter = mock()
+
+        makeInteractor(presenter, errorRepository).search(EventSearchInputData(keyword = setOf("kotlin"), ym = 201802))
 
         verify(errorRepository).findEvent(any())
-
-        verify(presenter, never()).complete(any())
+        verify(presenter).complete(check {
+            assertThat(it.error).isNotNull()
+            assertThat(it.error).isInstanceOf(UnknownHostException::class.java)
+        })
     }
 }

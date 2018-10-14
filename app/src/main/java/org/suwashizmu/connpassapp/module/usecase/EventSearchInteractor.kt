@@ -10,8 +10,8 @@ import org.suwashizmu.connpassapp.module.repository.EventRepository
 /**
  * Created by KEKE on 2018/10/06.
  */
-class EventSearchInteractor(private val eventSearchRepository: EventRepository,
-                            private val eventSearchPresenter: IEventSearchPresenter) : IEventSearchUseCase {
+class EventSearchInteractor(private val eventSearchPresenter: IEventSearchPresenter,
+                            private val eventSearchRepository: EventRepository) : IEventSearchUseCase {
 
     override fun search(inputData: EventSearchInputData) {
         //varargには*をつけること
@@ -21,11 +21,20 @@ class EventSearchInteractor(private val eventSearchRepository: EventRepository,
                 .subscribe(
                         { eventList ->
                             eventSearchPresenter.complete(EventSearchOutputData(
-                                    eventList.map { EventSearchOutputData.OutputEvent(it.title, it.catch, it.description) }
+                                    eventList = eventList.map {
+                                        EventSearchOutputData.OutputEvent(
+                                                it.title,
+                                                it.catch,
+                                                it.description)
+                                    },
+                                    error = null
                             ))
                         },
                         { error ->
-                            error.printStackTrace()
+                            eventSearchPresenter.complete(EventSearchOutputData(
+                                    eventList = emptyList(),
+                                    error = error
+                            ))
                         }
                 )
     }

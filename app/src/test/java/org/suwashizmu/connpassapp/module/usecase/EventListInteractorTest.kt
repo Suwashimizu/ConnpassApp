@@ -1,15 +1,22 @@
 package org.suwashizmu.connpassapp.module.usecase
 
-import com.nhaarman.mockitokotlin2.*
+import com.nhaarman.mockitokotlin2.any
+import com.nhaarman.mockitokotlin2.doReturn
+import com.nhaarman.mockitokotlin2.mock
+import com.nhaarman.mockitokotlin2.verify
 import io.reactivex.Single
 import io.reactivex.android.plugins.RxAndroidPlugins
 import io.reactivex.plugins.RxJavaPlugins
 import io.reactivex.schedulers.Schedulers
+import org.assertj.core.api.Assertions
 import org.junit.Before
 import org.junit.Test
+import org.mockito.ArgumentCaptor
 import org.suwashizmu.connpassapp.module.entity.Event
 import org.suwashizmu.connpassapp.module.input.EventSearchInputData
+import org.suwashizmu.connpassapp.module.output.EventSearchOutputData
 import org.suwashizmu.connpassapp.module.presenter.IEventListPresenter
+import org.suwashizmu.connpassapp.module.presenter.IEventSearchPresenter
 import org.suwashizmu.connpassapp.module.repository.EventRepository
 import org.threeten.bp.ZonedDateTime
 import java.net.UnknownHostException
@@ -43,7 +50,7 @@ class EventListInteractorTest {
 
     private val eventListInteractor = EventListInteractor(presenter, repository)
 
-    private fun makeInteractor(repository: EventRepository): EventListInteractor = EventListInteractor(presenter, repository)
+    private fun makeInteractor(presenter: IEventSearchPresenter, repository: EventRepository): EventSearchInteractor = EventSearchInteractor(presenter, repository)
 
 
     @Before
@@ -69,10 +76,19 @@ class EventListInteractorTest {
             on { findEvent(any()) } doReturn Single.error(UnknownHostException("unknownHost"))
         }
 
-        makeInteractor(errorRepository).search(EventSearchInputData(keyword = setOf("kotlin"), ym = 201802))
+        //引数をassertする
+        val outputCaptor: ArgumentCaptor<EventSearchOutputData> = ArgumentCaptor.forClass(EventSearchOutputData::class.java)
+        val presenter: IEventSearchPresenter = mock {
+            on { complete(outputCaptor.capture()) } doReturn Unit
+        }
+
+        makeInteractor(presenter, errorRepository).search(EventSearchInputData(keyword = setOf("kotlin"), ym = 201802))
 
         verify(errorRepository).findEvent(any())
 
-        verify(presenter, never()).complete(any())
+        val result = outputCaptor.value
+
+        Assertions.assertThat(result.error).isNotNull()
+        Assertions.assertThat(result.error).isInstanceOf(UnknownHostException::class.java)
     }
 }
