@@ -71,6 +71,8 @@ class EventListFragment : Fragment(), IEventListView {
         val adapter = binding.listView.adapter as? EventListAdapter
         adapter?.update(viewModel)
         adapter?.notifyDataSetChanged()
+
+        binding.progress.visibility = View.GONE
     }
 
 }
