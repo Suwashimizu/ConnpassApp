@@ -2,7 +2,7 @@ package org.suwashizmu.connpassapp.module.presenter
 
 import org.suwashizmu.connpassapp.module.output.EventSearchOutputData
 import org.suwashizmu.connpassapp.module.router.IEventListRouter
-import org.suwashizmu.connpassapp.module.usecase.IEventSearchUseCase
+import org.suwashizmu.connpassapp.module.usecase.IEventFetchUseCase
 
 /**
  * Created by KEKE
@@ -11,7 +11,7 @@ import org.suwashizmu.connpassapp.module.usecase.IEventSearchUseCase
 interface IEventListPresenter : BasePresenter {
 
     //subject
-    var useCase: IEventSearchUseCase?
+    var useCase: IEventFetchUseCase?
     var router: IEventListRouter?
 
     fun complete(eventList: EventSearchOutputData)

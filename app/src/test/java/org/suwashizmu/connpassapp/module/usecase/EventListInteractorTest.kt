@@ -1,20 +1,15 @@
 package org.suwashizmu.connpassapp.module.usecase
 
-import com.nhaarman.mockitokotlin2.any
-import com.nhaarman.mockitokotlin2.doReturn
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.verify
+import com.nhaarman.mockitokotlin2.*
 import io.reactivex.Single
 import io.reactivex.android.plugins.RxAndroidPlugins
 import io.reactivex.plugins.RxJavaPlugins
 import io.reactivex.schedulers.Schedulers
-import org.assertj.core.api.Assertions
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
-import org.mockito.ArgumentCaptor
 import org.suwashizmu.connpassapp.module.entity.Event
 import org.suwashizmu.connpassapp.module.input.EventSearchInputData
-import org.suwashizmu.connpassapp.module.output.EventSearchOutputData
 import org.suwashizmu.connpassapp.module.presenter.IEventListPresenter
 import org.suwashizmu.connpassapp.module.presenter.IEventSearchPresenter
 import org.suwashizmu.connpassapp.module.repository.EventRepository
@@ -76,19 +71,14 @@ class EventListInteractorTest {
             on { findEvent(any()) } doReturn Single.error(UnknownHostException("unknownHost"))
         }
 
-        //引数をassertする
-        val outputCaptor: ArgumentCaptor<EventSearchOutputData> = ArgumentCaptor.forClass(EventSearchOutputData::class.java)
-        val presenter: IEventSearchPresenter = mock {
-            on { complete(outputCaptor.capture()) } doReturn Unit
-        }
+        val presenter: IEventSearchPresenter = mock()
 
         makeInteractor(presenter, errorRepository).search(EventSearchInputData(keyword = setOf("kotlin"), ym = 201802))
 
         verify(errorRepository).findEvent(any())
+        verify(presenter).complete(check {
+            assertThat(it.error).isInstanceOf(UnknownHostException::class.java)
+        })
 
-        val result = outputCaptor.value
-
-        Assertions.assertThat(result.error).isNotNull()
-        Assertions.assertThat(result.error).isInstanceOf(UnknownHostException::class.java)
     }
 }

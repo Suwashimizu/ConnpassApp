@@ -1,10 +1,10 @@
 package org.suwashizmu.connpassapp.module.presenter
 
+import com.orhanobut.logger.Logger
 import org.suwashizmu.connpassapp.module.controller.IEventListController
-import org.suwashizmu.connpassapp.module.input.EventSearchInputData
 import org.suwashizmu.connpassapp.module.output.EventSearchOutputData
 import org.suwashizmu.connpassapp.module.router.IEventListRouter
-import org.suwashizmu.connpassapp.module.usecase.IEventSearchUseCase
+import org.suwashizmu.connpassapp.module.usecase.IEventFetchUseCase
 
 /**
  * Created by KEKE
@@ -13,11 +13,11 @@ class EventListPresenter : IEventListPresenter, IEventListController {
 
     //subject
     //var useCase: IEventListUseCase?
-    override var useCase: IEventSearchUseCase? = null
+    override var useCase: IEventFetchUseCase? = null
     override var router: IEventListRouter? = null
 
     override fun onCreate() {
-        useCase?.search(EventSearchInputData(emptySet(), 200))
+        useCase?.fetchEvent()
     }
 
     override fun onResume() {
@@ -33,7 +33,7 @@ class EventListPresenter : IEventListPresenter, IEventListController {
     }
 
     override fun complete(eventList: EventSearchOutputData) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        Logger.d(eventList)
     }
 
 }
