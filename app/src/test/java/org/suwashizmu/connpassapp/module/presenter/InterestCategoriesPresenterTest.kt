@@ -6,6 +6,7 @@ import org.junit.Before
 import org.junit.Test
 import org.suwashizmu.connpassapp.module.entity.InterestCategory
 import org.suwashizmu.connpassapp.module.output.InterestCateoriesOutput
+import org.suwashizmu.connpassapp.module.router.IWizardRouter
 import org.suwashizmu.connpassapp.module.usecase.InterestCategoriesGetUseCase
 import org.suwashizmu.connpassapp.module.usecase.InterestCategorySelectUseCase
 import org.suwashizmu.connpassapp.module.view.InterestCategoriesViewModel
@@ -17,6 +18,7 @@ class InterestCategoriesPresenterTest {
 
     private val getUseCase: InterestCategoriesGetUseCase = mock()
     private val selectUseCase: InterestCategorySelectUseCase = mock()
+    private val router: IWizardRouter = mock()
 
     private val presenter = InterestCategoriesPresenter()
     private val subject: InterestCategoriesSubject = mock {
@@ -30,6 +32,7 @@ class InterestCategoriesPresenterTest {
         presenter.getUseCase = getUseCase
         presenter.selectUseCase = selectUseCase
         presenter.subject = subject
+        presenter.router = router
     }
 
     @Test
@@ -67,6 +70,7 @@ class InterestCategoriesPresenterTest {
         )
 
         verify(subject).update(eq(viewModel))
+        verify(router).gotoEnventList()
 
     }
 
