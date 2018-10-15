@@ -5,5 +5,5 @@ package org.suwashizmu.connpassapp.module.view
  */
 data class EventListViewModel(var eventList: Collection<Event>) {
 
-    data class Event(val title: String)
+    data class Event(val title: String, val catch: String)
 }

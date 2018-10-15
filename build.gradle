@@ -23,7 +23,7 @@ allprojects {
 }
 
 project.ext {
-    appcompatVersion = "27.1"
+    appcompatVersion = "28.0.0"
     constraintLayoutVersion = "1.1.0"
     retrofitVersion = "2.4.0"
     okhttpVersion = "3.4.1"

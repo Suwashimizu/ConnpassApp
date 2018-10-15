@@ -40,7 +40,7 @@ class EventListPresenter : IEventListPresenter, IEventListController {
     override fun complete(eventList: EventSearchOutputData) {
 
         //TODO Mapperが必要
-        viewModel.eventList = eventList.eventList.map { EventListViewModel.Event(it.title) }
+        viewModel.eventList = eventList.eventList.map { EventListViewModel.Event(it.title, it.catch) }
         subject.update(viewModel)
     }
 
