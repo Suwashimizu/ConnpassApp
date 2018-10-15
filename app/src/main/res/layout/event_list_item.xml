@@ -10,6 +10,7 @@
         android:layout_height="88dp"
         android:paddingEnd="16dp"
         android:paddingStart="16dp"
+        android:background="?android:attr/selectableItemBackground"
         >
 
         <TextView

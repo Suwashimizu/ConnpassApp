@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.orhanobut.logger.Logger
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
 import org.suwashizmu.connpassapp.R
@@ -40,7 +41,9 @@ class EventListFragment : Fragment(), IEventListView {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        binding.listView.adapter = EventListAdapter()
+        binding.listView.adapter = EventListAdapter {
+            Logger.d("ItemClicked:$it")
+        }
         binding.listView.layoutManager = LinearLayoutManager(activity)
 
         presenter?.onCreate()
