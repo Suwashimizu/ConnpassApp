@@ -29,14 +29,15 @@ class EventFetchInteractorTest {
             1,
             "title",
             "catch",
+            "ownerName",
             "description",
             "eventUrl",
             "twitterHashTag",
             ZonedDateTime.now(),
             ZonedDateTime.now(),
             10,
-            "address",
             "place",
+            "address",
             10,
             5))
 

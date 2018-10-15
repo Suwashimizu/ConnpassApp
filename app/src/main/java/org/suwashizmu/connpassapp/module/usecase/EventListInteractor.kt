@@ -1,5 +1,6 @@
 package org.suwashizmu.connpassapp.module.usecase
 
+import com.orhanobut.logger.Logger
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import org.suwashizmu.connpassapp.module.input.EventSearchInputData
@@ -22,6 +23,7 @@ class EventListInteractor(private val eventSearchPresenter: IEventListPresenter,
                         { eventList ->
                             eventSearchPresenter.complete(EventSearchOutputData(
                                     eventList = eventList.map {
+                                        Logger.d(it)
                                         EventSearchOutputData.OutputEvent(
                                                 it.title,
                                                 it.catch,

@@ -11,17 +11,18 @@ class EventMapper {
     fun toEvent(searchResult: SearchResult): Collection<Event> =
             searchResult.events.map {
                 Event(id = it.eventId,
-                        address = it.address,
-                        limit = it.limit ?: -1,
-                        accepted = it.accepted,
-                        catch = it.catch,
-                        description = it.description,
-                        endedAt = ZonedDateTime.parse(it.endedAt),
-                        eventUtl = it.eventUrl,
-                        place = it.place,
-                        startedAt = ZonedDateTime.parse(it.startedAt),
                         title = it.title,
+                        catch = it.catch,
+                        ownerName = it.ownerNickname,
+                        description = it.description,
+                        eventUtl = it.eventUrl,
                         twitterHashTag = it.twitterHashTag,
+                        startedAt = ZonedDateTime.parse(it.startedAt),
+                        endedAt = ZonedDateTime.parse(it.endedAt),
+                        limit = it.limit ?: -1,
+                        place = it.place,
+                        address = it.address,
+                        accepted = it.accepted,
                         waiting = it.waiting)
             }
 }

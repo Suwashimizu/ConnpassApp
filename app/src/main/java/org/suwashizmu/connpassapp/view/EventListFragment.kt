@@ -32,7 +32,7 @@ class EventListFragment : Fragment(), IEventListView {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.event_list_frag, container, false)
 
-        //setup onClickListenerA
+        //setup onClickListener
 
         return binding.root
     }

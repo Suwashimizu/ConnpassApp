@@ -35,5 +35,6 @@ class EventMapperTest {
         assertThat(event.endedAt.monthValue).isEqualTo(10)
         assertThat(event.endedAt.dayOfMonth).isEqualTo(24)
         assertThat(event.endedAt.hour).isEqualTo(21)
+        assertThat(event.ownerName).isEqualTo("shota_sato_758")
     }
 }
