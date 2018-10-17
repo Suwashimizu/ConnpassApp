@@ -1,7 +1,8 @@
 package org.suwashizmu.connpassapp.module.presenter
 
-import com.nhaarman.mockitokotlin2.any
+import com.nhaarman.mockitokotlin2.check
 import com.nhaarman.mockitokotlin2.mock
+import com.nhaarman.mockitokotlin2.times
 import com.nhaarman.mockitokotlin2.verify
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
@@ -69,9 +70,22 @@ class EventListPresenterTest {
 
     @Test
     fun onPullRefresh() {
+        presenter.onScrollEnd()
 
         presenter.onPullRefresh()
 
-        verify(useCase).fetchEvent(any())
+        //refreshをしたのでoffsetは0になる
+        verify(useCase, times(2)).fetchEvent(check {
+            assertThat(it.offset).isEqualTo(0)
+        })
+    }
+
+    @Test
+    fun `onScrollEnd`() {
+        presenter.onScrollEnd()
+
+        verify(useCase).fetchEvent(check {
+            assertThat(it.offset).isEqualTo(30)
+        })
     }
 }

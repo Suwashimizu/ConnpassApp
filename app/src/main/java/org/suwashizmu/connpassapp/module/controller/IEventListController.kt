@@ -5,5 +5,8 @@ package org.suwashizmu.connpassapp.module.controller
  * アクションを定義する
  */
 interface IEventListController {
+
+    fun onScrollEnd()
+
     fun onPullRefresh()
 }

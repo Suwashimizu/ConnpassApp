@@ -55,9 +55,15 @@ class EventListPresenter : IEventListPresenter, IEventListController {
         //キャッシュの削除,offsetを元に戻す
         viewModel.eventList.clear()
         viewModel.hasNextEvents = true
-        pagination.next()
+        pagination.refresh()
 
         useCase?.fetchEvent(pagination)
     }
+
+    override fun onScrollEnd() {
+        pagination.next()
+        useCase?.fetchEvent(pagination)
+    }
+
     //endregion IEventListController
 }

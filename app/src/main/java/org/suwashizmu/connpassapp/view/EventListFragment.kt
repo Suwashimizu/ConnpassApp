@@ -46,6 +46,7 @@ class EventListFragment : Fragment(), IEventListView {
         binding.listView.adapter = EventListAdapter {
             Logger.d("ItemClicked:$it")
         }
+        binding.listView.addOnScrollListener(loadMoreListener)
         binding.listView.layoutManager = LinearLayoutManager(activity)
 
         presenter?.onCreate()
@@ -81,13 +82,20 @@ class EventListFragment : Fragment(), IEventListView {
         adapter?.update(viewModel)
         adapter?.notifyDataSetChanged()
 
-        binding.swipeRefresh.isRefreshing = viewModel.refreshing
+        //次のEventが無ければload中にする
+        loadMoreListener.isLoading = viewModel.hasNextEvents.not()
 
+        binding.swipeRefresh.isRefreshing = viewModel.refreshing
         binding.progress.visibility = View.GONE
     }
 
     private val refreshListener: SwipeRefreshLayout.OnRefreshListener = SwipeRefreshLayout.OnRefreshListener {
         presenter?.onPullRefresh()
+    }
+
+    private val loadMoreListener = LoadMoreListener {
+        Logger.d("loadMore!!!!!!")
+        presenter?.onScrollEnd()
     }
 
 }

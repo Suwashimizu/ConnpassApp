@@ -10,4 +10,8 @@ data class EventFetchInputData(var offset: Int, var limit: Int = 30) {
     fun next() {
         offset += limit
     }
+
+    fun refresh() {
+        offset = 0
+    }
 }
