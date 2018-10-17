@@ -1,5 +1,6 @@
 package org.suwashizmu.connpassapp.module.presenter
 
+import org.suwashizmu.connpassapp.module.controller.IEventListController
 import org.suwashizmu.connpassapp.module.output.EventSearchOutputData
 import org.suwashizmu.connpassapp.module.router.IEventListRouter
 import org.suwashizmu.connpassapp.module.usecase.IEventFetchUseCase
@@ -8,7 +9,7 @@ import org.suwashizmu.connpassapp.module.usecase.IEventFetchUseCase
  * Created by KEKE
  * UIロジック,Controller,outputを受け取る
  */
-interface IEventListPresenter : BasePresenter {
+interface IEventListPresenter : BasePresenter, IEventListController {
 
     var subject: EventListSubject
     var useCase: IEventFetchUseCase?

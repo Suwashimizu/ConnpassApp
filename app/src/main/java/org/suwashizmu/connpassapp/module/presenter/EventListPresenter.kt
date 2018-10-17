@@ -49,8 +49,9 @@ class EventListPresenter : IEventListPresenter, IEventListController {
 
     //region IEventListController
     override fun onPullRefresh() {
+        //キャッシュの削除,offsetを元に戻す
         viewModel.eventList.clear()
-        pagination.offset = 0
+        pagination.next()
 
         useCase?.fetchEvent(pagination)
     }

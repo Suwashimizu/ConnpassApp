@@ -3,6 +3,7 @@ package org.suwashizmu.connpassapp.view
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
@@ -34,6 +35,7 @@ class EventListFragment : Fragment(), IEventListView {
         binding = DataBindingUtil.inflate(inflater, R.layout.event_list_frag, container, false)
 
         //setup onClickListener
+        binding.swipeRefresh.setOnRefreshListener(refreshListener)
 
         return binding.root
     }
@@ -80,6 +82,10 @@ class EventListFragment : Fragment(), IEventListView {
         adapter?.notifyDataSetChanged()
 
         binding.progress.visibility = View.GONE
+    }
+
+    private val refreshListener: SwipeRefreshLayout.OnRefreshListener = SwipeRefreshLayout.OnRefreshListener {
+        presenter?.onPullRefresh()
     }
 
 }
