@@ -9,6 +9,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
 import org.suwashizmu.connpassapp.module.entity.Event
+import org.suwashizmu.connpassapp.module.input.EventFetchInputData
 import org.suwashizmu.connpassapp.module.presenter.IEventListPresenter
 import org.suwashizmu.connpassapp.module.repository.AreaRepository
 import org.suwashizmu.connpassapp.module.repository.EventRepository
@@ -42,7 +43,7 @@ class EventFetchInteractorTest {
             5))
 
     private val eventMock: EventRepository = mock {
-        on { findEvent(any()) } doReturn Single.just<Collection<Event>>(result)
+        on { findEvent(any(), any(), any()) } doReturn Single.just<Collection<Event>>(result)
     }
 
     private val interactor = EventFetchInteractor(
@@ -62,11 +63,11 @@ class EventFetchInteractorTest {
     @Test
     fun fetchEvent() {
 
-        interactor.fetchEvent()
+        interactor.fetchEvent(EventFetchInputData(0, 30))
 
         verify(areaMock).getArea()
         verify(interestMock).getCurrentInterestCategories()
-        verify(eventMock).findEvent(any())
+        verify(eventMock).findEvent(any(), any(), any())
 
         verify(mockPresenter).complete(check {
             assertThat(it.error).isNull()
@@ -77,12 +78,12 @@ class EventFetchInteractorTest {
     @Test
     fun `fetchEvent when error`() {
 
-        whenever(eventMock.findEvent(any())).thenReturn(Single.error(UnknownHostException("unknownHost")))
-        interactor.fetchEvent()
+        whenever(eventMock.findEvent(any(), any(), any())).thenReturn(Single.error(UnknownHostException("unknownHost")))
+        interactor.fetchEvent(EventFetchInputData(0, 30))
 
         verify(areaMock).getArea()
         verify(interestMock).getCurrentInterestCategories()
-        verify(eventMock).findEvent(any())
+        verify(eventMock).findEvent(any(), any(), any())
 
         verify(mockPresenter).complete(check {
             assertThat(it.error).isNotNull()

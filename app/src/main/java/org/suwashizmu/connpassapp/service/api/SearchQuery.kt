@@ -64,7 +64,7 @@ class SearchQuery(
         var nickname: Set<String>? = null
         var ownerNickname: Set<String>? = null
         var seriesId: Set<Int>? = null
-        var start: Int = 1
+        var start: Int = 0
         /*
         検索結果の表示順を、更新日時順、開催日時順、新着順で指定します。 | 1: 更新日時順
         2: 開催日時順

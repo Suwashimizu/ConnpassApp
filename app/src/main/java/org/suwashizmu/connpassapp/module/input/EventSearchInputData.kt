@@ -10,4 +10,6 @@ package org.suwashizmu.connpassapp.module.input
  */
 data class EventSearchInputData(
         var keyword: Set<String> = emptySet(),
-        val ym: Int = -1)
+        val ym: Int = -1,
+        val offset: Int,
+        val limit: Int)

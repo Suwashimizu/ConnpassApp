@@ -15,7 +15,7 @@ class EventSearchInteractor(private val eventSearchPresenter: IEventSearchPresen
 
     override fun search(inputData: EventSearchInputData) {
         //varargには*をつけること
-        eventSearchRepository.findEvent(*inputData.keyword.toTypedArray())
+        eventSearchRepository.findEvent(inputData.offset, inputData.limit, *inputData.keyword.toTypedArray())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(

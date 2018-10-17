@@ -1,6 +1,7 @@
 package org.suwashizmu.connpassapp.module.presenter
 
 import org.suwashizmu.connpassapp.module.controller.IEventListController
+import org.suwashizmu.connpassapp.module.input.EventFetchInputData
 import org.suwashizmu.connpassapp.module.output.EventSearchOutputData
 import org.suwashizmu.connpassapp.module.router.IEventListRouter
 import org.suwashizmu.connpassapp.module.usecase.IEventFetchUseCase
@@ -19,16 +20,16 @@ class EventListPresenter : IEventListPresenter, IEventListController {
     override var useCase: IEventFetchUseCase? = null
     override var router: IEventListRouter? = null
 
+    private val pagination: EventFetchInputData = EventFetchInputData(0, 30)
+
     override fun onCreate() {
-        useCase?.fetchEvent()
+        useCase?.fetchEvent(pagination)
     }
 
     override fun onResume() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun onPause() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun onDestroy() {
@@ -44,4 +45,10 @@ class EventListPresenter : IEventListPresenter, IEventListController {
         subject.update(viewModel)
     }
 
+    //region IEventListController
+    override fun onPullRefresh() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
+    }
+    //endregion IEventListController
 }

@@ -52,6 +52,8 @@ class EventListFragment : Fragment(), IEventListView {
     override fun onResume() {
         super.onResume()
 
+        presenter?.onResume()
+
         EventListSubject.observable
                 .subscribe(this::update)
                 .addTo(disposable)
@@ -59,6 +61,8 @@ class EventListFragment : Fragment(), IEventListView {
 
     override fun onPause() {
         super.onPause()
+
+        presenter?.onPause()
 
         disposable.clear()
     }

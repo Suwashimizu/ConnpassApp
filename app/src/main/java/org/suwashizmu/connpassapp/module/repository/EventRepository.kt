@@ -9,5 +9,5 @@ import org.suwashizmu.connpassapp.module.entity.Event
  * interface adapter層
  */
 interface EventRepository {
-    fun findEvent(vararg keyword: String): Single<Collection<Event>>
+    fun findEvent(start: Int, limit: Int, vararg keyword: String): Single<Collection<Event>>
 }

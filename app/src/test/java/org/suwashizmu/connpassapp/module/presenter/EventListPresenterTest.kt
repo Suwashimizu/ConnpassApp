@@ -3,6 +3,7 @@ package org.suwashizmu.connpassapp.module.presenter
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
 import org.junit.Test
+import org.suwashizmu.connpassapp.module.input.EventFetchInputData
 import org.suwashizmu.connpassapp.module.usecase.IEventFetchUseCase
 
 /**
@@ -20,6 +21,6 @@ class EventListPresenterTest {
     fun `onCreate`() {
         presenter.onCreate()
 
-        verify(useCase).fetchEvent()
+        verify(useCase).fetchEvent(EventFetchInputData(0, 30))
     }
 }

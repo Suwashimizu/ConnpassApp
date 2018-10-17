@@ -5,5 +5,5 @@ package org.suwashizmu.connpassapp.module.controller
  * アクションを定義する
  */
 interface IEventListController {
-
+    fun onPullRefresh()
 }

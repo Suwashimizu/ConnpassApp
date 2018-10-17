@@ -15,9 +15,11 @@ class RemoteEventDataSource(private val client: ConnpassService) : EventReposito
 
     private val mapper = EventMapper()
 
-    override fun findEvent(vararg keyword: String): Single<Collection<Event>> {
+    override fun findEvent(start: Int, limit: Int, vararg keyword: String): Single<Collection<Event>> {
         val query = SearchQuery.build {
             this.keyword = keyword.toSet()
+            this.start = start
+            this.count = limit
         }
 
         return client.searchEvents(query.toMap())
