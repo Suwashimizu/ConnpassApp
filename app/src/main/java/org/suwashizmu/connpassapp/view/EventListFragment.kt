@@ -81,6 +81,8 @@ class EventListFragment : Fragment(), IEventListView {
         adapter?.update(viewModel)
         adapter?.notifyDataSetChanged()
 
+        binding.swipeRefresh.isRefreshing = viewModel.refreshing
+
         binding.progress.visibility = View.GONE
     }
 

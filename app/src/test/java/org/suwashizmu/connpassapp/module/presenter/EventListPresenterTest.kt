@@ -64,6 +64,7 @@ class EventListPresenterTest {
         presenter.complete(EventSearchOutputData(emptyList(), null))
 
         test.assertValue { it.hasNextEvents.not() }
+        test.assertValue { it.refreshing.not() }
     }
 
     @Test

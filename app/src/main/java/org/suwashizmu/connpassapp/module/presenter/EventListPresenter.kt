@@ -14,7 +14,8 @@ class EventListPresenter : IEventListPresenter, IEventListController {
 
     private val viewModel = EventListViewModel(
             mutableListOf(),
-            false
+            hasNextEvents = false,
+            refreshing = false
     )
 
     override var subject: EventListSubject = EventListSubject
@@ -44,6 +45,8 @@ class EventListPresenter : IEventListPresenter, IEventListController {
         //TODO Mapperが必要
         viewModel.eventList.addAll(eventList.eventList.map { EventListViewModel.Event(it.title, it.catch) })
         viewModel.hasNextEvents = eventList.hasNext()
+        viewModel.refreshing = false
+
         subject.update(viewModel)
     }
 
@@ -51,6 +54,7 @@ class EventListPresenter : IEventListPresenter, IEventListController {
     override fun onPullRefresh() {
         //キャッシュの削除,offsetを元に戻す
         viewModel.eventList.clear()
+        viewModel.hasNextEvents = true
         pagination.next()
 
         useCase?.fetchEvent(pagination)
