@@ -20,8 +20,8 @@ class EventListAdapter(private val itemClickCallback: (event: EventListViewModel
                 }
             }
 
-    override fun onBindViewHolder(p0: EventOverviewViewHolder, p1: Int) {
-        p0.onBind(eventList.elementAt(p1))
+    override fun onBindViewHolder(viewHolder: EventOverviewViewHolder, position: Int) {
+        viewHolder.onBind(eventList.elementAt(position))
     }
 
     override fun getItemCount(): Int = eventList.size

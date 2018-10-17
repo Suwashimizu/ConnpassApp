@@ -1,5 +1,6 @@
 package org.suwashizmu.connpassapp.module.usecase
 
+import com.orhanobut.logger.Logger
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import org.suwashizmu.connpassapp.module.input.EventFetchInputData
@@ -28,6 +29,7 @@ class EventFetchInteractor(private val presenter: IEventListPresenter,
                         { eventList ->
                             //Logを埋めすぎるのでNG
 //                            Logger.d(eventList)
+                            Logger.d("TotalEventCount:${eventList.totalEventCount}")
                             presenter.complete(EventSearchOutputData(
                                     eventList = eventList.eventList.map {
                                         EventSearchOutputData.OutputEvent(

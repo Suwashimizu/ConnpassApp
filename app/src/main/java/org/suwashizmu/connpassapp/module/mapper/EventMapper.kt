@@ -23,8 +23,8 @@ class EventMapper {
                                 startedAt = ZonedDateTime.parse(it.startedAt),
                                 endedAt = ZonedDateTime.parse(it.endedAt),
                                 limit = it.limit ?: -1,
-                                place = it.place,
-                                address = it.address,
+                                place = it.place ?: "",
+                                address = it.address ?: "",
                                 accepted = it.accepted,
                                 waiting = it.waiting)
                     }

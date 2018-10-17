@@ -15,7 +15,8 @@ class EventListPresenter : IEventListPresenter, IEventListController {
     private val viewModel = EventListViewModel(
             mutableListOf(),
             hasNextEvents = false,
-            refreshing = false
+            refreshing = false,
+            error = null
     )
 
     override var subject: EventListSubject = EventListSubject
@@ -42,9 +43,16 @@ class EventListPresenter : IEventListPresenter, IEventListController {
 
     override fun complete(eventList: EventSearchOutputData) {
 
-        //TODO Mapperが必要
-        viewModel.eventList.addAll(eventList.eventList.map { EventListViewModel.Event(it.title, it.catch) })
-        viewModel.hasNextEvents = eventList.hasNext()
+        if (eventList.error == null) {
+            //TODO Mapperが必要
+            viewModel.eventList.addAll(eventList.eventList.map { EventListViewModel.Event(it.title, it.catch) })
+            //全件より少なければ未取得のEventがある
+            viewModel.hasNextEvents = viewModel.eventList.size < eventList.totalEventCount
+
+            pagination.next()
+        }
+
+        viewModel.error = eventList.error
         viewModel.refreshing = false
 
         subject.update(viewModel)
@@ -61,7 +69,6 @@ class EventListPresenter : IEventListPresenter, IEventListController {
     }
 
     override fun onScrollEnd() {
-        pagination.next()
         useCase?.fetchEvent(pagination)
     }
 

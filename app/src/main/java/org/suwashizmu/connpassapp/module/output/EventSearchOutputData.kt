@@ -11,8 +11,6 @@ data class EventSearchOutputData(
         val error: Throwable?,
         val totalEventCount: Int) {
 
-    fun hasNext() = eventList.isNotEmpty()
-
     data class OutputEvent(val title: String,
                            val catch: String,
                            val description: String)

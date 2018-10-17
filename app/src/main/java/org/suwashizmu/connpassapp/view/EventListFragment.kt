@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.orhanobut.logger.Logger
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
@@ -87,6 +88,11 @@ class EventListFragment : Fragment(), IEventListView {
 
         binding.swipeRefresh.isRefreshing = viewModel.refreshing
         binding.progress.visibility = View.GONE
+
+        //Errorの表示
+        if (viewModel.error != null) {
+            Toast.makeText(activity, viewModel.error!!.message, Toast.LENGTH_SHORT).show()
+        }
     }
 
     private val refreshListener: SwipeRefreshLayout.OnRefreshListener = SwipeRefreshLayout.OnRefreshListener {
