@@ -9,6 +9,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
 import org.suwashizmu.connpassapp.module.entity.Event
+import org.suwashizmu.connpassapp.module.entity.EventList
 import org.suwashizmu.connpassapp.module.input.EventSearchInputData
 import org.suwashizmu.connpassapp.module.presenter.IEventListPresenter
 import org.suwashizmu.connpassapp.module.presenter.IEventSearchPresenter
@@ -23,7 +24,7 @@ class EventListInteractorTest {
 
     private val presenter: IEventListPresenter = mock()
 
-    private val result = listOf(Event(
+    private val result = EventList(100, listOf(Event(
             1,
             "title",
             "catch",
@@ -38,8 +39,10 @@ class EventListInteractorTest {
             "address",
             10,
             5))
+    )
+
     private val repository: EventRepository = mock {
-        on { findEvent(any(), any(), any()) } doReturn Single.create<Collection<Event>> { emitter ->
+        on { findEventList(any(), any(), any()) } doReturn Single.create<EventList> { emitter ->
             emitter.onSuccess(result)
         }
     }
@@ -61,22 +64,24 @@ class EventListInteractorTest {
 
         eventListInteractor.search(EventSearchInputData(keyword = setOf("kotlin"), ym = 201802, offset = 0, limit = 30))
 
-        verify(repository).findEvent(any(), any(), any())
-        verify(presenter).complete(any())
+        verify(repository).findEventList(any(), any(), any())
+        verify(presenter).complete(check {
+            assertThat(it.totalEventCount).isEqualTo(100)
+        })
     }
 
     @Test
     fun `search error`() {
 
         val errorRepository: EventRepository = mock {
-            on { findEvent(any(), any(), any()) } doReturn Single.error(UnknownHostException("unknownHost"))
+            on { findEventList(any(), any(), any()) } doReturn Single.error(UnknownHostException("unknownHost"))
         }
 
         val presenter: IEventSearchPresenter = mock()
 
         makeInteractor(presenter, errorRepository).search(EventSearchInputData(keyword = setOf("kotlin"), ym = 201802, offset = 0, limit = 30))
 
-        verify(errorRepository).findEvent(any(), any(), any())
+        verify(errorRepository).findEventList(any(), any(), any())
         verify(presenter).complete(check {
             assertThat(it.error).isInstanceOf(UnknownHostException::class.java)
         })

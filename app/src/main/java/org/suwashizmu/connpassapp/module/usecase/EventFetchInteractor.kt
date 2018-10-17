@@ -21,7 +21,7 @@ class EventFetchInteractor(private val presenter: IEventListPresenter,
         val interestCategory = interestCategoryRepository.getCurrentInterestCategories()
 
         interestCategory ?: return
-        eventRepository.findEvent(inputData.offset, inputData.limit, *interestCategory.map { it.name }.toTypedArray())
+        eventRepository.findEventList(inputData.offset, inputData.limit, *interestCategory.map { it.name }.toTypedArray())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
@@ -29,19 +29,21 @@ class EventFetchInteractor(private val presenter: IEventListPresenter,
                             //Logを埋めすぎるのでNG
 //                            Logger.d(eventList)
                             presenter.complete(EventSearchOutputData(
-                                    eventList = eventList.map {
+                                    eventList = eventList.eventList.map {
                                         EventSearchOutputData.OutputEvent(
                                                 it.title,
                                                 it.catch,
                                                 it.description)
                                     },
-                                    error = null
+                                    error = null,
+                                    totalEventCount = eventList.totalEventCount
                             ))
                         },
                         { error ->
                             presenter.complete(EventSearchOutputData(
                                     eventList = emptyList(),
-                                    error = error
+                                    error = error,
+                                    totalEventCount = -1
                             ))
                         }
                 )

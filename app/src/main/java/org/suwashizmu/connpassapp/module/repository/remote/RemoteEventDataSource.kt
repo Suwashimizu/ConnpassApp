@@ -1,7 +1,7 @@
 package org.suwashizmu.connpassapp.module.repository.remote
 
 import io.reactivex.Single
-import org.suwashizmu.connpassapp.module.entity.Event
+import org.suwashizmu.connpassapp.module.entity.EventList
 import org.suwashizmu.connpassapp.module.mapper.EventMapper
 import org.suwashizmu.connpassapp.module.repository.EventRepository
 import org.suwashizmu.connpassapp.service.api.ConnpassService
@@ -15,7 +15,7 @@ class RemoteEventDataSource(private val client: ConnpassService) : EventReposito
 
     private val mapper = EventMapper()
 
-    override fun findEvent(start: Int, limit: Int, vararg keyword: String): Single<Collection<Event>> {
+    override fun findEventList(start: Int, limit: Int, vararg keyword: String): Single<EventList> {
         val query = SearchQuery.build {
             this.keyword = keyword.toSet()
             this.start = start

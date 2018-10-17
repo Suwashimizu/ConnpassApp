@@ -24,7 +24,7 @@ class RemoteEventDataSourceTest {
 
     @Test
     fun `find event`() {
-        remoteDataSource.findEvent(0, 30, "kotlin")
+        remoteDataSource.findEventList(0, 30, "kotlin")
 
         verify(mock).searchEvents(any())
     }

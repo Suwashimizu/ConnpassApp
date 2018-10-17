@@ -51,7 +51,7 @@ class EventListPresenterTest {
 
         val test = presenter.subject.observable.test()
 
-        presenter.complete(EventSearchOutputData(listOf(EventSearchOutputData.OutputEvent("title", "catch", "description")), null))
+        presenter.complete(EventSearchOutputData(listOf(EventSearchOutputData.OutputEvent("title", "catch", "description")), null, 100))
 
         test.assertValue { it.hasNextEvents }
     }
@@ -62,7 +62,7 @@ class EventListPresenterTest {
 
         val test = presenter.subject.observable.test()
 
-        presenter.complete(EventSearchOutputData(emptyList(), null))
+        presenter.complete(EventSearchOutputData(emptyList(), null, 100))
 
         test.assertValue { it.hasNextEvents.not() }
         test.assertValue { it.refreshing.not() }

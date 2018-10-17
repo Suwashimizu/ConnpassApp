@@ -1,5 +1,6 @@
 package org.suwashizmu.connpassapp.module.usecase
 
+import com.orhanobut.logger.Logger
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import org.suwashizmu.connpassapp.module.input.EventSearchInputData
@@ -15,25 +16,28 @@ class EventSearchInteractor(private val eventSearchPresenter: IEventSearchPresen
 
     override fun search(inputData: EventSearchInputData) {
         //varargには*をつけること
-        eventSearchRepository.findEvent(inputData.offset, inputData.limit, *inputData.keyword.toTypedArray())
+        eventSearchRepository.findEventList(inputData.offset, inputData.limit, *inputData.keyword.toTypedArray())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         { eventList ->
                             eventSearchPresenter.complete(EventSearchOutputData(
-                                    eventList = eventList.map {
+                                    eventList = eventList.eventList.map {
+                                        Logger.d(it)
                                         EventSearchOutputData.OutputEvent(
                                                 it.title,
                                                 it.catch,
                                                 it.description)
                                     },
-                                    error = null
+                                    error = null,
+                                    totalEventCount = eventList.totalEventCount
                             ))
                         },
                         { error ->
                             eventSearchPresenter.complete(EventSearchOutputData(
                                     eventList = emptyList(),
-                                    error = error
+                                    error = error,
+                                    totalEventCount = -1
                             ))
                         }
                 )

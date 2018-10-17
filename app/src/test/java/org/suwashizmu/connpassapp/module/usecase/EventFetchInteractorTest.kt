@@ -9,6 +9,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
 import org.suwashizmu.connpassapp.module.entity.Event
+import org.suwashizmu.connpassapp.module.entity.EventList
 import org.suwashizmu.connpassapp.module.input.EventFetchInputData
 import org.suwashizmu.connpassapp.module.presenter.IEventListPresenter
 import org.suwashizmu.connpassapp.module.repository.AreaRepository
@@ -26,7 +27,7 @@ class EventFetchInteractorTest {
     private val areaMock: AreaRepository = mock()
     private val interestMock: InterestCategoryRepository = mock()
 
-    private val result = listOf(Event(
+    private val result = EventList(100, listOf(Event(
             1,
             "title",
             "catch",
@@ -41,9 +42,10 @@ class EventFetchInteractorTest {
             "address",
             10,
             5))
+    )
 
     private val eventMock: EventRepository = mock {
-        on { findEvent(any(), any(), any()) } doReturn Single.just<Collection<Event>>(result)
+        on { findEventList(any(), any(), any()) } doReturn Single.just<EventList>(result)
     }
 
     private val interactor = EventFetchInteractor(
@@ -67,10 +69,11 @@ class EventFetchInteractorTest {
 
         verify(areaMock).getArea()
         verify(interestMock).getCurrentInterestCategories()
-        verify(eventMock).findEvent(any(), any(), any())
+        verify(eventMock).findEventList(any(), any(), any())
 
         verify(mockPresenter).complete(check {
             assertThat(it.error).isNull()
+            assertThat(it.totalEventCount).isEqualTo(100)
         })
     }
 
@@ -78,12 +81,12 @@ class EventFetchInteractorTest {
     @Test
     fun `fetchEvent when error`() {
 
-        whenever(eventMock.findEvent(any(), any(), any())).thenReturn(Single.error(UnknownHostException("unknownHost")))
+        whenever(eventMock.findEventList(any(), any(), any())).thenReturn(Single.error(UnknownHostException("unknownHost")))
         interactor.fetchEvent(EventFetchInputData(0, 30))
 
         verify(areaMock).getArea()
         verify(interestMock).getCurrentInterestCategories()
-        verify(eventMock).findEvent(any(), any(), any())
+        verify(eventMock).findEventList(any(), any(), any())
 
         verify(mockPresenter).complete(check {
             assertThat(it.error).isNotNull()
