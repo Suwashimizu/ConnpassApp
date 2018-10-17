@@ -7,6 +7,9 @@ package org.suwashizmu.connpassapp.module.output
 data class EventSearchOutputData(
         val eventList: Collection<OutputEvent>,
         val error: Throwable?) {
+
+    fun hasNext() = eventList.isNotEmpty()
+
     data class OutputEvent(val title: String,
                            val catch: String,
                            val description: String)

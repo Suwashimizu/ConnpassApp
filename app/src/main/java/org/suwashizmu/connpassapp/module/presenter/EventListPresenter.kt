@@ -13,7 +13,8 @@ import org.suwashizmu.connpassapp.module.view.EventListViewModel
 class EventListPresenter : IEventListPresenter, IEventListController {
 
     private val viewModel = EventListViewModel(
-            emptyList()
+            mutableListOf(),
+            false
     )
 
     override var subject: EventListSubject = EventListSubject
@@ -41,14 +42,17 @@ class EventListPresenter : IEventListPresenter, IEventListController {
     override fun complete(eventList: EventSearchOutputData) {
 
         //TODO Mapperが必要
-        viewModel.eventList = eventList.eventList.map { EventListViewModel.Event(it.title, it.catch) }
+        viewModel.eventList.addAll(eventList.eventList.map { EventListViewModel.Event(it.title, it.catch) })
+        viewModel.hasNextEvents = eventList.hasNext()
         subject.update(viewModel)
     }
 
     //region IEventListController
     override fun onPullRefresh() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        viewModel.eventList.clear()
+        pagination.offset = 0
 
+        useCase?.fetchEvent(pagination)
     }
     //endregion IEventListController
 }

@@ -28,6 +28,7 @@ class EventListAdapter(private val itemClickCallback: (event: EventListViewModel
 
     fun update(viewModel: EventListViewModel) {
         //TODO diffTool使いたい
+        eventList.clear()
         eventList.addAll(viewModel.eventList)
     }
 

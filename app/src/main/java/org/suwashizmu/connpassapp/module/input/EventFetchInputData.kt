@@ -6,4 +6,4 @@ package org.suwashizmu.connpassapp.module.input
  * @param offset 指定するページから取得
  * @param limit 一度に取得するページ数
  */
-data class EventFetchInputData(val offset: Int, val limit: Int = 30)
+data class EventFetchInputData(var offset: Int, var limit: Int = 30)
