@@ -84,7 +84,7 @@ class WizardInterestFragment : Fragment(), IInterestCategoriesView {
 
             val selectedItems = mutableListOf<InterestCategory>()
             for (i in 0 until checked.size()) {
-                if (checked[i]) {
+                if (checked[checked.keyAt(i)]) {
                     selectedItems.add(binding.listView.getItemAtPosition(checked.keyAt(i)) as InterestCategory)
                 }
             }

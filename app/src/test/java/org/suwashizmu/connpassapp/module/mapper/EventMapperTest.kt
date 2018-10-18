@@ -23,9 +23,9 @@ class EventMapperTest {
 
         val eventList = mapper.toEvent(searchResult)
 
-        assertThat(eventList.size).isEqualTo(1)
+        assertThat(eventList.eventList.size).isEqualTo(1)
 
-        val event = eventList.first()
+        val event = eventList.eventList.first()
 
         print(event)
 
@@ -35,5 +35,7 @@ class EventMapperTest {
         assertThat(event.endedAt.monthValue).isEqualTo(10)
         assertThat(event.endedAt.dayOfMonth).isEqualTo(24)
         assertThat(event.endedAt.hour).isEqualTo(21)
+        assertThat(event.ownerName).isEqualTo("shota_sato_758")
+        assertThat(eventList.totalEventCount).isEqualTo(450)
     }
 }

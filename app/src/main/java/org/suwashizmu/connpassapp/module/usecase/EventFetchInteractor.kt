@@ -3,27 +3,35 @@ package org.suwashizmu.connpassapp.module.usecase
 import com.orhanobut.logger.Logger
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import org.suwashizmu.connpassapp.module.input.EventSearchInputData
+import org.suwashizmu.connpassapp.module.input.EventFetchInputData
 import org.suwashizmu.connpassapp.module.output.EventSearchOutputData
-import org.suwashizmu.connpassapp.module.presenter.IEventSearchPresenter
+import org.suwashizmu.connpassapp.module.presenter.IEventListPresenter
+import org.suwashizmu.connpassapp.module.repository.AreaRepository
 import org.suwashizmu.connpassapp.module.repository.EventRepository
+import org.suwashizmu.connpassapp.module.repository.InterestCategoryRepository
 
 /**
- * Created by KEKE on 2018/10/06.
+ * Created by KEKE on 2018/10/14.
  */
-class EventSearchInteractor(private val eventSearchPresenter: IEventSearchPresenter,
-                            private val eventSearchRepository: EventRepository) : IEventSearchUseCase {
+class EventFetchInteractor(private val presenter: IEventListPresenter,
+                           private val areaRepository: AreaRepository,
+                           private val interestCategoryRepository: InterestCategoryRepository,
+                           private val eventRepository: EventRepository) : IEventFetchUseCase {
+    override fun fetchEvent(inputData: EventFetchInputData) {
+        val area = areaRepository.getArea()
+        val interestCategory = interestCategoryRepository.getCurrentInterestCategories()
 
-    override fun search(inputData: EventSearchInputData) {
-        //varargには*をつけること
-        eventSearchRepository.findEventList(inputData.offset, inputData.limit, *inputData.keyword.toTypedArray())
+        interestCategory ?: return
+        eventRepository.findEventList(inputData.offset, inputData.limit, *interestCategory.map { it.name }.toTypedArray())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         { eventList ->
-                            eventSearchPresenter.complete(EventSearchOutputData(
+                            //Logを埋めすぎるのでNG
+//                            Logger.d(eventList)
+                            Logger.d("TotalEventCount:${eventList.totalEventCount}")
+                            presenter.complete(EventSearchOutputData(
                                     eventList = eventList.eventList.map {
-                                        Logger.d(it)
                                         EventSearchOutputData.OutputEvent(
                                                 it.title,
                                                 it.catch,
@@ -34,7 +42,7 @@ class EventSearchInteractor(private val eventSearchPresenter: IEventSearchPresen
                             ))
                         },
                         { error ->
-                            eventSearchPresenter.complete(EventSearchOutputData(
+                            presenter.complete(EventSearchOutputData(
                                     eventList = emptyList(),
                                     error = error,
                                     totalEventCount = -1
@@ -42,5 +50,4 @@ class EventSearchInteractor(private val eventSearchPresenter: IEventSearchPresen
                         }
                 )
     }
-
 }

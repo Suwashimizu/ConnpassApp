@@ -70,7 +70,7 @@ class InterestCategoriesPresenterTest {
         )
 
         verify(subject).update(eq(viewModel))
-        verify(router).gotoEnventList()
+        verify(router).gotoEventList()
 
     }
 

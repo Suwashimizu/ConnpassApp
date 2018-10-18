@@ -47,7 +47,7 @@ class InterestCategoriesPresenter : IInterestCategoriesPresenter {
 
         subject.update(viewModel)
         if (output.isComplete) {
-            router?.gotoEnventList()
+            router?.gotoEventList()
         }
     }
 

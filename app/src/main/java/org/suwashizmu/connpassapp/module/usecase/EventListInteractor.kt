@@ -5,14 +5,14 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import org.suwashizmu.connpassapp.module.input.EventSearchInputData
 import org.suwashizmu.connpassapp.module.output.EventSearchOutputData
-import org.suwashizmu.connpassapp.module.presenter.IEventSearchPresenter
+import org.suwashizmu.connpassapp.module.presenter.IEventListPresenter
 import org.suwashizmu.connpassapp.module.repository.EventRepository
 
 /**
- * Created by KEKE on 2018/10/06.
+ * Created by KEKE
  */
-class EventSearchInteractor(private val eventSearchPresenter: IEventSearchPresenter,
-                            private val eventSearchRepository: EventRepository) : IEventSearchUseCase {
+class EventListInteractor(private val eventSearchPresenter: IEventListPresenter,
+                          private val eventSearchRepository: EventRepository) : IEventSearchUseCase {
 
     override fun search(inputData: EventSearchInputData) {
         //varargには*をつけること
@@ -42,5 +42,4 @@ class EventSearchInteractor(private val eventSearchPresenter: IEventSearchPresen
                         }
                 )
     }
-
 }

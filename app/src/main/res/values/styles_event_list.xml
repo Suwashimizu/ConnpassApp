@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="EventListItem">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAppearance">@style/TextAppearanceListItem</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="EventListItem.Secondary">
+        <item name="android:textAppearance">@style/TextAppearanceListItemSecondary</item>
+        <item name="android:maxLines">2</item>
+    </style>
+</resources>

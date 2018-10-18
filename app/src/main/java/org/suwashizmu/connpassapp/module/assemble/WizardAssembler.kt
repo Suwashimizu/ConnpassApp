@@ -2,6 +2,7 @@ package org.suwashizmu.connpassapp.module.assemble
 
 import org.kodein.di.Kodein
 import org.kodein.di.android.AndroidComponentsWeakScope
+import org.kodein.di.direct
 import org.kodein.di.generic.*
 import org.suwashizmu.connpassapp.module.presenter.AreaSelectPresenter
 import org.suwashizmu.connpassapp.module.presenter.IInterestCategoriesPresenter
@@ -35,11 +36,10 @@ class WizardAssembler {
         }
 
         val presenter: AreaSelectPresenter by kodein.instance()
-        val useCase: IAreaSelectUseCase by kodein.instance()
         val router: WizardRouter by kodein.instance()
 
-        presenter.useCase = useCase
-        presenter.router = router
+        presenter.useCase = kodein.direct.instance()
+        presenter.router = kodein.direct.instance()
 
         val f = activity.supportFragmentManager
                 .findFragmentByTag(TAG_FRAGMENT) as WizardFragment
@@ -59,17 +59,18 @@ class WizardAssembler {
             //presenterはAndroidComponentsWeakScopeなので同一のインスタンスが返ってくる
             bind<InterestCategoriesGetUseCase>() with provider { InterestCategoriesGetInteractor(presenter = instance(), repository = instance()) }
             bind<InterestCategorySelectUseCase>() with provider { InterestCategorySelectInteractor(presenter = instance(), repository = instance()) }
-            bind<IWizardRouter>() with scoped(AndroidComponentsWeakScope).singleton { WizardRouter() }
+            bind<IWizardRouter>() with scoped(AndroidComponentsWeakScope).singleton {
+                WizardRouter().apply {
+                    this.fragment = fragment
+                }
+            }
         }
 
         val presenter: IInterestCategoriesPresenter by kodein.instance()
-        val useCase: InterestCategoriesGetUseCase by kodein.instance()
-        val selectUseCase: InterestCategorySelectUseCase by kodein.instance()
-        val router: IWizardRouter by kodein.instance()
 
-        presenter.getUseCase = useCase
-        presenter.selectUseCase = selectUseCase
-        presenter.router = router
+        presenter.getUseCase = kodein.direct.instance()
+        presenter.selectUseCase = kodein.direct.instance()
+        presenter.router = kodein.direct.instance()
 
         fragment.presenter = presenter
 

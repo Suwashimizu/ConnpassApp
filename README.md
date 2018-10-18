@@ -65,6 +65,21 @@ controllerのみ抽象を持たないようにする
 Presenterのコンストラクタをデフォルトのものに変更
 
 
+## Test難易度
+
+- controller - o
+- assemble - x
+- entiry - ?
+- input[DS] - ?
+- mapper - o
+- output[DS] - ?
+- presenter - o
+- repository - o
+- router - ?
+- usecase - o
+- view - x
+- viewModel[DS] - ?
+
 ## 参考URL
 https://qiita.com/nrslib/items/a5f902c4defc83bd46b8
 

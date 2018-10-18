@@ -1,9 +1,9 @@
 package org.suwashizmu.connpassapp.module.router
 
 import android.support.v4.app.Fragment
-import com.orhanobut.logger.Logger
 import org.suwashizmu.connpassapp.R
 import org.suwashizmu.connpassapp.module.assemble.WizardAssembler
+import org.suwashizmu.connpassapp.view.EventListActivity
 import org.suwashizmu.connpassapp.view.MainActivity
 import org.suwashizmu.connpassapp.view.WizardInterestFragment
 
@@ -32,7 +32,11 @@ class WizardRouter : IWizardRouter {
         assembler.assembleInterestCategories(mainActivity, nextFragment)
     }
 
-    override fun gotoEnventList() {
-        Logger.d("event list")
+    override fun gotoEventList() {
+
+        val ac = fragment.activity ?: return
+
+        ac.startActivity(EventListActivity.newIntent(ac))
+        ac.finish()
     }
 }

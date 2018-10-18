@@ -11,23 +11,18 @@ import org.junit.Test
 import org.suwashizmu.connpassapp.module.entity.Event
 import org.suwashizmu.connpassapp.module.entity.EventList
 import org.suwashizmu.connpassapp.module.input.EventSearchInputData
+import org.suwashizmu.connpassapp.module.presenter.IEventListPresenter
 import org.suwashizmu.connpassapp.module.presenter.IEventSearchPresenter
 import org.suwashizmu.connpassapp.module.repository.EventRepository
 import org.threeten.bp.ZonedDateTime
 import java.net.UnknownHostException
 
 /**
- * Created by KEKE on 2018/10/06.
- *
- * Interactorのテスト
- *
- * - repositoryへの正当な呼び出し
- * - errorハンドリング
- * - outputへ正しくデータを受け渡せているか(これはmapperでいい気ガス)
- *
- * RxのSchedulersの差し替えが必要だったり少しテクニシャン
+ * Created by KEKE on 2018/10/14.
  */
-class EventSearchInteractorTest {
+class EventListInteractorTest {
+
+    private val presenter: IEventListPresenter = mock()
 
     private val result = EventList(100, listOf(Event(
             1,
@@ -47,13 +42,15 @@ class EventSearchInteractorTest {
     )
 
     private val repository: EventRepository = mock {
-        on { findEventList(any(), any(), any()) } doReturn Single.just(result)
+        on { findEventList(any(), any(), any()) } doReturn Single.create<EventList> { emitter ->
+            emitter.onSuccess(result)
+        }
     }
-    private val presenter: IEventSearchPresenter = mock()
 
-    private val interactor = EventSearchInteractor(presenter, repository)
+    private val eventListInteractor = EventListInteractor(presenter, repository)
 
     private fun makeInteractor(presenter: IEventSearchPresenter, repository: EventRepository): EventSearchInteractor = EventSearchInteractor(presenter, repository)
+
 
     @Before
     fun setup() {
@@ -65,11 +62,12 @@ class EventSearchInteractorTest {
     @Test
     fun `search`() {
 
-        interactor.search(EventSearchInputData(keyword = setOf("kotlin"), ym = 201802, offset = 0, limit = 30))
+        eventListInteractor.search(EventSearchInputData(keyword = setOf("kotlin"), ym = 201802, offset = 0, limit = 30))
 
         verify(repository).findEventList(any(), any(), any())
-
-        verify(presenter).complete(any())
+        verify(presenter).complete(check {
+            assertThat(it.totalEventCount).isEqualTo(100)
+        })
     }
 
     @Test
@@ -85,8 +83,8 @@ class EventSearchInteractorTest {
 
         verify(errorRepository).findEventList(any(), any(), any())
         verify(presenter).complete(check {
-            assertThat(it.error).isNotNull()
             assertThat(it.error).isInstanceOf(UnknownHostException::class.java)
         })
+
     }
 }
