@@ -21,6 +21,7 @@ class AreaSelectPresenter : IAreaSelectPresenter {
 
     //region IAreaSelectPresenter
     override fun onCreate() {
+
     }
 
     override fun onResume() {
