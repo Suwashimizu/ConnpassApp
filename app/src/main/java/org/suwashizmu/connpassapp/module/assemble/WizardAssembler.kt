@@ -32,6 +32,7 @@ class WizardAssembler {
             //presenterはAndroidComponentsWeakScopeで生成する
             bind<AreaSelectPresenter>() with scoped(AndroidComponentsWeakScope).singleton { AreaSelectPresenter() }
             bind<IAreaSelectUseCase>() with provider { AreaSelectInteractor(instance(), instance()) }
+            bind<IFetchSettingsUseCase>() with provider { FetchSettingsInteractor(instance<AreaSelectPresenter>(), instance(), instance()) }
             bind<WizardRouter>() with scoped(AndroidComponentsWeakScope).singleton { WizardRouter() }
         }
 
@@ -40,6 +41,7 @@ class WizardAssembler {
 
         presenter.useCase = kodein.direct.instance()
         presenter.router = kodein.direct.instance()
+        presenter.settingsUseCase = kodein.direct.instance()
 
         val f = activity.supportFragmentManager
                 .findFragmentByTag(TAG_FRAGMENT) as WizardFragment

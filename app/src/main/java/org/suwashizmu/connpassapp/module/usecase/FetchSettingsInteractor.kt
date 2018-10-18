@@ -9,7 +9,7 @@ import org.suwashizmu.connpassapp.module.repository.InterestCategoryRepository
  */
 class FetchSettingsInteractor(private val settingsOutputPort: SettingsOutputPort,
                               private val areaRepository: AreaRepository,
-                              private val interestCategoryRepository: InterestCategoryRepository) : IFetchSettings {
+                              private val interestCategoryRepository: InterestCategoryRepository) : IFetchSettingsUseCase {
 
     override fun fetchSettings() {
         settingsOutputPort.complete(areaRepository.getArea(), interestCategoryRepository.getCurrentInterestCategories())

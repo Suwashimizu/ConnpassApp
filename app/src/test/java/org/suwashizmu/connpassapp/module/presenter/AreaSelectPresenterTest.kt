@@ -7,6 +7,7 @@ import org.suwashizmu.connpassapp.module.entity.InterestCategory
 import org.suwashizmu.connpassapp.module.input.AreaSelectInputData
 import org.suwashizmu.connpassapp.module.router.IWizardRouter
 import org.suwashizmu.connpassapp.module.usecase.IAreaSelectUseCase
+import org.suwashizmu.connpassapp.module.usecase.IFetchSettingsUseCase
 
 /**
  * Created by KEKE on 2018/10/06.
@@ -15,12 +16,15 @@ class AreaSelectPresenterTest {
 
     private val useCase: IAreaSelectUseCase = mock()
     private val router: IWizardRouter = mock()
+    private val settingsUseCase: IFetchSettingsUseCase = mock()
 
-    private val subject: AreaSelectSubject = mock()
+    private
+    val subject: AreaSelectSubject = mock()
 
     private val presenter = AreaSelectPresenter().apply {
         subject = this@AreaSelectPresenterTest.subject
         useCase = this@AreaSelectPresenterTest.useCase
+        settingsUseCase = this@AreaSelectPresenterTest.settingsUseCase
         router = this@AreaSelectPresenterTest.router
     }
 
@@ -74,5 +78,12 @@ class AreaSelectPresenterTest {
         presenter.complete(Area.TOKYO, null)
 
         verify(router, never()).gotoEventList()
+    }
+
+    @Test
+    fun `onCreate`() {
+        presenter.onCreate()
+
+        verify(settingsUseCase).fetchSettings()
     }
 }

@@ -5,6 +5,7 @@ import org.suwashizmu.connpassapp.module.entity.InterestCategory
 import org.suwashizmu.connpassapp.module.input.AreaSelectInputData
 import org.suwashizmu.connpassapp.module.router.IWizardRouter
 import org.suwashizmu.connpassapp.module.usecase.IAreaSelectUseCase
+import org.suwashizmu.connpassapp.module.usecase.IFetchSettingsUseCase
 import org.suwashizmu.connpassapp.module.view.AreaSelectViewModel
 
 /**
@@ -15,6 +16,7 @@ class AreaSelectPresenter : IAreaSelectPresenter {
     override var subject: AreaSelectSubject? = null
 
     override var useCase: IAreaSelectUseCase? = null
+    override var settingsUseCase: IFetchSettingsUseCase? = null
 
     override var router: IWizardRouter? = null
 
@@ -22,7 +24,7 @@ class AreaSelectPresenter : IAreaSelectPresenter {
 
     //region IAreaSelectPresenter
     override fun onCreate() {
-
+        settingsUseCase?.fetchSettings()
     }
 
     override fun onResume() {

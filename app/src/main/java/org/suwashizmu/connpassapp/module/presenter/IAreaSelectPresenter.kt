@@ -4,6 +4,7 @@ import org.suwashizmu.connpassapp.module.entity.Area
 import org.suwashizmu.connpassapp.module.output.SettingsOutputPort
 import org.suwashizmu.connpassapp.module.router.IWizardRouter
 import org.suwashizmu.connpassapp.module.usecase.IAreaSelectUseCase
+import org.suwashizmu.connpassapp.module.usecase.IFetchSettingsUseCase
 
 /**
  * Created by KEKE on 2018/10/06.
@@ -12,6 +13,7 @@ interface IAreaSelectPresenter : BasePresenter, SettingsOutputPort {
 
     var subject: AreaSelectSubject?
     var useCase: IAreaSelectUseCase?
+    var settingsUseCase: IFetchSettingsUseCase?
     var router: IWizardRouter?
 
     fun fetchAreaList()

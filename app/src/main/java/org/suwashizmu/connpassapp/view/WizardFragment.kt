@@ -49,6 +49,8 @@ class WizardFragment : Fragment(), IAreaSelectView {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         presenter?.subject = subject
+
+        presenter?.onCreate()
     }
 
     override fun onResume() {
