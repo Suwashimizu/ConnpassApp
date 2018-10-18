@@ -1,11 +1,9 @@
 package org.suwashizmu.connpassapp.module.presenter
 
-import com.nhaarman.mockitokotlin2.any
-import com.nhaarman.mockitokotlin2.eq
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.verify
+import com.nhaarman.mockitokotlin2.*
 import org.junit.Test
 import org.suwashizmu.connpassapp.module.entity.Area
+import org.suwashizmu.connpassapp.module.entity.InterestCategory
 import org.suwashizmu.connpassapp.module.input.AreaSelectInputData
 import org.suwashizmu.connpassapp.module.router.IWizardRouter
 import org.suwashizmu.connpassapp.module.usecase.IAreaSelectUseCase
@@ -53,5 +51,28 @@ class AreaSelectPresenterTest {
         presenter.onNextButtonClick(Area.TOKYO)
 
         verify(useCase).select(eq(AreaSelectInputData(Area.TOKYO)))
+    }
+
+    @Test
+    fun `outputPort complete`() {
+        presenter.complete(Area.TOKYO, listOf(InterestCategory.AI))
+
+        verify(router).gotoEventList()
+    }
+
+
+    @Test
+    fun `outputPort complete when area is null`() {
+        presenter.complete(null, listOf(InterestCategory.AI))
+
+        verify(router, never()).gotoEventList()
+    }
+
+
+    @Test
+    fun `outputPort complete when InterestCategory is null`() {
+        presenter.complete(Area.TOKYO, null)
+
+        verify(router, never()).gotoEventList()
     }
 }

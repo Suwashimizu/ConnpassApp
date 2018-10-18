@@ -1,6 +1,7 @@
 package org.suwashizmu.connpassapp.module.presenter
 
 import org.suwashizmu.connpassapp.module.entity.Area
+import org.suwashizmu.connpassapp.module.entity.InterestCategory
 import org.suwashizmu.connpassapp.module.input.AreaSelectInputData
 import org.suwashizmu.connpassapp.module.router.IWizardRouter
 import org.suwashizmu.connpassapp.module.usecase.IAreaSelectUseCase
@@ -59,4 +60,12 @@ class AreaSelectPresenter : IAreaSelectPresenter {
 
         router?.gotoInterestSelect()
     }
+
+    //region SettingsOutputPort
+    override fun complete(area: Area?, interestCategories: Collection<InterestCategory>?) {
+        if (area != null && interestCategories != null) {
+            router?.gotoEventList()
+        }
+    }
+    //endregion SettingsOutputPort
 }
