@@ -10,5 +10,5 @@ import org.suwashizmu.connpassapp.module.entity.InterestCategory
 interface ISearchSettingsController {
     fun loadSettings()
 
-    fun saveSettings(area: Area, vararg interestCategory: InterestCategory)
+    fun saveSettings(area: Area, vararg interestCategories: InterestCategory)
 }

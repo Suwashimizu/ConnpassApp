@@ -5,5 +5,5 @@ package org.suwashizmu.connpassapp.module.router
  */
 
 interface ISearchSettingsRouter {
-
+    fun close()
 }

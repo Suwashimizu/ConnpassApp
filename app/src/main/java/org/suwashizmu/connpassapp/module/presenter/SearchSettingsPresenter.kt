@@ -3,10 +3,12 @@ package org.suwashizmu.connpassapp.module.presenter
 import org.suwashizmu.connpassapp.module.controller.ISearchSettingsController
 import org.suwashizmu.connpassapp.module.entity.Area
 import org.suwashizmu.connpassapp.module.entity.InterestCategory
+import org.suwashizmu.connpassapp.module.input.SaveSettingsInputData
 import org.suwashizmu.connpassapp.module.output.SearchSettingsOutputPort
 import org.suwashizmu.connpassapp.module.router.ISearchSettingsRouter
 import org.suwashizmu.connpassapp.module.usecase.IFetchSettingsUseCase
 import org.suwashizmu.connpassapp.module.usecase.ISaveSettingsUseCase
+import org.suwashizmu.connpassapp.module.view.SearchSettingsViewModel
 
 /**
  * Created by KEKE
@@ -18,8 +20,10 @@ class SearchSettingsPresenter : ISearchSettingsPresenter, ISearchSettingsControl
     override var fetchSettingsUseCase: IFetchSettingsUseCase? = null
     override var router: ISearchSettingsRouter? = null
 
+    private val viewModel = SearchSettingsViewModel()
+
     override fun onCreate() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        loadSettings()
     }
 
     override fun onResume() {
@@ -36,17 +40,20 @@ class SearchSettingsPresenter : ISearchSettingsPresenter, ISearchSettingsControl
 
     //region ISearchSettingsController
     override fun loadSettings() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        fetchSettingsUseCase?.fetchSettings()
     }
 
-    override fun saveSettings(area: Area, vararg interestCategory: InterestCategory) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun saveSettings(area: Area, vararg interestCategories: InterestCategory) {
+        saveUseCase?.save(SaveSettingsInputData(area, interestCategories.toList()))
     }
     //endregion ISearchSettingsController
 
     //region SearchSettingsOutputPort
     override fun complete(error: Throwable?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        viewModel.error = error
+        if (error == null) {
+            router?.close()
+        }
     }
     //endregion SearchSettingsOutputPort
 }
