@@ -63,24 +63,24 @@ class EventListPresenterTest {
     @Test
     fun `hasNextEvents is True when currentListSize greater than totalEventCount`() {
 
-        val test = presenter.subject.observable.test()
-
         presenter.complete(EventSearchOutputData(listOf(
                 EventSearchOutputData.OutputEvent("title", "catch", "description"),
                 EventSearchOutputData.OutputEvent("title", "catch", "description")),
                 null,
                 2))
 
+        val test = presenter.subject.observable.test()
+
+        assertThat(test.valueCount()).isEqualTo(1)
         test.assertValue { it.hasNextEvents.not() }
         test.assertValue { it.refreshing.not() }
     }
 
     @Test
     fun `hasNextEvent is False when eventList is empty`() {
+        presenter.complete(EventSearchOutputData(emptyList(), null, -1))
 
         val test = presenter.subject.observable.test()
-
-        presenter.complete(EventSearchOutputData(emptyList(), null, -1))
 
         test.assertValue { it.hasNextEvents.not() }
         test.assertValue { it.refreshing.not() }
