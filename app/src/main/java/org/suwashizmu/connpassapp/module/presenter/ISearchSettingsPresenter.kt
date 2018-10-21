@@ -1,6 +1,8 @@
 package org.suwashizmu.connpassapp.module.presenter
 
 import org.suwashizmu.connpassapp.module.router.ISearchSettingsRouter
+import org.suwashizmu.connpassapp.module.usecase.IFetchSettingsUseCase
+import org.suwashizmu.connpassapp.module.usecase.ISaveSettingsUseCase
 
 /**
  * Created by KEKE
@@ -9,6 +11,7 @@ import org.suwashizmu.connpassapp.module.router.ISearchSettingsRouter
 interface ISearchSettingsPresenter : BasePresenter {
 
     //subject
-    //var useCase: ISearchSettingsUseCase?
+    var saveUseCase: ISaveSettingsUseCase?
+    var fetchSettingsUseCase: IFetchSettingsUseCase?
     var router: ISearchSettingsRouter?
 }

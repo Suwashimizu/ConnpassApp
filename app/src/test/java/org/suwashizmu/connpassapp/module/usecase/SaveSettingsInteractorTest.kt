@@ -7,7 +7,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 import org.suwashizmu.connpassapp.module.entity.Area
 import org.suwashizmu.connpassapp.module.entity.InterestCategory
-import org.suwashizmu.connpassapp.module.entity.Settings
+import org.suwashizmu.connpassapp.module.input.SaveSettingsInputData
 import org.suwashizmu.connpassapp.module.output.SearchSettingsOutputPort
 import org.suwashizmu.connpassapp.module.repository.AreaRepository
 import org.suwashizmu.connpassapp.module.repository.InterestCategoryRepository
@@ -23,9 +23,11 @@ class SaveSettingsInteractorTest {
 
     private val interactor = SaveSettingsInteractor(outputPort, areaRepository, interestCategoryRepository)
 
+    private val inputData = SaveSettingsInputData(Area.TOKYO, listOf(InterestCategory.AI))
+
     @Test
     fun save() {
-        interactor.save(Settings(Area.TOKYO, listOf(InterestCategory.AI), "hoge,fuga"))
+        interactor.save(inputData)
 
         verify(areaRepository).save(check {
             assertThat(it).isEqualTo(Area.TOKYO)

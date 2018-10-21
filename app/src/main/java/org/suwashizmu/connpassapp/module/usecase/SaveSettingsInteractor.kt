@@ -1,6 +1,6 @@
 package org.suwashizmu.connpassapp.module.usecase
 
-import org.suwashizmu.connpassapp.module.entity.Settings
+import org.suwashizmu.connpassapp.module.input.SaveSettingsInputData
 import org.suwashizmu.connpassapp.module.output.SearchSettingsOutputPort
 import org.suwashizmu.connpassapp.module.repository.AreaRepository
 import org.suwashizmu.connpassapp.module.repository.InterestCategoryRepository
@@ -12,10 +12,12 @@ class SaveSettingsInteractor(private val outputPort: SearchSettingsOutputPort,
                              private val areaRepository: AreaRepository,
                              private val interestCategoryRepository: InterestCategoryRepository) : ISaveSettingsUseCase {
 
-    override fun save(settings: Settings) {
-        areaRepository.save(settings.area)
-        interestCategoryRepository.save(*settings.interestCategory.toTypedArray())
+    override fun save(inputData: SaveSettingsInputData) {
+
+        areaRepository.save(inputData.area)
+        interestCategoryRepository.save(*inputData.interestCategory.toTypedArray())
 
         outputPort.complete(null)
+
     }
 }
