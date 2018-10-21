@@ -33,7 +33,7 @@ class AreaChoiceDialogFragment : DialogFragment() {
         val firstPosition = areaSource.indexOf(searchSettingsFragment.presenter?.viewModel?.area)
 
         return AlertDialog.Builder(requireActivity())
-                .setSingleChoiceItems(areaSource.map { it.name }.toTypedArray(), firstPosition) { _, which: Int ->
+                .setSingleChoiceItems(areaSource.map { it.value }.toTypedArray(), firstPosition) { _, which: Int ->
 
                     searchSettingsFragment.presenter?.onAreaSelected(areaSource.elementAt(which))
 

@@ -42,7 +42,7 @@ class SearchSettingsAdapter(private val areaItemClickListener: () -> Unit,
         when (viewHolder) {
             is SearchSettingsViewHolder.ItemArea -> {
                 viewHolder.binding.label.text = viewHolder.binding.root.resources.getString(R.string.area)
-                viewHolder.binding.value.text = viewModel?.area?.name
+                viewHolder.binding.value.text = viewModel?.area?.value
             }
             is SearchSettingsViewHolder.ItemInterest -> {
                 viewHolder.binding.label.text = viewHolder.binding.root.resources.getString(R.string.interest)

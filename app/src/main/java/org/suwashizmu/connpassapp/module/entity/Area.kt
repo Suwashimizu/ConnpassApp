@@ -3,7 +3,7 @@ package org.suwashizmu.connpassapp.module.entity
 /**
  * Created by KEKE on 2018/10/06.
  */
-enum class Area(val id: Int, value: String) {
+enum class Area(val id: Int, val value: String) {
     HOKKAIDO(1, "北海道"),
     AOMORI(2, "青森"),
     IWATE(3, "岩手"),
