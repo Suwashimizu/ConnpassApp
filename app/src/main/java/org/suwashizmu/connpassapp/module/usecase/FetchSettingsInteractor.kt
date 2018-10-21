@@ -12,6 +12,7 @@ class FetchSettingsInteractor(private val settingsOutputPort: SettingsOutputPort
                               private val interestCategoryRepository: InterestCategoryRepository) : IFetchSettingsUseCase {
 
     override fun fetchSettings() {
-        settingsOutputPort.complete(areaRepository.getArea(), interestCategoryRepository.getCurrentInterestCategories())
+        settingsOutputPort.complete(areaRepository.getArea(), interestCategoryRepository.getCurrentInterestCategories(),
+                areaRepository.getAreaList(), interestCategoryRepository.getInterestCategories())
     }
 }

@@ -18,7 +18,7 @@ class SearchSettingsPresenter : ISearchSettingsPresenter {
     override var fetchSettingsUseCase: IFetchSettingsUseCase? = null
     override var router: ISearchSettingsRouter? = null
 
-    private val viewModel = SearchSettingsViewModel()
+    override var viewModel = SearchSettingsViewModel()
 
     override fun onCreate() {
         loadSettings()
@@ -62,9 +62,12 @@ class SearchSettingsPresenter : ISearchSettingsPresenter {
     //endregion SearchSettingsOutputPort
 
     //region SettingsOutputPort
-    override fun complete(area: Area?, interestCategories: Collection<InterestCategory>?) {
-        viewModel.area = area
-        if (interestCategories != null) viewModel.interestCategories = interestCategories
+    override fun complete(currentArea: Area?, currentInterestCategories: Collection<InterestCategory>?, areaSource: Collection<Area>, interestCategoriesSource: Collection<InterestCategory>) {
+        viewModel.area = currentArea
+        if (currentInterestCategories != null) viewModel.interestCategories = currentInterestCategories
+
+        viewModel.areaSource = areaSource
+        viewModel.interestCategoriesSource = interestCategoriesSource
 
         subject.update(viewModel)
     }

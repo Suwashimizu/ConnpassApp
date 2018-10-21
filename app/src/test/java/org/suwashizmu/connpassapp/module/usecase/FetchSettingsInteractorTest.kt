@@ -1,5 +1,6 @@
 package org.suwashizmu.connpassapp.module.usecase
 
+import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.anyOrNull
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
@@ -27,6 +28,9 @@ class FetchSettingsInteractorTest {
 
         verify(mockAreaRepository).getArea()
         verify(mockInterestCategoryRepository).getCurrentInterestCategories()
-        verify(outputPort).complete(anyOrNull(), anyOrNull())
+        verify(mockAreaRepository).getAreaList()
+        verify(mockInterestCategoryRepository).getCurrentInterestCategories()
+
+        verify(outputPort).complete(anyOrNull(), anyOrNull(), any(), any())
     }
 }

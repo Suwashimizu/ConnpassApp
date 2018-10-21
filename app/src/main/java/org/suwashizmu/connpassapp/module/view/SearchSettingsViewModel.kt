@@ -8,4 +8,6 @@ import org.suwashizmu.connpassapp.module.entity.InterestCategory
  */
 data class SearchSettingsViewModel(var area: Area? = null,
                                    var interestCategories: Collection<InterestCategory> = emptyList(),
+                                   var areaSource: Collection<Area>? = null,
+                                   var interestCategoriesSource: Collection<InterestCategory>? = null,
                                    var error: Throwable? = null)

@@ -1,5 +1,6 @@
 package org.suwashizmu.connpassapp.view
 
+import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -14,15 +15,23 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
 import org.suwashizmu.connpassapp.R
 import org.suwashizmu.connpassapp.databinding.SearchSettingsFragBinding
+import org.suwashizmu.connpassapp.module.entity.Area
 import org.suwashizmu.connpassapp.module.presenter.ISearchSettingsPresenter
 import org.suwashizmu.connpassapp.module.presenter.SearchSettingsSubject
 import org.suwashizmu.connpassapp.module.view.ISearchSettingsView
 import org.suwashizmu.connpassapp.module.view.SearchSettingsViewModel
 import org.suwashizmu.connpassapp.view.adapter.SearchSettingsAdapter
+import org.suwashizmu.connpassapp.view.dialog.AreaChoiceDialogFragment
 
 class SearchSettingsFragment : Fragment(), ISearchSettingsView {
 
     companion object {
+
+        private const val TAG_AREA = "areaDialog"
+        private const val TAG_INTEREST = "interestDialog"
+
+        private const val REQUEST_AREA = 0
+
         fun newInstance(): SearchSettingsFragment = SearchSettingsFragment()
     }
 
@@ -41,7 +50,7 @@ class SearchSettingsFragment : Fragment(), ISearchSettingsView {
         (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayShowHomeEnabled(true)
         requireActivity().findViewById<Toolbar>(R.id.toolbar).setNavigationOnClickListener(navigationListener)
 
-        binding.listView.adapter = SearchSettingsAdapter()
+        binding.listView.adapter = SearchSettingsAdapter(areaItemClickListener, interestItemClickListener)
         binding.listView.layoutManager = LinearLayoutManager(requireActivity())
 
         return binding.root
@@ -76,6 +85,16 @@ class SearchSettingsFragment : Fragment(), ISearchSettingsView {
         presenter = null
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            REQUEST_AREA -> {
+                val selectedArea = data?.getSerializableExtra("area") as Area
+                Logger.d(selectedArea)
+            }
+        }
+    }
+
     override fun update(searchSettingsViewModel: SearchSettingsViewModel) {
         Logger.d(searchSettingsViewModel)
 
@@ -87,5 +106,16 @@ class SearchSettingsFragment : Fragment(), ISearchSettingsView {
 
     private val navigationListener: View.OnClickListener = View.OnClickListener {
         presenter?.onNavigationButtonClick()
+    }
+
+    private val areaItemClickListener: () -> Unit = {
+        presenter?.viewModel?.let {
+            AreaChoiceDialogFragment.newInstance(this, REQUEST_AREA, it)
+                    .show(fragmentManager, TAG_AREA)
+        }
+    }
+
+    private val interestItemClickListener: () -> Unit = {
+
     }
 }

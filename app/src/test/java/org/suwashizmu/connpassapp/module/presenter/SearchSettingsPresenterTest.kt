@@ -65,7 +65,7 @@ class SearchSettingsPresenterTest {
 
         val test = presenter.subject.observable.test()
 
-        presenter.complete(Area.TOKYO, listOf(InterestCategory.AI))
+        presenter.complete(Area.TOKYO, listOf(InterestCategory.AI), listOf(Area.TOKYO), listOf(InterestCategory.AI))
 
         test.assertNoErrors()
         assertThat(test.values().first()).isEqualTo(SearchSettingsViewModel(Area.TOKYO, listOf(InterestCategory.AI)))

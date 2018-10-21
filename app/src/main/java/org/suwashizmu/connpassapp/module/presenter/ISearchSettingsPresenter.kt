@@ -6,6 +6,7 @@ import org.suwashizmu.connpassapp.module.output.SettingsOutputPort
 import org.suwashizmu.connpassapp.module.router.ISearchSettingsRouter
 import org.suwashizmu.connpassapp.module.usecase.IFetchSettingsUseCase
 import org.suwashizmu.connpassapp.module.usecase.ISaveSettingsUseCase
+import org.suwashizmu.connpassapp.module.view.SearchSettingsViewModel
 
 /**
  * Created by KEKE
@@ -17,4 +18,6 @@ interface ISearchSettingsPresenter : BasePresenter, ISearchSettingsController, S
     var saveUseCase: ISaveSettingsUseCase?
     var fetchSettingsUseCase: IFetchSettingsUseCase?
     var router: ISearchSettingsRouter?
+
+    var viewModel: SearchSettingsViewModel
 }

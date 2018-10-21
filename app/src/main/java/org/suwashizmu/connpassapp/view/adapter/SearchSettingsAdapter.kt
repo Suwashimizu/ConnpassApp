@@ -10,7 +10,8 @@ import org.suwashizmu.connpassapp.module.view.SearchSettingsViewModel
 /**
  * Created by KEKE on 2018/10/21.
  */
-class SearchSettingsAdapter : RecyclerView.Adapter<SearchSettingsViewHolder>() {
+class SearchSettingsAdapter(private val areaItemClickListener: () -> Unit,
+                            private val interestItemClickListener: () -> Unit) : RecyclerView.Adapter<SearchSettingsViewHolder>() {
 
     companion object {
         private const val ITEM_SIZE = 2
@@ -26,12 +27,12 @@ class SearchSettingsAdapter : RecyclerView.Adapter<SearchSettingsViewHolder>() {
             when (viewType) {
                 VIEW_TYPE_AREA -> SearchSettingsViewHolder.ItemArea(DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.search_settings_item, parent, false)).apply {
                     itemView.setOnClickListener {
-
+                        areaItemClickListener()
                     }
                 }
                 VIEW_TYPE_INTEREST -> SearchSettingsViewHolder.ItemInterest(DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.search_settings_item, parent, false)).apply {
                     itemView.setOnClickListener {
-
+                        interestItemClickListener()
                     }
                 }
                 else -> throw IllegalStateException("index out of bounds")
