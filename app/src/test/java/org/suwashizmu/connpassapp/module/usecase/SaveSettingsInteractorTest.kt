@@ -8,6 +8,7 @@ import org.junit.Test
 import org.suwashizmu.connpassapp.module.entity.Area
 import org.suwashizmu.connpassapp.module.entity.InterestCategory
 import org.suwashizmu.connpassapp.module.entity.Settings
+import org.suwashizmu.connpassapp.module.output.SearchSettingsOutputPort
 import org.suwashizmu.connpassapp.module.repository.AreaRepository
 import org.suwashizmu.connpassapp.module.repository.InterestCategoryRepository
 
@@ -16,10 +17,11 @@ import org.suwashizmu.connpassapp.module.repository.InterestCategoryRepository
  */
 class SaveSettingsInteractorTest {
 
+    private val outputPort: SearchSettingsOutputPort = mock()
     private val areaRepository: AreaRepository = mock()
     private val interestCategoryRepository: InterestCategoryRepository = mock()
 
-    private val interactor = SaveSettingsInteractor(areaRepository, interestCategoryRepository)
+    private val interactor = SaveSettingsInteractor(outputPort, areaRepository, interestCategoryRepository)
 
     @Test
     fun save() {
@@ -31,5 +33,7 @@ class SaveSettingsInteractorTest {
         verify(interestCategoryRepository).save(check {
             assertThat(it).isEqualTo(InterestCategory.AI)
         })
+
+        verify(outputPort).complete(null)
     }
 }
