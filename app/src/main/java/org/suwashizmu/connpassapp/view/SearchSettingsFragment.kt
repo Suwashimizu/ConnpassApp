@@ -4,6 +4,7 @@ import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.Toolbar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,6 +36,7 @@ class SearchSettingsFragment : Fragment(), ISearchSettingsView {
 
         (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
         (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayShowHomeEnabled(true)
+        requireActivity().findViewById<Toolbar>(R.id.toolbar).setNavigationOnClickListener(navigationListener)
 
         //setup onClickListener
 
@@ -72,5 +74,9 @@ class SearchSettingsFragment : Fragment(), ISearchSettingsView {
 
     override fun update(searchSettingsViewModel: SearchSettingsViewModel) {
         Logger.d(searchSettingsViewModel)
+    }
+
+    private val navigationListener: View.OnClickListener = View.OnClickListener {
+        presenter?.onNavigationButtonClick()
     }
 }

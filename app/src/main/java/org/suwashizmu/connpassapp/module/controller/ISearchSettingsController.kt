@@ -8,6 +8,9 @@ import org.suwashizmu.connpassapp.module.entity.InterestCategory
  * アクションを定義する
  */
 interface ISearchSettingsController {
+
+    fun onNavigationButtonClick()
+
     fun loadSettings()
 
     fun saveSettings(area: Area, vararg interestCategories: InterestCategory)

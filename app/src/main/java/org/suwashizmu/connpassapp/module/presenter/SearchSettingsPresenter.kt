@@ -1,6 +1,5 @@
 package org.suwashizmu.connpassapp.module.presenter
 
-import org.suwashizmu.connpassapp.module.controller.ISearchSettingsController
 import org.suwashizmu.connpassapp.module.entity.Area
 import org.suwashizmu.connpassapp.module.entity.InterestCategory
 import org.suwashizmu.connpassapp.module.input.SaveSettingsInputData
@@ -12,7 +11,7 @@ import org.suwashizmu.connpassapp.module.view.SearchSettingsViewModel
 /**
  * Created by KEKE
  */
-class SearchSettingsPresenter : ISearchSettingsPresenter, ISearchSettingsController {
+class SearchSettingsPresenter : ISearchSettingsPresenter {
 
     override var subject: SearchSettingsSubject = SearchSettingsSubject
     override var saveUseCase: ISaveSettingsUseCase? = null
@@ -39,6 +38,11 @@ class SearchSettingsPresenter : ISearchSettingsPresenter, ISearchSettingsControl
     }
 
     //region ISearchSettingsController
+
+    override fun onNavigationButtonClick() {
+        router?.close()
+    }
+
     override fun loadSettings() {
         fetchSettingsUseCase?.fetchSettings()
     }

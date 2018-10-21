@@ -36,9 +36,12 @@ class SearchSettingsAssembler {
                         interestCategoryRepository = instance()
                 )
             }
-
-            //
-            bind<ISearchSettingsRouter>() with scoped(AndroidComponentsWeakScope).singleton { SearchSettingsRouter() }
+            
+            bind<ISearchSettingsRouter>() with scoped(AndroidComponentsWeakScope).singleton {
+                SearchSettingsRouter().apply {
+                    this.fragment = fragment
+                }
+            }
         }
 
         val presenter: ISearchSettingsPresenter by kodein.instance()

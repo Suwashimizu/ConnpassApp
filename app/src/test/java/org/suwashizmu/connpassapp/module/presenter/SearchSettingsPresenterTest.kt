@@ -6,6 +6,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 import org.suwashizmu.connpassapp.module.entity.Area
 import org.suwashizmu.connpassapp.module.entity.InterestCategory
+import org.suwashizmu.connpassapp.module.router.ISearchSettingsRouter
 import org.suwashizmu.connpassapp.module.usecase.IFetchSettingsUseCase
 import org.suwashizmu.connpassapp.module.view.SearchSettingsViewModel
 
@@ -15,9 +16,11 @@ import org.suwashizmu.connpassapp.module.view.SearchSettingsViewModel
 class SearchSettingsPresenterTest {
 
     private val fetcher: IFetchSettingsUseCase = mock()
+    private val mockRouter: ISearchSettingsRouter = mock()
 
     private val presenter = SearchSettingsPresenter().apply {
         this.fetchSettingsUseCase = fetcher
+        router = mockRouter
     }
 
     @Test
@@ -37,6 +40,13 @@ class SearchSettingsPresenterTest {
 
     @Test
     fun onDestroy() {
+    }
+
+    @Test
+    fun `onNavigationButtonClick`() {
+        presenter.onNavigationButtonClick()
+
+        verify(mockRouter).close()
     }
 
     @Test
