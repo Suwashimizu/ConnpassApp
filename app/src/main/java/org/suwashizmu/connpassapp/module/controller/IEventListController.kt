@@ -9,4 +9,6 @@ interface IEventListController {
     fun onScrollEnd()
 
     fun onPullRefresh()
+
+    fun onSearchIconClicked()
 }

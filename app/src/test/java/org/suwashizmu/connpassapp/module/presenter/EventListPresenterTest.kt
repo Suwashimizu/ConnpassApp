@@ -8,6 +8,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 import org.suwashizmu.connpassapp.module.input.EventFetchInputData
 import org.suwashizmu.connpassapp.module.output.EventSearchOutputData
+import org.suwashizmu.connpassapp.module.router.IEventListRouter
 import org.suwashizmu.connpassapp.module.usecase.IEventFetchUseCase
 
 /**
@@ -16,9 +17,11 @@ import org.suwashizmu.connpassapp.module.usecase.IEventFetchUseCase
 class EventListPresenterTest {
 
     private val useCase: IEventFetchUseCase = mock()
+    private val mockRouter: IEventListRouter = mock()
 
     private val presenter = EventListPresenter().apply {
         useCase = this@EventListPresenterTest.useCase
+        router = mockRouter
     }
 
     @Test
@@ -103,4 +106,14 @@ class EventListPresenterTest {
             assertThat(it.offset).isEqualTo(0)
         })
     }
+
+    @Test
+    fun onSearchIconClicked() {
+
+        presenter.onSearchIconClicked()
+
+        verify(mockRouter).gotoSearchSettings()
+    }
+
+
 }

@@ -39,7 +39,11 @@ class EventListAssembler {
             }
 
             //
-            bind<IEventListRouter>() with scoped(AndroidComponentsWeakScope).singleton { EventListRouter() }
+            bind<IEventListRouter>() with scoped(AndroidComponentsWeakScope).singleton {
+                EventListRouter().apply {
+                    this.fragment = fragment
+                }
+            }
         }
 
         val presenter: IEventListPresenter by kodein.instance()

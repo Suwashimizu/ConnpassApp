@@ -6,4 +6,5 @@ package org.suwashizmu.connpassapp.module.router
 
 interface IEventListRouter {
 
+    fun gotoSearchSettings()
 }

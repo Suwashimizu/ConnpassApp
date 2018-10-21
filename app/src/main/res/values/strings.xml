@@ -6,4 +6,6 @@
 
     <string name="next">次へ</string>
     <string name="finish">完了</string>
+
+    <string name="search">検索</string>
 </resources>

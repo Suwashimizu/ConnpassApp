@@ -5,9 +5,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Toast
 import com.orhanobut.logger.Logger
 import io.reactivex.disposables.CompositeDisposable
@@ -30,6 +28,11 @@ class EventListFragment : Fragment(), IEventListView {
     override var presenter: IEventListPresenter? = null
     //ViewModelの変化を監視
     private val disposable = CompositeDisposable()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -76,6 +79,16 @@ class EventListFragment : Fragment(), IEventListView {
         presenter?.onDestroy()
 
         presenter = null
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater?.inflate(R.menu.event_list, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        if (item?.itemId == R.id.action_search) presenter?.onSearchIconClicked()
+        return super.onOptionsItemSelected(item)
     }
 
     override fun update(viewModel: EventListViewModel) {
