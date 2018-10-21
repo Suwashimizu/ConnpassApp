@@ -9,4 +9,6 @@ interface ISearchSettingsView {
 
     var presenter: ISearchSettingsPresenter?
 
+    fun update(searchSettingsViewModel: SearchSettingsViewModel)
+
 }

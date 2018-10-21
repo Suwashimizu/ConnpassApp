@@ -6,12 +6,15 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.orhanobut.logger.Logger
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
 import org.suwashizmu.connpassapp.R
 import org.suwashizmu.connpassapp.databinding.SearchSettingsFragBinding
-import org.suwashizmu.connpassapp.module.view.ISearchSettingsView
 import org.suwashizmu.connpassapp.module.presenter.ISearchSettingsPresenter
+import org.suwashizmu.connpassapp.module.presenter.SearchSettingsSubject
+import org.suwashizmu.connpassapp.module.view.ISearchSettingsView
+import org.suwashizmu.connpassapp.module.view.SearchSettingsViewModel
 
 class SearchSettingsFragment : Fragment(), ISearchSettingsView {
 
@@ -23,6 +26,7 @@ class SearchSettingsFragment : Fragment(), ISearchSettingsView {
     override var presenter: ISearchSettingsPresenter? = null
     //ViewModelの変化を監視
     private val disposable = CompositeDisposable()
+    private val subject: SearchSettingsSubject = SearchSettingsSubject
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -33,19 +37,25 @@ class SearchSettingsFragment : Fragment(), ISearchSettingsView {
         return binding.root
     }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        presenter?.onCreate()
+    }
+
     override fun onResume() {
         super.onResume()
 
-        /*
         subject.observable
                 .subscribe(this::update)
                 .addTo(disposable)
-        */
+
     }
 
     override fun onPause() {
         super.onPause()
 
+        presenter?.onPause()
         disposable.clear()
     }
 
@@ -54,5 +64,9 @@ class SearchSettingsFragment : Fragment(), ISearchSettingsView {
         presenter?.onDestroy()
 
         presenter = null
+    }
+
+    override fun update(searchSettingsViewModel: SearchSettingsViewModel) {
+        Logger.d(searchSettingsViewModel)
     }
 }

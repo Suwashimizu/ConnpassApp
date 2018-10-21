@@ -4,8 +4,6 @@ import org.suwashizmu.connpassapp.module.controller.ISearchSettingsController
 import org.suwashizmu.connpassapp.module.entity.Area
 import org.suwashizmu.connpassapp.module.entity.InterestCategory
 import org.suwashizmu.connpassapp.module.input.SaveSettingsInputData
-import org.suwashizmu.connpassapp.module.output.SearchSettingsOutputPort
-import org.suwashizmu.connpassapp.module.output.SettingsOutputPort
 import org.suwashizmu.connpassapp.module.router.ISearchSettingsRouter
 import org.suwashizmu.connpassapp.module.usecase.IFetchSettingsUseCase
 import org.suwashizmu.connpassapp.module.usecase.ISaveSettingsUseCase
@@ -14,7 +12,7 @@ import org.suwashizmu.connpassapp.module.view.SearchSettingsViewModel
 /**
  * Created by KEKE
  */
-class SearchSettingsPresenter : ISearchSettingsPresenter, ISearchSettingsController, SearchSettingsOutputPort, SettingsOutputPort {
+class SearchSettingsPresenter : ISearchSettingsPresenter, ISearchSettingsController {
 
     override var subject: SearchSettingsSubject = SearchSettingsSubject
     override var saveUseCase: ISaveSettingsUseCase? = null
@@ -28,15 +26,16 @@ class SearchSettingsPresenter : ISearchSettingsPresenter, ISearchSettingsControl
     }
 
     override fun onResume() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun onPause() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun onDestroy() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
+        saveUseCase = null
+        fetchSettingsUseCase = null
+        router = null
     }
 
     //region ISearchSettingsController

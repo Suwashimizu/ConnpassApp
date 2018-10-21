@@ -64,6 +64,9 @@ controllerのみ抽象を持たないようにする
 
 Presenterのコンストラクタをデフォルトのものに変更
 
+presenter(kodein:Kodein)にして  
+`val useCase:UseCase by kodein.instance`
+で取得出来るようにしたい
 
 ## Test難易度
 
