@@ -27,6 +27,8 @@ class EventListRouter : IEventListRouter {
         val searchSettingsFragment = SearchSettingsFragment.newInstance()
 
         fragment.requireFragmentManager().beginTransaction()
+                //googleNewのアニメを参考
+                .setCustomAnimations(R.anim.fade_in, R.anim.fade_out, R.anim.fade_in, R.anim.slide_out_down)
                 .replace(R.id.container, searchSettingsFragment, TAG_SEARCH_SETTINGS)
                 .addToBackStack(null)
                 .commit()

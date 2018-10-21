@@ -44,6 +44,7 @@ class EventListFragment : Fragment(), IEventListView {
 
         (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
         (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayShowHomeEnabled(false)
+        (requireActivity() as AppCompatActivity).supportActionBar?.setTitle(R.string.app_name)
 
         return binding.root
     }

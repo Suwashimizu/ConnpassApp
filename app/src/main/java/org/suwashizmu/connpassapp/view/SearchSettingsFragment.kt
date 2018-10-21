@@ -50,6 +50,7 @@ class SearchSettingsFragment : Fragment(), ISearchSettingsView {
         //navigationButtonを有効にする
         (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
         (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayShowHomeEnabled(true)
+        (requireActivity() as AppCompatActivity).supportActionBar?.setTitle(R.string.search_settings)
         requireActivity().findViewById<Toolbar>(R.id.toolbar).setNavigationOnClickListener(navigationListener)
 
         binding.listView.adapter = SearchSettingsAdapter(areaItemClickListener, interestItemClickListener)
