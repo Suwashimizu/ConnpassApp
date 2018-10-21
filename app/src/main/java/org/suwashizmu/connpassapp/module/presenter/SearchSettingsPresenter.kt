@@ -1,5 +1,6 @@
 package org.suwashizmu.connpassapp.module.presenter
 
+import com.orhanobut.logger.Logger
 import org.suwashizmu.connpassapp.module.entity.Area
 import org.suwashizmu.connpassapp.module.entity.InterestCategory
 import org.suwashizmu.connpassapp.module.input.SaveSettingsInputData
@@ -62,6 +63,7 @@ class SearchSettingsPresenter : ISearchSettingsPresenter {
         viewModel.error = error
         if (error == null) {
             router?.close()
+            Logger.d("settings save success")
         }
     }
     //endregion SearchSettingsOutputPort

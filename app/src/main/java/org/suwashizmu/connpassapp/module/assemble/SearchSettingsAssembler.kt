@@ -14,6 +14,8 @@ import org.suwashizmu.connpassapp.module.router.ISearchSettingsRouter
 import org.suwashizmu.connpassapp.module.router.SearchSettingsRouter
 import org.suwashizmu.connpassapp.module.usecase.FetchSettingsInteractor
 import org.suwashizmu.connpassapp.module.usecase.IFetchSettingsUseCase
+import org.suwashizmu.connpassapp.module.usecase.ISaveSettingsUseCase
+import org.suwashizmu.connpassapp.module.usecase.SaveSettingsInteractor
 import org.suwashizmu.connpassapp.view.SearchSettingsFragment
 
 /**
@@ -36,7 +38,15 @@ class SearchSettingsAssembler {
                         interestCategoryRepository = instance()
                 )
             }
-            
+
+            bind<ISaveSettingsUseCase>() with scoped(AndroidComponentsWeakScope).singleton {
+                SaveSettingsInteractor(
+                        outputPort = instance(),
+                        areaRepository = instance(),
+                        interestCategoryRepository = instance()
+                )
+            }
+
             bind<ISearchSettingsRouter>() with scoped(AndroidComponentsWeakScope).singleton {
                 SearchSettingsRouter().apply {
                     this.fragment = fragment
@@ -49,6 +59,7 @@ class SearchSettingsAssembler {
         //presenter.usecase = kodein.direct.instance()
         presenter.router = kodein.direct.instance()
         presenter.fetchSettingsUseCase = kodein.direct.instance()
+        presenter.saveUseCase = kodein.direct.instance()
 
         fragment.presenter = presenter
     }
