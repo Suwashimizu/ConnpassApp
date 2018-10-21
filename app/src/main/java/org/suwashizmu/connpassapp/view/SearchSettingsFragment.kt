@@ -1,21 +1,17 @@
 package org.suwashizmu.connpassapp.view
 
-import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.Toolbar
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import com.orhanobut.logger.Logger
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
 import org.suwashizmu.connpassapp.R
 import org.suwashizmu.connpassapp.databinding.SearchSettingsFragBinding
-import org.suwashizmu.connpassapp.module.entity.Area
 import org.suwashizmu.connpassapp.module.presenter.ISearchSettingsPresenter
 import org.suwashizmu.connpassapp.module.presenter.SearchSettingsSubject
 import org.suwashizmu.connpassapp.module.view.ISearchSettingsView
@@ -41,11 +37,17 @@ class SearchSettingsFragment : Fragment(), ISearchSettingsView {
     private val disposable = CompositeDisposable()
     private val subject: SearchSettingsSubject = SearchSettingsSubject
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.search_settings_frag, container, false)
 
         //setup onClickListener
+        //navigationButtonを有効にする
         (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
         (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayShowHomeEnabled(true)
         requireActivity().findViewById<Toolbar>(R.id.toolbar).setNavigationOnClickListener(navigationListener)
@@ -85,16 +87,21 @@ class SearchSettingsFragment : Fragment(), ISearchSettingsView {
         presenter = null
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        when (requestCode) {
-            REQUEST_AREA -> {
-                val selectedArea = data?.getSerializableExtra("area") as Area
-                Logger.d(selectedArea)
-            }
-        }
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater?.inflate(R.menu.search_settings, menu)
     }
 
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        if (item?.itemId == R.id.action_save) {
+            val viewModel = presenter?.viewModel ?: return true
+            presenter?.saveSettings(viewModel.area!!, *viewModel.interestCategories.toTypedArray())
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    //observer経由で更新が通知される
+    //ViewModelにErrorが含まれるので表示すること
     override fun update(searchSettingsViewModel: SearchSettingsViewModel) {
         Logger.d(searchSettingsViewModel)
 

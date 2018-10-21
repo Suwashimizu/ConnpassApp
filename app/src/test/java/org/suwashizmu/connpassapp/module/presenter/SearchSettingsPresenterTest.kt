@@ -1,5 +1,6 @@
 package org.suwashizmu.connpassapp.module.presenter
 
+import com.nhaarman.mockitokotlin2.check
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
 import org.assertj.core.api.Assertions.assertThat
@@ -8,6 +9,7 @@ import org.suwashizmu.connpassapp.module.entity.Area
 import org.suwashizmu.connpassapp.module.entity.InterestCategory
 import org.suwashizmu.connpassapp.module.router.ISearchSettingsRouter
 import org.suwashizmu.connpassapp.module.usecase.IFetchSettingsUseCase
+import org.suwashizmu.connpassapp.module.usecase.ISaveSettingsUseCase
 import org.suwashizmu.connpassapp.module.view.SearchSettingsViewModel
 
 /**
@@ -16,10 +18,12 @@ import org.suwashizmu.connpassapp.module.view.SearchSettingsViewModel
 class SearchSettingsPresenterTest {
 
     private val fetcher: IFetchSettingsUseCase = mock()
+    private val mockStore: ISaveSettingsUseCase = mock()
     private val mockRouter: ISearchSettingsRouter = mock()
 
     private val presenter = SearchSettingsPresenter().apply {
         this.fetchSettingsUseCase = fetcher
+        saveUseCase = mockStore
         router = mockRouter
     }
 
@@ -58,6 +62,12 @@ class SearchSettingsPresenterTest {
 
     @Test
     fun saveSettings() {
+        presenter.saveSettings(Area.FUKUSHIMA, InterestCategory.KOTLIN)
+
+        verify(mockStore).save(check {
+            assertThat(it.area).isEqualTo(Area.FUKUSHIMA)
+            assertThat(it.interestCategory).contains(InterestCategory.KOTLIN)
+        })
     }
 
     @Test
