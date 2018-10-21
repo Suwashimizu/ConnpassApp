@@ -4,6 +4,7 @@ import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.Toolbar
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +18,7 @@ import org.suwashizmu.connpassapp.module.presenter.ISearchSettingsPresenter
 import org.suwashizmu.connpassapp.module.presenter.SearchSettingsSubject
 import org.suwashizmu.connpassapp.module.view.ISearchSettingsView
 import org.suwashizmu.connpassapp.module.view.SearchSettingsViewModel
+import org.suwashizmu.connpassapp.view.adapter.SearchSettingsAdapter
 
 class SearchSettingsFragment : Fragment(), ISearchSettingsView {
 
@@ -34,11 +36,13 @@ class SearchSettingsFragment : Fragment(), ISearchSettingsView {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.search_settings_frag, container, false)
 
+        //setup onClickListener
         (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
         (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayShowHomeEnabled(true)
         requireActivity().findViewById<Toolbar>(R.id.toolbar).setNavigationOnClickListener(navigationListener)
 
-        //setup onClickListener
+        binding.listView.adapter = SearchSettingsAdapter()
+        binding.listView.layoutManager = LinearLayoutManager(requireActivity())
 
         return binding.root
     }
@@ -74,6 +78,11 @@ class SearchSettingsFragment : Fragment(), ISearchSettingsView {
 
     override fun update(searchSettingsViewModel: SearchSettingsViewModel) {
         Logger.d(searchSettingsViewModel)
+
+        val adapter = binding.listView.adapter as? SearchSettingsAdapter ?: return
+
+        adapter.viewModel = searchSettingsViewModel
+        adapter.notifyDataSetChanged()
     }
 
     private val navigationListener: View.OnClickListener = View.OnClickListener {

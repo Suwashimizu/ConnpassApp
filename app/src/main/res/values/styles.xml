@@ -15,15 +15,22 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <!--TextStyles-->
     <style name="TextAppearanceListItem">
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/primaryTextColor</item>
+    </style>
+
+
+    <style name="TextAppearanceListItem.Small">
+        <item name="android:textSize">12sp</item>
     </style>
 
     <style name="TextAppearanceListItemSecondary">
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/secondaryTextColor</item>
     </style>
+    <!--TextStyles-->
 
     <style name="AppToolbar" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
         <item name="android:textColorPrimary">@android:color/white</item>
