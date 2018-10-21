@@ -5,6 +5,7 @@ import org.suwashizmu.connpassapp.module.entity.Area
 import org.suwashizmu.connpassapp.module.entity.InterestCategory
 import org.suwashizmu.connpassapp.module.input.SaveSettingsInputData
 import org.suwashizmu.connpassapp.module.output.SearchSettingsOutputPort
+import org.suwashizmu.connpassapp.module.output.SettingsOutputPort
 import org.suwashizmu.connpassapp.module.router.ISearchSettingsRouter
 import org.suwashizmu.connpassapp.module.usecase.IFetchSettingsUseCase
 import org.suwashizmu.connpassapp.module.usecase.ISaveSettingsUseCase
@@ -13,9 +14,9 @@ import org.suwashizmu.connpassapp.module.view.SearchSettingsViewModel
 /**
  * Created by KEKE
  */
-class SearchSettingsPresenter : ISearchSettingsPresenter, ISearchSettingsController, SearchSettingsOutputPort {
+class SearchSettingsPresenter : ISearchSettingsPresenter, ISearchSettingsController, SearchSettingsOutputPort, SettingsOutputPort {
 
-    //subject
+    override var subject: SearchSettingsSubject = SearchSettingsSubject
     override var saveUseCase: ISaveSettingsUseCase? = null
     override var fetchSettingsUseCase: IFetchSettingsUseCase? = null
     override var router: ISearchSettingsRouter? = null
@@ -56,4 +57,13 @@ class SearchSettingsPresenter : ISearchSettingsPresenter, ISearchSettingsControl
         }
     }
     //endregion SearchSettingsOutputPort
+
+    //region SettingsOutputPort
+    override fun complete(area: Area?, interestCategories: Collection<InterestCategory>?) {
+        viewModel.area = area
+        if (interestCategories != null) viewModel.interestCategories = interestCategories
+
+        subject.update(viewModel)
+    }
+    //endregion SettingsOutputPort
 }

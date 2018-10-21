@@ -2,8 +2,12 @@ package org.suwashizmu.connpassapp.module.presenter
 
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
+import org.suwashizmu.connpassapp.module.entity.Area
+import org.suwashizmu.connpassapp.module.entity.InterestCategory
 import org.suwashizmu.connpassapp.module.usecase.IFetchSettingsUseCase
+import org.suwashizmu.connpassapp.module.view.SearchSettingsViewModel
 
 /**
  * Created by KEKE on 2018/10/21.
@@ -37,6 +41,9 @@ class SearchSettingsPresenterTest {
 
     @Test
     fun loadSettings() {
+        presenter.loadSettings()
+
+        verify(fetcher).fetchSettings()
     }
 
     @Test
@@ -45,5 +52,12 @@ class SearchSettingsPresenterTest {
 
     @Test
     fun complete() {
+
+        val test = presenter.subject.observable.test()
+
+        presenter.complete(Area.TOKYO, listOf(InterestCategory.AI))
+
+        test.assertNoErrors()
+        assertThat(test.values().first()).isEqualTo(SearchSettingsViewModel(Area.TOKYO, listOf(InterestCategory.AI)))
     }
 }

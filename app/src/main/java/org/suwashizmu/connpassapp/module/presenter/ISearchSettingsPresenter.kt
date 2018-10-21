@@ -10,7 +10,7 @@ import org.suwashizmu.connpassapp.module.usecase.ISaveSettingsUseCase
  */
 interface ISearchSettingsPresenter : BasePresenter {
 
-    //subject
+    var subject: SearchSettingsSubject
     var saveUseCase: ISaveSettingsUseCase?
     var fetchSettingsUseCase: IFetchSettingsUseCase?
     var router: ISearchSettingsRouter?
