@@ -65,9 +65,23 @@ class SearchSettingsPresenterTest {
 
         val test = presenter.subject.observable.test()
 
-        presenter.complete(Area.TOKYO, listOf(InterestCategory.AI), listOf(Area.TOKYO), listOf(InterestCategory.AI))
+        presenter.complete(currentArea = Area.TOKYO,
+                currentInterestCategories = listOf(InterestCategory.AI),
+                areaSource = listOf(Area.FUKUI),
+                interestCategoriesSource = listOf(InterestCategory.KOTLIN))
 
         test.assertNoErrors()
-        assertThat(test.values().first()).isEqualTo(SearchSettingsViewModel(Area.TOKYO, listOf(InterestCategory.AI)))
+        assertThat(test.values().last()).isEqualTo(SearchSettingsViewModel(Area.TOKYO, listOf(InterestCategory.AI), listOf(Area.FUKUI), listOf(InterestCategory.KOTLIN)))
+    }
+
+    @Test
+    fun onAreaSelected() {
+
+        presenter.onAreaSelected(Area.FUKUOKA)
+
+        assertThat(presenter.viewModel.area).isEqualTo(Area.FUKUOKA)
+
+        val test = presenter.subject.observable.test()
+        assertThat(test.values().last().area).isEqualTo(Area.FUKUOKA)
     }
 }

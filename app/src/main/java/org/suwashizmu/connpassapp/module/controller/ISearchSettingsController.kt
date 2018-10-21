@@ -9,9 +9,15 @@ import org.suwashizmu.connpassapp.module.entity.InterestCategory
  */
 interface ISearchSettingsController {
 
+    //画面を閉じる
     fun onNavigationButtonClick()
 
+    //地域を選択
+    fun onAreaSelected(area: Area)
+
+    //設定の読み込み
     fun loadSettings()
 
+    //設定の変更を保存
     fun saveSettings(area: Area, vararg interestCategories: InterestCategory)
 }

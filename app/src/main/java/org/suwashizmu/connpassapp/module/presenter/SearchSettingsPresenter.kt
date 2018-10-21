@@ -43,6 +43,11 @@ class SearchSettingsPresenter : ISearchSettingsPresenter {
         router?.close()
     }
 
+    override fun onAreaSelected(area: Area) {
+        viewModel.area = area
+        subject.update(viewModel)
+    }
+
     override fun loadSettings() {
         fetchSettingsUseCase?.fetchSettings()
     }
