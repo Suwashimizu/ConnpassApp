@@ -68,6 +68,8 @@ presenter(kodein:Kodein)にして
 `val useCase:UseCase by kodein.instance`
 で取得出来るようにしたい
 
+Subjectをジェネリックにしたい
+
 ## Test難易度
 
 - controller - o
