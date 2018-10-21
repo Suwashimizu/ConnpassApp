@@ -4,27 +4,54 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import org.suwashizmu.connpassapp.databinding.EventListItemBinding
+import org.suwashizmu.connpassapp.databinding.ProgressItemBinding
 import org.suwashizmu.connpassapp.module.view.EventListViewModel
 
 /**
  * Created by KEKE on 2018/10/15.
  */
-class EventListAdapter(private val itemClickCallback: (event: EventListViewModel.Event) -> Unit) : RecyclerView.Adapter<EventListAdapter.EventOverviewViewHolder>() {
+class EventListAdapter(private val itemClickCallback: (event: EventListViewModel.Event) -> Unit) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    companion object {
+        private const val VIEW_TYPE_ITEM = 0
+        private const val VIEW_TYPE_PROGRESS = 1
+    }
 
     private val eventList = mutableSetOf<EventListViewModel.Event>()
 
-    override fun onCreateViewHolder(p0: ViewGroup, p1: Int): EventOverviewViewHolder =
-            EventOverviewViewHolder(EventListItemBinding.inflate(LayoutInflater.from(p0.context), p0, false)).apply {
-                itemView.setOnClickListener {
-                    itemClickCallback(eventList.elementAt(adapterPosition))
+    var isLoading = false
+
+    override fun onCreateViewHolder(p0: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
+            when (viewType) {
+                VIEW_TYPE_ITEM -> {
+                    EventOverviewViewHolder(EventListItemBinding.inflate(LayoutInflater.from(p0.context), p0, false)).apply {
+                        itemView.setOnClickListener {
+                            itemClickCallback(eventList.elementAt(adapterPosition))
+                        }
+                    }
                 }
+                VIEW_TYPE_PROGRESS -> {
+                    ProgressViewHolder(ProgressItemBinding.inflate(LayoutInflater.from(p0.context), p0, false))
+                }
+                else -> throw IllegalStateException("undefined ViewType")
             }
 
-    override fun onBindViewHolder(viewHolder: EventOverviewViewHolder, position: Int) {
-        viewHolder.onBind(eventList.elementAt(position))
+    override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int) {
+        when (viewHolder) {
+            is EventOverviewViewHolder -> viewHolder.onBind(eventList.elementAt(position))
+        }
     }
 
-    override fun getItemCount(): Int = eventList.size
+    //Loading中かつ最後のアイテムはProgress
+    override fun getItemViewType(position: Int): Int {
+        return if (isLoading) {
+            if (position == itemCount - 1) VIEW_TYPE_PROGRESS else VIEW_TYPE_ITEM
+        } else {
+            VIEW_TYPE_ITEM
+        }
+    }
+
+    override fun getItemCount(): Int = if (isLoading) eventList.size + 1 else eventList.size
 
     fun update(viewModel: EventListViewModel) {
         //TODO diffTool使いたい
@@ -39,4 +66,6 @@ class EventListAdapter(private val itemClickCallback: (event: EventListViewModel
             binding.text2.text = event.catch
         }
     }
+
+    class ProgressViewHolder(private val binding: ProgressItemBinding) : RecyclerView.ViewHolder(binding.root)
 }

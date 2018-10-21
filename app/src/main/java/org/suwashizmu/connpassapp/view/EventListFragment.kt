@@ -99,10 +99,10 @@ class EventListFragment : Fragment(), IEventListView {
     override fun update(viewModel: EventListViewModel) {
         val adapter = binding.listView.adapter as? EventListAdapter
         adapter?.update(viewModel)
-        adapter?.notifyDataSetChanged()
 
         //次のEventが無ければload中にする
         loadMoreListener.isLoading = viewModel.hasNextEvents.not()
+        adapter?.isLoading = viewModel.hasNextEvents.not()
 
         binding.swipeRefresh.isRefreshing = viewModel.refreshing
         binding.progress.visibility = View.GONE
@@ -110,7 +110,10 @@ class EventListFragment : Fragment(), IEventListView {
         //Errorの表示
         if (viewModel.error != null) {
             Toast.makeText(activity, viewModel.error!!.message, Toast.LENGTH_SHORT).show()
+            adapter?.isLoading = false
         }
+
+        adapter?.notifyDataSetChanged()
     }
 
     private val refreshListener: SwipeRefreshLayout.OnRefreshListener = SwipeRefreshLayout.OnRefreshListener {
@@ -119,6 +122,10 @@ class EventListFragment : Fragment(), IEventListView {
 
     private val loadMoreListener = LoadMoreListener {
         Logger.d("loadMore!!!!!!")
+        val adapter = binding.listView.adapter as? EventListAdapter
+        //呼ばれた時は常にLoad中
+        adapter?.isLoading = true
+        adapter?.notifyDataSetChanged()
         presenter?.onScrollEnd()
     }
 
