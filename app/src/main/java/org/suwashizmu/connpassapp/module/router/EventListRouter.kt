@@ -12,6 +12,10 @@ import org.suwashizmu.connpassapp.view.SearchSettingsFragment
 
 class EventListRouter : IEventListRouter {
 
+    companion object {
+        const val TAG_SEARCH_SETTINGS = "settings"
+    }
+
     var fragment: Fragment? = null
 
     override fun gotoSearchSettings() {
@@ -23,7 +27,7 @@ class EventListRouter : IEventListRouter {
         val searchSettingsFragment = SearchSettingsFragment.newInstance()
 
         fragment.requireFragmentManager().beginTransaction()
-                .replace(R.id.container, searchSettingsFragment)
+                .replace(R.id.container, searchSettingsFragment, TAG_SEARCH_SETTINGS)
                 .addToBackStack(null)
                 .commit()
 
