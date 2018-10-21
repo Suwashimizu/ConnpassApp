@@ -3,6 +3,7 @@ package org.suwashizmu.connpassapp.view
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,6 +32,9 @@ class SearchSettingsFragment : Fragment(), ISearchSettingsView {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.search_settings_frag, container, false)
+
+        (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayShowHomeEnabled(true)
 
         //setup onClickListener
 

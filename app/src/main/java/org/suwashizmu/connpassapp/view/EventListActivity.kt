@@ -25,6 +25,8 @@ class EventListActivity : AppCompatActivity(), KodeinAware {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.event_list_act)
 
+        setSupportActionBar(findViewById(R.id.toolbar))
+
         val fragment = if (savedInstanceState == null) {
             EventListFragment.newInstance().apply {
                 supportFragmentManager.beginTransaction().add(R.id.container, this).commit()
