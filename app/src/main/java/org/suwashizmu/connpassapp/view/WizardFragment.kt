@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.*
 import android.widget.ArrayAdapter
+import android.widget.TextView
 import com.orhanobut.logger.Logger
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
@@ -99,7 +100,20 @@ class WizardFragment : Fragment(), IAreaSelectView {
         Logger.d(viewModel)
 
         if (binding.spinner.adapter == null) {
-            binding.spinner.adapter = ArrayAdapter(requireActivity(), android.R.layout.simple_list_item_1, viewModel.areaList.toMutableList())
+            binding.spinner.adapter = object : ArrayAdapter<Area>(requireActivity(), android.R.layout.simple_list_item_1, viewModel.areaList.toMutableList()) {
+                //表示は日本語で表示する
+                override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+                    return super.getView(position, convertView, parent).apply {
+                        (this as TextView).text = getItem(position)?.value
+                    }
+                }
+
+                override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
+                    return super.getDropDownView(position, convertView, parent).apply {
+                        (this as TextView).text = getItem(position)?.value
+                    }
+                }
+            }
 
             //選択位置の復元
             val currentPosition = viewModel.areaList.indexOfFirst { it.id == viewModel.selectedArea?.id }

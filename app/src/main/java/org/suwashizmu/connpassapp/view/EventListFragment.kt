@@ -102,7 +102,7 @@ class EventListFragment : Fragment(), IEventListView {
 
         //次のEventが無ければload中にする
         loadMoreListener.isLoading = viewModel.hasNextEvents.not()
-        adapter?.isLoading = viewModel.hasNextEvents.not()
+        adapter?.isLoading = false
 
         binding.swipeRefresh.isRefreshing = viewModel.refreshing
         binding.progress.visibility = View.GONE
