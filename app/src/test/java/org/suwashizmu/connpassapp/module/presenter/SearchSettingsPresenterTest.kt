@@ -94,4 +94,13 @@ class SearchSettingsPresenterTest {
         val test = presenter.subject.observable.test()
         assertThat(test.values().last().area).isEqualTo(Area.FUKUOKA)
     }
+
+    @Test
+    fun onInterestItemClick() {
+        val test = presenter.subject.observable.test()
+
+        presenter.onInterestItemClick()
+
+        assertThat(test.values().last().isShowInterestChoiceDialog).isTrue()
+    }
 }

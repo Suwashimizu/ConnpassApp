@@ -12,6 +12,12 @@ interface ISearchSettingsController {
     //画面を閉じる
     fun onNavigationButtonClick()
 
+    //興味をクリック
+    fun onInterestItemClick()
+
+    //興味を選択
+    fun onInterestSelected(interestCategories: Collection<InterestCategory>)
+
     //地域を選択
     fun onAreaSelected(area: Area)
 

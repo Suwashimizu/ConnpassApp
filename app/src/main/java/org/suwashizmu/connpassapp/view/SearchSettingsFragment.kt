@@ -18,6 +18,7 @@ import org.suwashizmu.connpassapp.module.view.ISearchSettingsView
 import org.suwashizmu.connpassapp.module.view.SearchSettingsViewModel
 import org.suwashizmu.connpassapp.view.adapter.SearchSettingsAdapter
 import org.suwashizmu.connpassapp.view.dialog.AreaChoiceDialogFragment
+import org.suwashizmu.connpassapp.view.dialog.InterestChoiceDialogFragment
 
 class SearchSettingsFragment : Fragment(), ISearchSettingsView {
 
@@ -27,6 +28,7 @@ class SearchSettingsFragment : Fragment(), ISearchSettingsView {
         private const val TAG_INTEREST = "interestDialog"
 
         private const val REQUEST_AREA = 0
+        private const val REQUEST_INTEREST = 1
 
         fun newInstance(): SearchSettingsFragment = SearchSettingsFragment()
     }
@@ -110,6 +112,16 @@ class SearchSettingsFragment : Fragment(), ISearchSettingsView {
 
         adapter.viewModel = searchSettingsViewModel
         adapter.notifyDataSetChanged()
+
+        if (searchSettingsViewModel.isShowInterestChoiceDialog) {
+            if (fragmentManager?.findFragmentByTag(TAG_INTEREST) == null) {
+                presenter?.viewModel?.let {
+
+                    InterestChoiceDialogFragment.newInstance(this, REQUEST_INTEREST, it)
+                            .show(fragmentManager, TAG_INTEREST)
+                }
+            }
+        }
     }
 
     private val navigationListener: View.OnClickListener = View.OnClickListener {
@@ -117,13 +129,15 @@ class SearchSettingsFragment : Fragment(), ISearchSettingsView {
     }
 
     private val areaItemClickListener: () -> Unit = {
-        presenter?.viewModel?.let {
-            AreaChoiceDialogFragment.newInstance(this, REQUEST_AREA, it)
-                    .show(fragmentManager, TAG_AREA)
+        if (fragmentManager?.findFragmentByTag(TAG_AREA) == null) {
+            presenter?.viewModel?.let {
+                AreaChoiceDialogFragment.newInstance(this, REQUEST_AREA, it)
+                        .show(fragmentManager, TAG_AREA)
+            }
         }
     }
 
     private val interestItemClickListener: () -> Unit = {
-
+        presenter?.onInterestItemClick()
     }
 }

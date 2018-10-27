@@ -44,6 +44,21 @@ class SearchSettingsPresenter : ISearchSettingsPresenter {
         router?.close()
     }
 
+    override fun onInterestItemClick() {
+        viewModel.isShowInterestChoiceDialog = true
+        subject.update(viewModel)
+        //trueを一度だけ送れば良いのでfalseに戻す
+        viewModel = viewModel.copy(isShowInterestChoiceDialog = false)
+    }
+
+    override fun onInterestSelected(interestCategories: Collection<InterestCategory>) {
+        Logger.d(interestCategories)
+
+        viewModel.interestCategories = interestCategories
+
+        subject.update(viewModel)
+    }
+
     override fun onAreaSelected(area: Area) {
         viewModel.area = area
         subject.update(viewModel)
@@ -56,6 +71,7 @@ class SearchSettingsPresenter : ISearchSettingsPresenter {
     override fun saveSettings(area: Area, vararg interestCategories: InterestCategory) {
         saveUseCase?.save(SaveSettingsInputData(area, interestCategories.toList()))
     }
+
     //endregion ISearchSettingsController
 
     //region SearchSettingsOutputPort
