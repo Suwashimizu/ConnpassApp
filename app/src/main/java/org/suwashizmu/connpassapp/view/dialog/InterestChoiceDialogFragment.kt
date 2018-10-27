@@ -15,12 +15,14 @@ class InterestChoiceDialogFragment : DialogFragment() {
 
     companion object {
 
-        private const val KEY_INTEREST_SOURCE = "interest"
+        private const val KEY_INTEREST_SOURCE = "source"
+        private const val KEY_CURRENT = "currentValues"
 
         fun newInstance(target: SearchSettingsFragment, requestCode: Int, viewModel: SearchSettingsViewModel): InterestChoiceDialogFragment {
             return InterestChoiceDialogFragment().apply {
                 arguments = Bundle().apply {
                     putSerializable(KEY_INTEREST_SOURCE, viewModel.interestCategoriesSource?.toTypedArray())
+                    putSerializable(KEY_CURRENT, viewModel.interestCategories.toTypedArray())
                 }
                 setTargetFragment(target, requestCode)
             }
@@ -31,21 +33,26 @@ class InterestChoiceDialogFragment : DialogFragment() {
 
         val searchSettingsFragment = targetFragment as SearchSettingsFragment
         val interestSource: Array<InterestCategory> = arguments!!.getSerializable(KEY_INTEREST_SOURCE) as Array<InterestCategory>
-
-        val choicesItems = mutableSetOf<Int>()
+        val currentSelectedItems = arguments!!.getSerializable(KEY_CURRENT) as Array<InterestCategory>
+        val checkedItems = interestSource.map { currentSelectedItems.contains(it) }
 
         return AlertDialog.Builder(requireActivity())
-                .setMultiChoiceItems(interestSource.map { it.name }.toTypedArray(), null) { _, which, isChecked ->
-                    if (isChecked) {
-                        choicesItems.add(which)
-                    } else {
-                        choicesItems.remove(which)
-                    }
-                }
+                .setMultiChoiceItems(interestSource.map { it.name }.toTypedArray(), checkedItems.toBooleanArray(), null)
                 .setPositiveButton(android.R.string.ok) { _, _ ->
+                    val checkedItemPositions = (dialog as AlertDialog).listView.checkedItemPositions
+                    //trueのkeyのみ取得する
+                    val checkedKeys = IntRange(0, checkedItemPositions.size() - 1)
+                            //keyの取得
+                            .map {
+                                checkedItemPositions.keyAt(it)
+                            }
+                            .filter {
+                                checkedItemPositions.get(it)
+                            }.toList()
                     searchSettingsFragment.presenter?.onInterestSelected(
-                            interestSource.filterIndexed { index, _ -> choicesItems.contains(index) }
+                            checkedKeys.map { interestSource[it] }
                     )
+
                 }
                 .setNegativeButton(android.R.string.cancel, null)
                 .create()
