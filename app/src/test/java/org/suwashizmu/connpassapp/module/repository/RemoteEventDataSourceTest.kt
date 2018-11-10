@@ -6,6 +6,7 @@ import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
 import io.reactivex.Single
 import org.junit.Test
+import org.suwashizmu.connpassapp.module.entity.Area
 import org.suwashizmu.connpassapp.module.repository.remote.RemoteEventDataSource
 import org.suwashizmu.connpassapp.service.api.ConnpassService
 import org.suwashizmu.connpassapp.service.api.SearchResult
@@ -24,7 +25,7 @@ class RemoteEventDataSourceTest {
 
     @Test
     fun `find event`() {
-        remoteDataSource.findEventList(0, 30, "kotlin")
+        remoteDataSource.findEventList(0, 30, Area.FUKUSHIMA, "kotlin")
 
         verify(mock).searchEvents(any())
     }

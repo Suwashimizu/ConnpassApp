@@ -16,7 +16,7 @@ class EventListInteractor(private val eventSearchPresenter: IEventListPresenter,
 
     override fun search(inputData: EventSearchInputData) {
         //varargには*をつけること
-        eventSearchRepository.findEventList(inputData.offset, inputData.limit, *inputData.keyword.toTypedArray())
+        eventSearchRepository.findEventList(inputData.offset, inputData.limit, inputData.area, *inputData.keyword.toTypedArray())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(

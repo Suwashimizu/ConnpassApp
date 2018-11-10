@@ -8,6 +8,7 @@ import io.reactivex.schedulers.Schedulers
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
+import org.suwashizmu.connpassapp.module.entity.Area
 import org.suwashizmu.connpassapp.module.entity.Event
 import org.suwashizmu.connpassapp.module.entity.EventList
 import org.suwashizmu.connpassapp.module.input.EventSearchInputData
@@ -65,7 +66,7 @@ class EventSearchInteractorTest {
     @Test
     fun `search`() {
 
-        interactor.search(EventSearchInputData(keyword = setOf("kotlin"), ym = 201802, offset = 0, limit = 30))
+        interactor.search(EventSearchInputData(keyword = setOf("kotlin"), ym = 201802, offset = 0, limit = 30, area = Area.FUKUSHIMA))
 
         verify(repository).findEventList(any(), any(), any())
 
@@ -81,7 +82,7 @@ class EventSearchInteractorTest {
 
         val presenter: IEventSearchPresenter = mock()
 
-        makeInteractor(presenter, errorRepository).search(EventSearchInputData(keyword = setOf("kotlin"), ym = 201802, offset = 0, limit = 30))
+        makeInteractor(presenter, errorRepository).search(EventSearchInputData(keyword = setOf("kotlin"), ym = 201802, offset = 0, limit = 30, area = Area.FUKUSHIMA))
 
         verify(errorRepository).findEventList(any(), any(), any())
         verify(presenter).complete(check {

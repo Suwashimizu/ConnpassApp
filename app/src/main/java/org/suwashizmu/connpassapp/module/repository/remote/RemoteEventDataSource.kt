@@ -1,6 +1,7 @@
 package org.suwashizmu.connpassapp.module.repository.remote
 
 import io.reactivex.Single
+import org.suwashizmu.connpassapp.module.entity.Area
 import org.suwashizmu.connpassapp.module.entity.EventList
 import org.suwashizmu.connpassapp.module.mapper.EventMapper
 import org.suwashizmu.connpassapp.module.repository.EventRepository
@@ -15,9 +16,10 @@ class RemoteEventDataSource(private val client: ConnpassService) : EventReposito
 
     private val mapper = EventMapper()
 
-    override fun findEventList(start: Int, limit: Int, vararg keyword: String): Single<EventList> {
+    override fun findEventList(start: Int, limit: Int, area: Area?, vararg keywordOr: String): Single<EventList> {
         val query = SearchQuery.build {
-            this.keyword = keyword.toSet()
+            this.keyword = setOf(area?.value ?: "")
+            this.keywordOr = keywordOr.toSet()
             this.start = start
             this.count = limit
         }
