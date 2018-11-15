@@ -8,6 +8,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 import org.suwashizmu.connpassapp.module.input.EventFetchInputData
 import org.suwashizmu.connpassapp.module.output.EventSearchOutputData
+import org.suwashizmu.connpassapp.module.router.IEventListRouter
 import org.suwashizmu.connpassapp.module.usecase.IEventFetchUseCase
 
 /**
@@ -16,9 +17,11 @@ import org.suwashizmu.connpassapp.module.usecase.IEventFetchUseCase
 class EventListPresenterTest {
 
     private val useCase: IEventFetchUseCase = mock()
+    private val mockRouter: IEventListRouter = mock()
 
     private val presenter = EventListPresenter().apply {
         useCase = this@EventListPresenterTest.useCase
+        router = mockRouter
     }
 
     @Test
@@ -60,24 +63,24 @@ class EventListPresenterTest {
     @Test
     fun `hasNextEvents is True when currentListSize greater than totalEventCount`() {
 
-        val test = presenter.subject.observable.test()
-
         presenter.complete(EventSearchOutputData(listOf(
                 EventSearchOutputData.OutputEvent("title", "catch", "description"),
                 EventSearchOutputData.OutputEvent("title", "catch", "description")),
                 null,
                 2))
 
+        val test = presenter.subject.observable.test()
+
+        assertThat(test.valueCount()).isEqualTo(1)
         test.assertValue { it.hasNextEvents.not() }
         test.assertValue { it.refreshing.not() }
     }
 
     @Test
     fun `hasNextEvent is False when eventList is empty`() {
+        presenter.complete(EventSearchOutputData(emptyList(), null, -1))
 
         val test = presenter.subject.observable.test()
-
-        presenter.complete(EventSearchOutputData(emptyList(), null, -1))
 
         test.assertValue { it.hasNextEvents.not() }
         test.assertValue { it.refreshing.not() }
@@ -103,4 +106,14 @@ class EventListPresenterTest {
             assertThat(it.offset).isEqualTo(0)
         })
     }
+
+    @Test
+    fun onSearchIconClicked() {
+
+        presenter.onSearchIconClicked()
+
+        verify(mockRouter).gotoSearchSettings()
+    }
+
+
 }

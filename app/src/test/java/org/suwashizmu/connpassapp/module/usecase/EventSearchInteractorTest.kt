@@ -8,6 +8,7 @@ import io.reactivex.schedulers.Schedulers
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
+import org.suwashizmu.connpassapp.module.entity.Area
 import org.suwashizmu.connpassapp.module.entity.Event
 import org.suwashizmu.connpassapp.module.entity.EventList
 import org.suwashizmu.connpassapp.module.input.EventSearchInputData
@@ -47,7 +48,7 @@ class EventSearchInteractorTest {
     )
 
     private val repository: EventRepository = mock {
-        on { findEventList(any(), any(), any()) } doReturn Single.just(result)
+        on { findEventList(any(), any(), any(), anyVararg()) } doReturn Single.just(result)
     }
     private val presenter: IEventSearchPresenter = mock()
 
@@ -65,9 +66,9 @@ class EventSearchInteractorTest {
     @Test
     fun `search`() {
 
-        interactor.search(EventSearchInputData(keyword = setOf("kotlin"), ym = 201802, offset = 0, limit = 30))
+        interactor.search(EventSearchInputData(keyword = setOf("kotlin"), ym = 201802, offset = 0, limit = 30, area = Area.FUKUSHIMA))
 
-        verify(repository).findEventList(any(), any(), any())
+        verify(repository).findEventList(any(), any(), any(), anyVararg())
 
         verify(presenter).complete(any())
     }
@@ -76,14 +77,14 @@ class EventSearchInteractorTest {
     fun `search error`() {
 
         val errorRepository: EventRepository = mock {
-            on { findEventList(any(), any(), any()) } doReturn Single.error(UnknownHostException("unknownHost"))
+            on { findEventList(any(), any(), any(), anyVararg()) } doReturn Single.error(UnknownHostException("unknownHost"))
         }
 
         val presenter: IEventSearchPresenter = mock()
 
-        makeInteractor(presenter, errorRepository).search(EventSearchInputData(keyword = setOf("kotlin"), ym = 201802, offset = 0, limit = 30))
+        makeInteractor(presenter, errorRepository).search(EventSearchInputData(keyword = setOf("kotlin"), ym = 201802, offset = 0, limit = 30, area = Area.FUKUSHIMA))
 
-        verify(errorRepository).findEventList(any(), any(), any())
+        verify(errorRepository).findEventList(any(), any(), any(), anyVararg())
         verify(presenter).complete(check {
             assertThat(it.error).isNotNull()
             assertThat(it.error).isInstanceOf(UnknownHostException::class.java)

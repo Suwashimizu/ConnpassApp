@@ -59,7 +59,7 @@ class AreaSelectPresenterTest {
 
     @Test
     fun `outputPort complete`() {
-        presenter.complete(Area.TOKYO, listOf(InterestCategory.AI))
+        presenter.complete(Area.TOKYO, listOf(InterestCategory.AI), listOf(Area.TOKYO), listOf(InterestCategory.AI))
 
         verify(router).gotoEventList()
     }
@@ -67,7 +67,7 @@ class AreaSelectPresenterTest {
 
     @Test
     fun `outputPort complete when area is null`() {
-        presenter.complete(null, listOf(InterestCategory.AI))
+        presenter.complete(null, listOf(InterestCategory.AI), listOf(Area.TOKYO), listOf(InterestCategory.AI))
 
         verify(router, never()).gotoEventList()
     }
@@ -75,7 +75,7 @@ class AreaSelectPresenterTest {
 
     @Test
     fun `outputPort complete when InterestCategory is null`() {
-        presenter.complete(Area.TOKYO, null)
+        presenter.complete(Area.TOKYO, null, listOf(Area.TOKYO), listOf(InterestCategory.AI))
 
         verify(router, never()).gotoEventList()
     }

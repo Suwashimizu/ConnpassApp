@@ -8,6 +8,7 @@ import io.reactivex.schedulers.Schedulers
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
+import org.suwashizmu.connpassapp.module.entity.Area
 import org.suwashizmu.connpassapp.module.entity.Event
 import org.suwashizmu.connpassapp.module.entity.EventList
 import org.suwashizmu.connpassapp.module.input.EventFetchInputData
@@ -24,7 +25,9 @@ import java.net.UnknownHostException
 class EventFetchInteractorTest {
 
     private val mockPresenter: IEventListPresenter = mock()
-    private val areaMock: AreaRepository = mock()
+    private val areaMock: AreaRepository = mock {
+        on { getArea() } doReturn Area.AICHI
+    }
     private val interestMock: InterestCategoryRepository = mock()
 
     private val result = EventList(100, listOf(Event(
@@ -45,7 +48,7 @@ class EventFetchInteractorTest {
     )
 
     private val eventMock: EventRepository = mock {
-        on { findEventList(any(), any(), any()) } doReturn Single.just<EventList>(result)
+        on { findEventList(any(), any(), any(), anyVararg()) } doReturn Single.just<EventList>(result)
     }
 
     private val interactor = EventFetchInteractor(
@@ -69,7 +72,11 @@ class EventFetchInteractorTest {
 
         verify(areaMock).getArea()
         verify(interestMock).getCurrentInterestCategories()
-        verify(eventMock).findEventList(any(), any(), any())
+        verify(eventMock).findEventList(any(), any(), check {
+            assertThat(it).isEqualTo(Area.AICHI)
+        }, check {
+            assertThat(it).isEqualTo("愛知")
+        })
 
         verify(mockPresenter).complete(check {
             assertThat(it.error).isNull()
@@ -81,12 +88,12 @@ class EventFetchInteractorTest {
     @Test
     fun `fetchEvent when error`() {
 
-        whenever(eventMock.findEventList(any(), any(), any())).thenReturn(Single.error(UnknownHostException("unknownHost")))
+        whenever(eventMock.findEventList(any(), any(), any(), anyVararg())).thenReturn(Single.error(UnknownHostException("unknownHost")))
         interactor.fetchEvent(EventFetchInputData(0, 30))
 
         verify(areaMock).getArea()
         verify(interestMock).getCurrentInterestCategories()
-        verify(eventMock).findEventList(any(), any(), any())
+        verify(eventMock).findEventList(any(), any(), anyOrNull(), any())
 
         verify(mockPresenter).complete(check {
             assertThat(it.error).isNotNull()

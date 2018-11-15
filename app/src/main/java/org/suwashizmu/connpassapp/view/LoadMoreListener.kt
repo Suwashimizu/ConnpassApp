@@ -12,7 +12,7 @@ import com.orhanobut.logger.Logger
 class LoadMoreListener(private val onLoadMoreListener: () -> Unit) : RecyclerView.OnScrollListener() {
 
     var isLoading = false
-    private val visibleThreshold = 5
+    private val visibleThreshold = 1
 
     override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
         super.onScrolled(recyclerView, dx, dy)

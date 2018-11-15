@@ -1,5 +1,7 @@
 package org.suwashizmu.connpassapp.module.input
 
+import org.suwashizmu.connpassapp.module.entity.Area
+
 /**
  * Created by KEKE on 2018/10/05.
  *
@@ -9,6 +11,7 @@ package org.suwashizmu.connpassapp.module.input
  * data classならcopyで良い気がする
  */
 data class EventSearchInputData(
+        var area: Area,
         var keyword: Set<String> = emptySet(),
         val ym: Int = -1,
         val offset: Int,

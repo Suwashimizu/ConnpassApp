@@ -8,6 +8,7 @@ import io.reactivex.schedulers.Schedulers
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
+import org.suwashizmu.connpassapp.module.entity.Area
 import org.suwashizmu.connpassapp.module.entity.Event
 import org.suwashizmu.connpassapp.module.entity.EventList
 import org.suwashizmu.connpassapp.module.input.EventSearchInputData
@@ -42,7 +43,7 @@ class EventListInteractorTest {
     )
 
     private val repository: EventRepository = mock {
-        on { findEventList(any(), any(), any()) } doReturn Single.create<EventList> { emitter ->
+        on { findEventList(any(), any(), any(), any()) } doReturn Single.create<EventList> { emitter ->
             emitter.onSuccess(result)
         }
     }
@@ -62,9 +63,9 @@ class EventListInteractorTest {
     @Test
     fun `search`() {
 
-        eventListInteractor.search(EventSearchInputData(keyword = setOf("kotlin"), ym = 201802, offset = 0, limit = 30))
+        eventListInteractor.search(EventSearchInputData(keyword = setOf("kotlin"), ym = 201802, offset = 0, limit = 30, area = Area.FUKUSHIMA))
 
-        verify(repository).findEventList(any(), any(), any())
+        verify(repository).findEventList(any(), any(), any(), any())
         verify(presenter).complete(check {
             assertThat(it.totalEventCount).isEqualTo(100)
         })
@@ -74,14 +75,14 @@ class EventListInteractorTest {
     fun `search error`() {
 
         val errorRepository: EventRepository = mock {
-            on { findEventList(any(), any(), any()) } doReturn Single.error(UnknownHostException("unknownHost"))
+            on { findEventList(any(), any(), any(), any()) } doReturn Single.error(UnknownHostException("unknownHost"))
         }
 
         val presenter: IEventSearchPresenter = mock()
 
-        makeInteractor(presenter, errorRepository).search(EventSearchInputData(keyword = setOf("kotlin"), ym = 201802, offset = 0, limit = 30))
+        makeInteractor(presenter, errorRepository).search(EventSearchInputData(keyword = setOf("kotlin"), ym = 201802, offset = 0, limit = 30, area = Area.FUKUSHIMA))
 
-        verify(errorRepository).findEventList(any(), any(), any())
+        verify(errorRepository).findEventList(any(), any(), any(), any())
         verify(presenter).complete(check {
             assertThat(it.error).isInstanceOf(UnknownHostException::class.java)
         })

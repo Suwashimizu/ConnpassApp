@@ -23,6 +23,9 @@ open class MainActivity : AppCompatActivity(), KodeinAware, ISearchEventView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        setSupportActionBar(findViewById(R.id.toolbar))
+
+
         if (savedInstanceState == null) {
             /*
             val eventSearchController = EventSearchController(EventSearchInteractor(

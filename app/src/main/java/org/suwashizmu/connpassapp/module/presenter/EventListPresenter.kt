@@ -72,5 +72,9 @@ class EventListPresenter : IEventListPresenter, IEventListController {
         useCase?.fetchEvent(pagination)
     }
 
+    override fun onSearchIconClicked() {
+        router?.gotoSearchSettings()
+    }
+
     //endregion IEventListController
 }

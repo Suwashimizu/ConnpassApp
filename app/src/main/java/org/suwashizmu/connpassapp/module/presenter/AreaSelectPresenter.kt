@@ -64,8 +64,8 @@ class AreaSelectPresenter : IAreaSelectPresenter {
     }
 
     //region SettingsOutputPort
-    override fun complete(area: Area?, interestCategories: Collection<InterestCategory>?) {
-        if (area != null && interestCategories != null) {
+    override fun complete(currentArea: Area?, currentInterestCategories: Collection<InterestCategory>?, areaSource: Collection<Area>, interestCategoriesSource: Collection<InterestCategory>) {
+        if (currentArea != null && currentInterestCategories != null) {
             router?.gotoEventList()
         }
     }

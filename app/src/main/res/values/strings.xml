@@ -6,4 +6,11 @@
 
     <string name="next">次へ</string>
     <string name="finish">完了</string>
+
+    <string name="search">検索</string>
+
+    <string name="area">地域</string>
+    <string name="interest">興味あるもの</string>
+    <string name="save">保存</string>
+    <string name="search_settings">検索設定</string>
 </resources>
