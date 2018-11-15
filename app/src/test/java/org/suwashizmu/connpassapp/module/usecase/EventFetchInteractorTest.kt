@@ -48,7 +48,7 @@ class EventFetchInteractorTest {
     )
 
     private val eventMock: EventRepository = mock {
-        on { findEventList(any(), any(), anyOrNull(), any()) } doReturn Single.just<EventList>(result)
+        on { findEventList(any(), any(), any(), anyVararg()) } doReturn Single.just<EventList>(result)
     }
 
     private val interactor = EventFetchInteractor(
@@ -72,10 +72,11 @@ class EventFetchInteractorTest {
 
         verify(areaMock).getArea()
         verify(interestMock).getCurrentInterestCategories()
-        verify(eventMock).findEventList(check {
-            assertThat(it).isEqualTo(1)
-        }, any(), any(), any())
-        verify(eventMock).findEventList(any(), any(), any(), any())
+        verify(eventMock).findEventList(any(), any(), check {
+            assertThat(it).isEqualTo(Area.AICHI)
+        }, check {
+            assertThat(it).isEqualTo("愛知")
+        })
 
         verify(mockPresenter).complete(check {
             assertThat(it.error).isNull()
@@ -87,7 +88,7 @@ class EventFetchInteractorTest {
     @Test
     fun `fetchEvent when error`() {
 
-        whenever(eventMock.findEventList(any(), any(), anyOrNull(), any())).thenReturn(Single.error(UnknownHostException("unknownHost")))
+        whenever(eventMock.findEventList(any(), any(), any(), anyVararg())).thenReturn(Single.error(UnknownHostException("unknownHost")))
         interactor.fetchEvent(EventFetchInputData(0, 30))
 
         verify(areaMock).getArea()

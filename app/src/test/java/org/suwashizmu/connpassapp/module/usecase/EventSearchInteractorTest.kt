@@ -48,7 +48,7 @@ class EventSearchInteractorTest {
     )
 
     private val repository: EventRepository = mock {
-        on { findEventList(any(), any(), any()) } doReturn Single.just(result)
+        on { findEventList(any(), any(), any(), anyVararg()) } doReturn Single.just(result)
     }
     private val presenter: IEventSearchPresenter = mock()
 
@@ -68,7 +68,7 @@ class EventSearchInteractorTest {
 
         interactor.search(EventSearchInputData(keyword = setOf("kotlin"), ym = 201802, offset = 0, limit = 30, area = Area.FUKUSHIMA))
 
-        verify(repository).findEventList(any(), any(), any())
+        verify(repository).findEventList(any(), any(), any(), anyVararg())
 
         verify(presenter).complete(any())
     }
@@ -77,14 +77,14 @@ class EventSearchInteractorTest {
     fun `search error`() {
 
         val errorRepository: EventRepository = mock {
-            on { findEventList(any(), any(), any()) } doReturn Single.error(UnknownHostException("unknownHost"))
+            on { findEventList(any(), any(), any(), anyVararg()) } doReturn Single.error(UnknownHostException("unknownHost"))
         }
 
         val presenter: IEventSearchPresenter = mock()
 
         makeInteractor(presenter, errorRepository).search(EventSearchInputData(keyword = setOf("kotlin"), ym = 201802, offset = 0, limit = 30, area = Area.FUKUSHIMA))
 
-        verify(errorRepository).findEventList(any(), any(), any())
+        verify(errorRepository).findEventList(any(), any(), any(), anyVararg())
         verify(presenter).complete(check {
             assertThat(it.error).isNotNull()
             assertThat(it.error).isInstanceOf(UnknownHostException::class.java)
