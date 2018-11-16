@@ -12,13 +12,13 @@ import org.suwashizmu.connpassapp.module.repository.EventRepository
 class EventDataSource(private val localEventDataSource: LocalEventDataSource,
                       private val remoteEventDataSource: RemoteEventDataSource) : EventRepository {
 
-    override fun findById(id: Int): Single<Event> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    override fun findById(id: Int): Single<Event> =
+            localEventDataSource.findById(id)
 
     override fun findEventList(start: Int, limit: Int, area: Area?, vararg keywordOr: String): Single<EventList> =
             remoteEventDataSource.findEventList(start, limit, area, *keywordOr)
                     .doOnEvent { t1, t2 ->
+                        //取得したイベントはcacheに保存する
                         if (t1 != null) {
                             localEventDataSource.cachedEvents.addAll(t1.eventList)
                         }
