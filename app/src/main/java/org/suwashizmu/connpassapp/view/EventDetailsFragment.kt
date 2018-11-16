@@ -1,11 +1,17 @@
 package org.suwashizmu.connpassapp.view
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebResourceRequest
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import com.orhanobut.logger.Logger
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
 import org.suwashizmu.connpassapp.R
@@ -40,6 +46,11 @@ class EventDetailsFragment : Fragment(), IEventDetailsView {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        //CustomTabを使おう!
+        //https://techbooster.org/android/application/17097/
+        binding.webView.webViewClient = webViewClient
+        binding.webView.settings.javaScriptEnabled = true
+
         presenter?.onCreate()
         presenter?.getEvent(getEventId())
     }
@@ -48,7 +59,6 @@ class EventDetailsFragment : Fragment(), IEventDetailsView {
         super.onResume()
 
         presenter?.onResume()
-
 
         subject.observable
                 .subscribe(this::update)
@@ -74,8 +84,18 @@ class EventDetailsFragment : Fragment(), IEventDetailsView {
             requireActivity().intent.getIntExtra(EventDetailsActivity.KEY_ID, -1)
 
     override fun update(viewModel: EventDetailsViewModel) {
-        if (viewModel.error != null) {
+        if (viewModel.error == null) {
             binding.webView.loadUrl(viewModel.eventUrl)
+        }
+
+        Logger.d(viewModel)
+    }
+
+    //リンクを外部ブラウザで開く
+    private val webViewClient = object : WebViewClient() {
+        override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(view?.url)))
+            return true
         }
     }
 }
