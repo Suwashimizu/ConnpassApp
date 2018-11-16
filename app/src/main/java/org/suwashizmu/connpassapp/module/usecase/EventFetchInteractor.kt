@@ -34,9 +34,11 @@ class EventFetchInteractor(private val presenter: IEventListPresenter,
                             presenter.complete(EventSearchOutputData(
                                     eventList = eventList.eventList.map {
                                         EventSearchOutputData.OutputEvent(
+                                                it.id,
                                                 it.title,
                                                 it.catch,
-                                                it.description)
+                                                it.description
+                                        )
                                     },
                                     error = null,
                                     totalEventCount = eventList.totalEventCount

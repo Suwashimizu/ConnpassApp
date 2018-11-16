@@ -2,6 +2,7 @@ package org.suwashizmu.connpassapp.module.router
 
 import org.suwashizmu.connpassapp.R
 import org.suwashizmu.connpassapp.module.assemble.SearchSettingsAssembler
+import org.suwashizmu.connpassapp.view.EventDetailsActivity
 import org.suwashizmu.connpassapp.view.EventListActivity
 import org.suwashizmu.connpassapp.view.SearchSettingsFragment
 
@@ -35,4 +36,10 @@ class EventListRouter : IEventListRouter {
         SearchSettingsAssembler().assembleSearchSettings(activity, searchSettingsFragment)
     }
 
+    override fun gotoEventDetails(eventId: Int) {
+
+        val context = fragment?.activity ?: return
+
+        fragment?.startActivity(EventDetailsActivity.newIntent(context, eventId))
+    }
 }

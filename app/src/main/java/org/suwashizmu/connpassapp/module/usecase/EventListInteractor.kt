@@ -25,9 +25,11 @@ class EventListInteractor(private val eventSearchPresenter: IEventListPresenter,
                                     eventList = eventList.eventList.map {
                                         Logger.d(it)
                                         EventSearchOutputData.OutputEvent(
+                                                it.id,
                                                 it.title,
                                                 it.catch,
-                                                it.description)
+                                                it.description
+                                        )
                                     },
                                     error = null,
                                     totalEventCount = eventList.totalEventCount

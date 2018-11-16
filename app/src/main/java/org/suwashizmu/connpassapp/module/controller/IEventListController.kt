@@ -11,4 +11,9 @@ interface IEventListController {
     fun onPullRefresh()
 
     fun onSearchIconClicked()
+
+    /**
+     * リストのItemをクリックした時
+     */
+    fun onItemClick(eventId: Int)
 }

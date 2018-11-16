@@ -10,5 +10,5 @@ data class EventListViewModel(var eventList: MutableList<Event>,
                               var refreshing: Boolean,
                               var error: Throwable?) {
 
-    data class Event(val title: String, val catch: String)
+    data class Event(val id: Int, val catch: String, val title: String)
 }
