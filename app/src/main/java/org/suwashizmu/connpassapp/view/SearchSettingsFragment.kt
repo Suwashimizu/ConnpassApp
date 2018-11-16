@@ -1,12 +1,10 @@
 package org.suwashizmu.connpassapp.view
 
-import android.databinding.DataBindingUtil
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.Toolbar
 import android.view.*
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.databinding.DataBindingUtil
 import com.orhanobut.logger.Logger
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
@@ -20,7 +18,7 @@ import org.suwashizmu.connpassapp.view.adapter.SearchSettingsAdapter
 import org.suwashizmu.connpassapp.view.dialog.AreaChoiceDialogFragment
 import org.suwashizmu.connpassapp.view.dialog.InterestChoiceDialogFragment
 
-class SearchSettingsFragment : Fragment(), ISearchSettingsView {
+class SearchSettingsFragment : androidx.fragment.app.Fragment(), ISearchSettingsView {
 
     companion object {
 
@@ -56,7 +54,7 @@ class SearchSettingsFragment : Fragment(), ISearchSettingsView {
         requireActivity().findViewById<Toolbar>(R.id.toolbar).setNavigationOnClickListener(navigationListener)
 
         binding.listView.adapter = SearchSettingsAdapter(areaItemClickListener, interestItemClickListener)
-        binding.listView.layoutManager = LinearLayoutManager(requireActivity())
+        binding.listView.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(requireActivity())
 
         return binding.root
     }

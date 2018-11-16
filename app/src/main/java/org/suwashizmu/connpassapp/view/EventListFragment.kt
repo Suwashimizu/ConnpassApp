@@ -1,13 +1,10 @@
 package org.suwashizmu.connpassapp.view
 
-import android.databinding.DataBindingUtil
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.widget.SwipeRefreshLayout
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
 import android.view.*
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import com.orhanobut.logger.Logger
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
@@ -19,7 +16,7 @@ import org.suwashizmu.connpassapp.module.view.EventListViewModel
 import org.suwashizmu.connpassapp.module.view.IEventListView
 import org.suwashizmu.connpassapp.view.adapter.EventListAdapter
 
-class EventListFragment : Fragment(), IEventListView {
+class EventListFragment : androidx.fragment.app.Fragment(), IEventListView {
 
     companion object {
         fun newInstance(): EventListFragment = EventListFragment()
@@ -56,7 +53,7 @@ class EventListFragment : Fragment(), IEventListView {
             Logger.d("ItemClicked:$it")
         }
         binding.listView.addOnScrollListener(loadMoreListener)
-        binding.listView.layoutManager = LinearLayoutManager(activity)
+        binding.listView.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(activity)
 
         presenter?.onCreate()
     }
@@ -116,7 +113,7 @@ class EventListFragment : Fragment(), IEventListView {
         adapter?.notifyDataSetChanged()
     }
 
-    private val refreshListener: SwipeRefreshLayout.OnRefreshListener = SwipeRefreshLayout.OnRefreshListener {
+    private val refreshListener: androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener = androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener {
         presenter?.onPullRefresh()
     }
 

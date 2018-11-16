@@ -1,6 +1,5 @@
 package org.suwashizmu.connpassapp.view.adapter
 
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import org.suwashizmu.connpassapp.databinding.EventListItemBinding
@@ -10,7 +9,7 @@ import org.suwashizmu.connpassapp.module.view.EventListViewModel
 /**
  * Created by KEKE on 2018/10/15.
  */
-class EventListAdapter(private val itemClickCallback: (event: EventListViewModel.Event) -> Unit) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class EventListAdapter(private val itemClickCallback: (event: EventListViewModel.Event) -> Unit) : androidx.recyclerview.widget.RecyclerView.Adapter<androidx.recyclerview.widget.RecyclerView.ViewHolder>() {
 
     companion object {
         private const val VIEW_TYPE_ITEM = 0
@@ -21,7 +20,7 @@ class EventListAdapter(private val itemClickCallback: (event: EventListViewModel
 
     var isLoading = false
 
-    override fun onCreateViewHolder(p0: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
+    override fun onCreateViewHolder(p0: ViewGroup, viewType: Int): androidx.recyclerview.widget.RecyclerView.ViewHolder =
             when (viewType) {
                 VIEW_TYPE_ITEM -> {
                     EventOverviewViewHolder(EventListItemBinding.inflate(LayoutInflater.from(p0.context), p0, false)).apply {
@@ -36,7 +35,7 @@ class EventListAdapter(private val itemClickCallback: (event: EventListViewModel
                 else -> throw IllegalStateException("undefined ViewType")
             }
 
-    override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int) {
+    override fun onBindViewHolder(viewHolder: androidx.recyclerview.widget.RecyclerView.ViewHolder, position: Int) {
         when (viewHolder) {
             is EventOverviewViewHolder -> viewHolder.onBind(eventList.elementAt(position))
         }
@@ -59,7 +58,7 @@ class EventListAdapter(private val itemClickCallback: (event: EventListViewModel
         eventList.addAll(viewModel.eventList)
     }
 
-    class EventOverviewViewHolder(private val binding: EventListItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    class EventOverviewViewHolder(private val binding: EventListItemBinding) : androidx.recyclerview.widget.RecyclerView.ViewHolder(binding.root) {
 
         fun onBind(event: EventListViewModel.Event) {
             binding.text1.text = event.title
@@ -67,5 +66,5 @@ class EventListAdapter(private val itemClickCallback: (event: EventListViewModel
         }
     }
 
-    class ProgressViewHolder(private val binding: ProgressItemBinding) : RecyclerView.ViewHolder(binding.root)
+    class ProgressViewHolder(private val binding: ProgressItemBinding) : androidx.recyclerview.widget.RecyclerView.ViewHolder(binding.root)
 }

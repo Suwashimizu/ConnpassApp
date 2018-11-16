@@ -1,13 +1,12 @@
 package org.suwashizmu.connpassapp.view
 
 
-import android.databinding.DataBindingUtil
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.view.*
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import android.widget.Toast
+import androidx.databinding.DataBindingUtil
 import com.orhanobut.logger.Logger
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
@@ -22,7 +21,7 @@ import org.suwashizmu.connpassapp.module.view.InterestCategoriesViewModel
 /**
  * Created by KEKE on 2018/10/08.
  */
-class WizardInterestFragment : Fragment(), IInterestCategoriesView {
+class WizardInterestFragment : androidx.fragment.app.Fragment(), IInterestCategoriesView {
 
     companion object {
         fun newInstance(): WizardInterestFragment =

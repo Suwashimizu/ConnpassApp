@@ -2,8 +2,7 @@ package org.suwashizmu.connpassapp.view.dialog
 
 import android.app.Dialog
 import android.os.Bundle
-import android.support.v4.app.DialogFragment
-import android.support.v7.app.AlertDialog
+import androidx.appcompat.app.AlertDialog
 import org.suwashizmu.connpassapp.module.entity.InterestCategory
 import org.suwashizmu.connpassapp.module.view.SearchSettingsViewModel
 import org.suwashizmu.connpassapp.view.SearchSettingsFragment
@@ -11,7 +10,7 @@ import org.suwashizmu.connpassapp.view.SearchSettingsFragment
 /**
  * Created by KEKE on 2018/10/21.
  */
-class InterestChoiceDialogFragment : DialogFragment() {
+class InterestChoiceDialogFragment : androidx.fragment.app.DialogFragment() {
 
     companion object {
 

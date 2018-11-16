@@ -1,9 +1,8 @@
 package org.suwashizmu.connpassapp.view.adapter
 
-import android.databinding.DataBindingUtil
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import org.suwashizmu.connpassapp.R
 import org.suwashizmu.connpassapp.module.view.SearchSettingsViewModel
 
@@ -11,7 +10,7 @@ import org.suwashizmu.connpassapp.module.view.SearchSettingsViewModel
  * Created by KEKE on 2018/10/21.
  */
 class SearchSettingsAdapter(private val areaItemClickListener: () -> Unit,
-                            private val interestItemClickListener: () -> Unit) : RecyclerView.Adapter<SearchSettingsViewHolder>() {
+                            private val interestItemClickListener: () -> Unit) : androidx.recyclerview.widget.RecyclerView.Adapter<SearchSettingsViewHolder>() {
 
     companion object {
         private const val ITEM_SIZE = 2

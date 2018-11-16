@@ -1,7 +1,7 @@
 package org.suwashizmu.connpassapp.view
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import com.orhanobut.logger.Logger
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware

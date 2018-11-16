@@ -1,6 +1,5 @@
 package org.suwashizmu.connpassapp.module.router
 
-import android.support.v4.app.Fragment
 import org.suwashizmu.connpassapp.R
 import org.suwashizmu.connpassapp.module.assemble.WizardAssembler
 import org.suwashizmu.connpassapp.view.EventListActivity
@@ -11,7 +10,7 @@ import org.suwashizmu.connpassapp.view.WizardInterestFragment
  * Created by KEKE on 2018/10/07.
  */
 class WizardRouter : IWizardRouter {
-    lateinit var fragment: Fragment
+    lateinit var fragment: androidx.fragment.app.Fragment
 
     private val assembler = WizardAssembler()
 

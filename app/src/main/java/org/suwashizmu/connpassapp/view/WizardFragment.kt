@@ -1,12 +1,11 @@
 package org.suwashizmu.connpassapp.view
 
 
-import android.databinding.DataBindingUtil
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.view.*
 import android.widget.ArrayAdapter
 import android.widget.TextView
+import androidx.databinding.DataBindingUtil
 import com.orhanobut.logger.Logger
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
@@ -21,7 +20,7 @@ import org.suwashizmu.connpassapp.module.view.IAreaSelectView
 /**
  * Created by KEKE on 2018/10/06.
  */
-class WizardFragment : Fragment(), IAreaSelectView {
+class WizardFragment : androidx.fragment.app.Fragment(), IAreaSelectView {
 
     companion object {
         fun newInstance(): WizardFragment = WizardFragment()
