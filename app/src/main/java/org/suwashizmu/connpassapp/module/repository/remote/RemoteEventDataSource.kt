@@ -2,6 +2,7 @@ package org.suwashizmu.connpassapp.module.repository.remote
 
 import io.reactivex.Single
 import org.suwashizmu.connpassapp.module.entity.Area
+import org.suwashizmu.connpassapp.module.entity.Event
 import org.suwashizmu.connpassapp.module.entity.EventList
 import org.suwashizmu.connpassapp.module.mapper.EventMapper
 import org.suwashizmu.connpassapp.module.repository.EventRepository
@@ -15,6 +16,11 @@ import org.suwashizmu.connpassapp.service.api.SearchQuery
 class RemoteEventDataSource(private val client: ConnpassService) : EventRepository {
 
     private val mapper = EventMapper()
+
+    override fun findById(id: Int): Single<Event> {
+        //apiからIDで取得する方法があれば実装する
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
     override fun findEventList(start: Int, limit: Int, area: Area?, vararg keywordOr: String): Single<EventList> {
         val query = SearchQuery.build {

@@ -1,17 +1,16 @@
 package org.suwashizmu.connpassapp.view
 
-import androidx.databinding.DataBindingUtil
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.rxkotlin.addTo
 import org.suwashizmu.connpassapp.R
 import org.suwashizmu.connpassapp.databinding.EventDetailsFragBinding
-import org.suwashizmu.connpassapp.module.view.IEventDetailsView
 import org.suwashizmu.connpassapp.module.presenter.IEventDetailsPresenter
+import org.suwashizmu.connpassapp.module.view.IEventDetailsView
 
 class EventDetailsFragment : Fragment(), IEventDetailsView {
 

@@ -13,7 +13,12 @@ import org.suwashizmu.connpassapp.module.assemble.EventDetailsAssembler
 class EventDetailsActivity : AppCompatActivity(), KodeinAware {
 
     companion object {
-        fun newIntent(context: Context, eventId: Int): Intent = Intent(context, EventDetailsActivity::class.java)
+
+        const val KEY_ID = "id"
+
+        fun newIntent(context: Context, eventId: Int): Intent = Intent(context, EventDetailsActivity::class.java).apply {
+            putExtra(KEY_ID, eventId)
+        }
     }
 
     private val _parentKodein by closestKodein()
