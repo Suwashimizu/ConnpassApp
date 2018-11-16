@@ -24,7 +24,7 @@ class EventDetailsAssembler {
 
             //presenterはAndroidComponentsWeakScopeで生成する
             bind<IEventDetailsPresenter>() with scoped(AndroidComponentsWeakScope).singleton { EventDetailsPresenter() }
-            bind<IFetchSingleEventUseCase>() with provider { FetchSingleEventInteractor(instance()) }
+            bind<IFetchSingleEventUseCase>() with provider { FetchSingleEventInteractor(instance(), instance()) }
             bind<IEventDetailsRouter>() with scoped(AndroidComponentsWeakScope).singleton { EventDetailsRouter() }
         }
 

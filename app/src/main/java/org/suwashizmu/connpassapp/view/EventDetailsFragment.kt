@@ -7,9 +7,12 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxkotlin.addTo
 import org.suwashizmu.connpassapp.R
 import org.suwashizmu.connpassapp.databinding.EventDetailsFragBinding
+import org.suwashizmu.connpassapp.module.presenter.EventDetailsSubject
 import org.suwashizmu.connpassapp.module.presenter.IEventDetailsPresenter
+import org.suwashizmu.connpassapp.module.view.EventDetailsViewModel
 import org.suwashizmu.connpassapp.module.view.IEventDetailsView
 
 class EventDetailsFragment : Fragment(), IEventDetailsView {
@@ -19,6 +22,8 @@ class EventDetailsFragment : Fragment(), IEventDetailsView {
     }
 
     private lateinit var binding: EventDetailsFragBinding
+    private val subject = EventDetailsSubject
+
     override var presenter: IEventDetailsPresenter? = null
     //ViewModelの変化を監視
     private val disposable = CompositeDisposable()
@@ -44,11 +49,11 @@ class EventDetailsFragment : Fragment(), IEventDetailsView {
 
         presenter?.onResume()
 
-        /*
+
         subject.observable
                 .subscribe(this::update)
                 .addTo(disposable)
-        */
+
     }
 
     override fun onPause() {
@@ -67,4 +72,10 @@ class EventDetailsFragment : Fragment(), IEventDetailsView {
 
     private fun getEventId(): Int =
             requireActivity().intent.getIntExtra(EventDetailsActivity.KEY_ID, -1)
+
+    override fun update(viewModel: EventDetailsViewModel) {
+        if (viewModel.error != null) {
+            binding.webView.loadUrl(viewModel.eventUrl)
+        }
+    }
 }
