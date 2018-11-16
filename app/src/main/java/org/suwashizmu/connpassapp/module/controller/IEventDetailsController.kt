@@ -5,5 +5,5 @@ package org.suwashizmu.connpassapp.module.controller
  * アクションを定義する
  */
 interface IEventDetailsController {
-
+    fun getEvent(id: Int)
 }

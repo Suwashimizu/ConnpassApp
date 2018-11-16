@@ -1,14 +1,16 @@
 package org.suwashizmu.connpassapp.module.presenter
 
+import org.suwashizmu.connpassapp.module.controller.IEventDetailsController
 import org.suwashizmu.connpassapp.module.router.IEventDetailsRouter
+import org.suwashizmu.connpassapp.module.usecase.IFetchSingleEventUseCase
 
 /**
  * Created by KEKE
  * UIロジック,Controller,outputを受け取る
  */
-interface IEventDetailsPresenter : BasePresenter {
+interface IEventDetailsPresenter : BasePresenter, IEventDetailsController {
 
     //subject
-    //var useCase: IEventDetailsUseCase?
+    var useCase: IFetchSingleEventUseCase?
     var router: IEventDetailsRouter?
 }

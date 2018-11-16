@@ -32,8 +32,17 @@ class EventDetailsFragment : Fragment(), IEventDetailsView {
         return binding.root
     }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        presenter?.onCreate()
+        presenter?.getEvent(getEventId())
+    }
+
     override fun onResume() {
         super.onResume()
+
+        presenter?.onResume()
 
         /*
         subject.observable
@@ -45,6 +54,7 @@ class EventDetailsFragment : Fragment(), IEventDetailsView {
     override fun onPause() {
         super.onPause()
 
+        presenter?.onPause()
         disposable.clear()
     }
 
@@ -54,4 +64,7 @@ class EventDetailsFragment : Fragment(), IEventDetailsView {
 
         presenter = null
     }
+
+    private fun getEventId(): Int =
+            requireActivity().intent.getIntExtra(EventDetailsActivity.KEY_ID, -1)
 }
