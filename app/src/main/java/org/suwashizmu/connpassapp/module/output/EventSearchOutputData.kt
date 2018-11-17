@@ -14,5 +14,6 @@ data class EventSearchOutputData(
     data class OutputEvent(val id: Int,
                            val title: String,
                            val catch: String,
-                           val description: String)
+                           val description: String,
+                           val eventUrl: String)
 }

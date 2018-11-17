@@ -28,7 +28,8 @@ class EventListInteractor(private val eventSearchPresenter: IEventListPresenter,
                                                 it.id,
                                                 it.title,
                                                 it.catch,
-                                                it.description
+                                                it.description,
+                                                it.eventUtl
                                         )
                                     },
                                     error = null,

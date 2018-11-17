@@ -45,7 +45,7 @@ class EventListPresenter : IEventListPresenter, IEventListController {
 
         if (eventList.error == null) {
             //TODO Mapperが必要
-            viewModel.eventList.addAll(eventList.eventList.map { EventListViewModel.Event(it.id, it.catch, it.title) })
+            viewModel.eventList.addAll(eventList.eventList.map { EventListViewModel.Event(it.id, it.catch, it.title, it.eventUrl) })
             //全件より少なければ未取得のEventがある
             viewModel.hasNextEvents = viewModel.eventList.size < eventList.totalEventCount
 
@@ -76,8 +76,8 @@ class EventListPresenter : IEventListPresenter, IEventListController {
         router?.gotoSearchSettings()
     }
 
-    override fun onItemClick(eventId: Int) {
-        router?.gotoEventDetails(eventId)
+    override fun onItemClick(event: EventListViewModel.Event) {
+        router?.gotoEventDetails(event.id, event.title, event.eventUrl)
     }
     //endregion IEventListController
 }

@@ -51,7 +51,7 @@ class EventListFragment : androidx.fragment.app.Fragment(), IEventListView {
 
         binding.listView.adapter = EventListAdapter {
             Logger.d("ItemClicked:$it")
-            presenter?.onItemClick(it.id)
+            presenter?.onItemClick(it)
         }
         binding.listView.addOnScrollListener(loadMoreListener)
         binding.listView.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(activity)

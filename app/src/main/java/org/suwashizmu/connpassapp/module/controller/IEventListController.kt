@@ -1,5 +1,7 @@
 package org.suwashizmu.connpassapp.module.controller
 
+import org.suwashizmu.connpassapp.module.view.EventListViewModel
+
 /**
  * Created by KEKE
  * アクションを定義する
@@ -15,5 +17,5 @@ interface IEventListController {
     /**
      * リストのItemをクリックした時
      */
-    fun onItemClick(eventId: Int)
+    fun onItemClick(event: EventListViewModel.Event)
 }

@@ -17,7 +17,7 @@ class EventSearchPresenterTest {
 
     @Test
     fun complete() {
-        presenter.complete(EventSearchOutputData(listOf(EventSearchOutputData.OutputEvent(1, "title", "catch", "description")), null, 100))
+        presenter.complete(EventSearchOutputData(listOf(EventSearchOutputData.OutputEvent(1, "title", "catch", "description", "url")), null, 100))
 
         verify(view).updated(any())
     }
