@@ -12,11 +12,15 @@ class SearchSettingsRouter : ISearchSettingsRouter {
 
     var fragment: Fragment? = null
 
-    override fun close() {
-
+    override fun gotoNewEventList() {
+        //list画面をクリアする
         val eventList = fragment?.fragmentManager?.findFragmentByTag(EventListActivity.TAG_EVENT_LIST) as EventListFragment
         eventList.presenter?.onRefresh()
 
+        close()
+    }
+
+    override fun close() {
         fragment?.fragmentManager
                 ?.popBackStack()
     }
