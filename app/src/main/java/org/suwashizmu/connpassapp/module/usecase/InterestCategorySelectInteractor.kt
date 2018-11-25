@@ -13,12 +13,16 @@ class InterestCategorySelectInteractor(
         private val repository: InterestCategoryRepository) : InterestCategorySelectUseCase {
 
     override fun select(inputData: InterestCategoryInputData) {
-        try {
-            repository.save(*inputData.interestCategory.toTypedArray())
-            presenter.completeEntry(InterestCateoriesOutput(inputData.interestCategory, true))
-        } catch (e: Throwable) {
-            e.printStackTrace()
-            presenter.completeEntry(InterestCateoriesOutput(inputData.interestCategory, false))
-        }
+        repository.save(*inputData.interestCategory.toTypedArray())
+                .subscribe(
+                        {
+                            presenter.completeEntry(InterestCateoriesOutput(inputData.interestCategory, true))
+                        },
+                        { error ->
+
+                            error.printStackTrace()
+                            presenter.completeEntry(InterestCateoriesOutput(inputData.interestCategory, false))
+                        }
+                )
     }
 }

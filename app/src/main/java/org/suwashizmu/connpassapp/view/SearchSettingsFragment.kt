@@ -2,6 +2,7 @@ package org.suwashizmu.connpassapp.view
 
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
@@ -119,6 +120,10 @@ class SearchSettingsFragment : androidx.fragment.app.Fragment(), ISearchSettings
                             .show(fragmentManager, TAG_INTEREST)
                 }
             }
+        }
+
+        if (searchSettingsViewModel.error != null) {
+            Toast.makeText(activity, searchSettingsViewModel.error?.message, Toast.LENGTH_SHORT).show()
         }
     }
 
