@@ -11,7 +11,9 @@ data class EventSearchOutputData(
         val error: Throwable?,
         val totalEventCount: Int) {
 
-    data class OutputEvent(val title: String,
+    data class OutputEvent(val id: Int,
+                           val title: String,
                            val catch: String,
-                           val description: String)
+                           val description: String,
+                           val eventUrl: String)
 }

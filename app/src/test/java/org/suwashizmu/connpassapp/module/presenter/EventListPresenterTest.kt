@@ -1,15 +1,13 @@
 package org.suwashizmu.connpassapp.module.presenter
 
-import com.nhaarman.mockitokotlin2.check
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.times
-import com.nhaarman.mockitokotlin2.verify
+import com.nhaarman.mockitokotlin2.*
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 import org.suwashizmu.connpassapp.module.input.EventFetchInputData
 import org.suwashizmu.connpassapp.module.output.EventSearchOutputData
 import org.suwashizmu.connpassapp.module.router.IEventListRouter
 import org.suwashizmu.connpassapp.module.usecase.IEventFetchUseCase
+import org.suwashizmu.connpassapp.module.view.EventListViewModel
 
 /**
  * Created by KEKE on 2018/10/14.
@@ -54,7 +52,7 @@ class EventListPresenterTest {
 
         val test = presenter.subject.observable.test()
 
-        presenter.complete(EventSearchOutputData(listOf(EventSearchOutputData.OutputEvent("title", "catch", "description")), null, 100))
+        presenter.complete(EventSearchOutputData(listOf(EventSearchOutputData.OutputEvent(1, "title", "catch", "description", "eventUrl")), null, 100))
 
         test.assertValue { it.hasNextEvents }
     }
@@ -64,8 +62,8 @@ class EventListPresenterTest {
     fun `hasNextEvents is True when currentListSize greater than totalEventCount`() {
 
         presenter.complete(EventSearchOutputData(listOf(
-                EventSearchOutputData.OutputEvent("title", "catch", "description"),
-                EventSearchOutputData.OutputEvent("title", "catch", "description")),
+                EventSearchOutputData.OutputEvent(1, "title", "catch", "description", "eventUrl"),
+                EventSearchOutputData.OutputEvent(2, "title", "catch", "description", "eventUrl")),
                 null,
                 2))
 
@@ -115,5 +113,21 @@ class EventListPresenterTest {
         verify(mockRouter).gotoSearchSettings()
     }
 
+    @Test
+    fun onItemClick() {
 
+        presenter.onItemClick(EventListViewModel.Event(10, "catch", "title", "eventUrl"))
+
+        argumentCaptor<Int>().apply {
+            verify(mockRouter).gotoEventDetails(capture(),
+                    check {
+                        assertThat(it).isEqualTo("title")
+                    },
+                    check {
+                        assertThat(it).isEqualTo("eventUrl")
+                    })
+
+            assertThat(lastValue).isEqualTo(10)
+        }
+    }
 }

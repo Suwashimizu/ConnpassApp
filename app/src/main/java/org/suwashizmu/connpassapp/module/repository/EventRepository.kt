@@ -2,6 +2,7 @@ package org.suwashizmu.connpassapp.module.repository
 
 import io.reactivex.Single
 import org.suwashizmu.connpassapp.module.entity.Area
+import org.suwashizmu.connpassapp.module.entity.Event
 import org.suwashizmu.connpassapp.module.entity.EventList
 
 /**
@@ -10,5 +11,6 @@ import org.suwashizmu.connpassapp.module.entity.EventList
  * interface adapter層
  */
 interface EventRepository {
+    fun findById(id: Int): Single<Event>
     fun findEventList(start: Int, limit: Int, area: Area?, vararg keywordOr: String): Single<EventList>
 }
