@@ -5,6 +5,7 @@ import android.view.*
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.orhanobut.logger.Logger
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
@@ -54,7 +55,7 @@ class EventListFragment : androidx.fragment.app.Fragment(), IEventListView {
             presenter?.onItemClick(it)
         }
         binding.listView.addOnScrollListener(loadMoreListener)
-        binding.listView.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(activity)
+        binding.listView.layoutManager = LinearLayoutManager(activity)
 
         presenter?.onCreate()
     }
@@ -103,7 +104,7 @@ class EventListFragment : androidx.fragment.app.Fragment(), IEventListView {
         adapter?.isLoading = false
 
         binding.swipeRefresh.isRefreshing = viewModel.refreshing
-        binding.progress.visibility = View.GONE
+        binding.progress.visibility = if (viewModel.loading) View.VISIBLE else View.GONE
 
         //Errorの表示
         if (viewModel.error != null) {

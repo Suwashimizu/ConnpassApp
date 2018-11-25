@@ -8,6 +8,7 @@ package org.suwashizmu.connpassapp.module.view
 data class EventListViewModel(var eventList: MutableList<Event>,
                               var hasNextEvents: Boolean,
                               var refreshing: Boolean,
+                              var loading: Boolean,
                               var error: Throwable?) {
 
     data class Event(val id: Int, val catch: String, val title: String, val eventUrl: String)

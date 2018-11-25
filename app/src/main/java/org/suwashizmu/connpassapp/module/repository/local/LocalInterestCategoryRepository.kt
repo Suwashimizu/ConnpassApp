@@ -1,6 +1,7 @@
 package org.suwashizmu.connpassapp.module.repository.local
 
 import android.content.Context
+import io.reactivex.Completable
 import org.suwashizmu.connpassapp.module.entity.InterestCategory
 import org.suwashizmu.connpassapp.module.repository.InterestCategoryRepository
 
@@ -17,16 +18,20 @@ class LocalInterestCategoryRepository(private val context: Context) : InterestCa
     override fun getInterestCategories(): Collection<InterestCategory> =
             InterestCategory.values().toList()
 
-    override fun save(vararg interestCategory: InterestCategory) {
-        //選択が空のときは？
-        if (interestCategory.isEmpty()) throw IllegalStateException("requires value")
+    override fun save(vararg interestCategory: InterestCategory): Completable =
+            Completable.create {
+                if (interestCategory.isEmpty()) {
+                    it.onError(IllegalStateException("requires value"))
+                    return@create
+                }
 
-        context.getSharedPreferences(KEY_INTEREST_CATEGORY, Context.MODE_PRIVATE)
-                .edit()
-                .putString(KEY_CURRENT_AREA_IDS, interestCategory.map { it.id }.joinToString(","))
-                .apply()
+                context.getSharedPreferences(KEY_INTEREST_CATEGORY, Context.MODE_PRIVATE)
+                        .edit()
+                        .putString(KEY_CURRENT_AREA_IDS, interestCategory.map { it.id }.joinToString(","))
+                        .apply()
 
-    }
+                it.onComplete()
+            }
 
     override fun getCurrentInterestCategories(): Collection<InterestCategory>? {
         //idが消えたときは？→消すな,使用不可フラグを追加する

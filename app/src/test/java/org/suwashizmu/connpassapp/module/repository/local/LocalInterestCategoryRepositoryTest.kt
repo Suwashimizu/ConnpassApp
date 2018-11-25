@@ -2,9 +2,7 @@ package org.suwashizmu.connpassapp.module.repository.local
 
 import androidx.appcompat.app.AppCompatActivity
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.Rule
 import org.junit.Test
-import org.junit.rules.ExpectedException
 import org.junit.runner.RunWith
 import org.robolectric.Robolectric
 import org.robolectric.RobolectricTestRunner
@@ -28,28 +26,20 @@ class LocalInterestCategoryRepositoryTest {
 
     @Test
     fun save() {
-        repository.save(InterestCategory.DESIGN)
+        repository.save(InterestCategory.DESIGN).test()
 
         assertThat(repository.getCurrentInterestCategories()).contains(InterestCategory.DESIGN)
 
         //複数保存した場合
-        repository.save(InterestCategory.ANDROID, InterestCategory.ELIXIR, InterestCategory.RUBY)
+        repository.save(InterestCategory.ANDROID, InterestCategory.ELIXIR, InterestCategory.RUBY).test()
 
         assertThat(repository.getCurrentInterestCategories()).contains(InterestCategory.ANDROID, InterestCategory.ELIXIR, InterestCategory.RUBY)
     }
 
-    //ruleはJvmFieldが必須
-    @Rule
-    @JvmField
-    val exception = ExpectedException.none()
-
     @Test
     fun `save when selected empty`() {
-
-        exception.expect(IllegalStateException::class.java)
-        exception.expectMessage("requires value")
-
-        repository.save()
+        val test = repository.save().test()
+        test.assertError { it is IllegalStateException }
     }
 
     @Test

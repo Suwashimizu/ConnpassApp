@@ -15,5 +15,7 @@ interface IEventListPresenter : BasePresenter, IEventListController {
     var useCase: IEventFetchUseCase?
     var router: IEventListRouter?
 
+    fun onRefresh()
+
     fun complete(eventList: EventSearchOutputData)
 }

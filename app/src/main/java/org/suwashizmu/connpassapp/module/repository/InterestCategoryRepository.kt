@@ -1,5 +1,6 @@
 package org.suwashizmu.connpassapp.module.repository
 
+import io.reactivex.Completable
 import org.suwashizmu.connpassapp.module.entity.InterestCategory
 
 /**
@@ -7,6 +8,10 @@ import org.suwashizmu.connpassapp.module.entity.InterestCategory
  */
 interface InterestCategoryRepository {
     fun getInterestCategories(): Collection<InterestCategory>
-    fun save(vararg interestCategory: InterestCategory)
+    /**
+     * @throws IllegalStateException throws it exception when interestCategory args is empty
+     */
+    fun save(vararg interestCategory: InterestCategory): Completable
+
     fun getCurrentInterestCategories(): Collection<InterestCategory>?
 }
