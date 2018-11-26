@@ -104,7 +104,14 @@ class EventListFragment : androidx.fragment.app.Fragment(), IEventListView {
         adapter?.isLoading = false
 
         binding.swipeRefresh.isRefreshing = viewModel.refreshing
-        binding.progress.visibility = if (viewModel.loading) View.VISIBLE else View.GONE
+        //load中はlistを非表示にする
+        if (viewModel.loading) {
+            binding.progress.visibility = View.VISIBLE
+            binding.listView.visibility = View.INVISIBLE
+        } else {
+            binding.progress.visibility = View.INVISIBLE
+            binding.listView.visibility = View.VISIBLE
+        }
 
         //Errorの表示
         if (viewModel.error != null) {
