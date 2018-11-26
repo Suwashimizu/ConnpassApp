@@ -22,7 +22,7 @@ class EventFetchInteractor(private val presenter: IEventListPresenter,
         val interestCategory = interestCategoryRepository.getCurrentInterestCategories()
 
         interestCategory ?: return
-        eventRepository.findEventList(inputData.offset, inputData.limit, area, *interestCategory.map { it.name }.toTypedArray().plus(area?.value
+        eventRepository.findEventList(inputData.offset, inputData.limit, area, *interestCategory.map { it.searchValue }.toTypedArray().plus(area?.value
                 ?: ""))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

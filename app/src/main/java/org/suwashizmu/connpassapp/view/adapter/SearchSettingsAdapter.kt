@@ -46,7 +46,7 @@ class SearchSettingsAdapter(private val areaItemClickListener: () -> Unit,
             is SearchSettingsViewHolder.ItemInterest -> {
                 viewHolder.binding.label.text = viewHolder.binding.root.resources.getString(R.string.interest)
                 //興味あるものは,で連結させる
-                viewHolder.binding.value.text = viewModel?.interestCategories?.joinToString(separator = ",")
+                viewHolder.binding.value.text = viewModel?.interestCategories?.map { it.searchValue }?.joinToString(separator = ",")
             }
         }
     }

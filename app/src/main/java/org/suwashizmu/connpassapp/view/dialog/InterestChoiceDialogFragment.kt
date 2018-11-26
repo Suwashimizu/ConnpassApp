@@ -36,7 +36,7 @@ class InterestChoiceDialogFragment : androidx.fragment.app.DialogFragment() {
         val checkedItems = interestSource.map { currentSelectedItems.contains(it) }.indexOfFirst { it }
 
         return AlertDialog.Builder(requireActivity())
-                .setSingleChoiceItems(interestSource.map { it.name }.toTypedArray(), checkedItems, null)
+                .setSingleChoiceItems(interestSource.map { it.searchValue }.toTypedArray(), checkedItems, null)
 //                .setMultiChoiceItems(interestSource.map { it.name }.toTypedArray(), checkedItems.toBooleanArray(), null)
                 .setPositiveButton(android.R.string.ok) { _, _ ->
                     val checkedItemPositions = (dialog as AlertDialog).listView.checkedItemPositions
