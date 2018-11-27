@@ -15,7 +15,7 @@ object ConnpassClient {
 
     private val client = OkHttpClient.Builder().apply {
         addInterceptor(HttpLoggingInterceptor().apply {
-            this.setLevel(LOG_LEVEL)
+            this.level = LOG_LEVEL
         })
     }
 

@@ -84,6 +84,7 @@ class WizardInterestFragment : androidx.fragment.app.Fragment(), IInterestCatego
             val selectedItems = mutableListOf<InterestCategory>()
             for (i in 0 until checked.size()) {
                 if (checked[checked.keyAt(i)]) {
+                    //TODO searchValueだと落ちるよ
                     selectedItems.add(binding.listView.getItemAtPosition(checked.keyAt(i)) as InterestCategory)
                 }
             }
@@ -101,8 +102,8 @@ class WizardInterestFragment : androidx.fragment.app.Fragment(), IInterestCatego
         Logger.d(viewModel)
 
         if (binding.listView.adapter == null) {
-            binding.listView.adapter = ArrayAdapter(requireActivity(), android.R.layout.simple_list_item_multiple_choice, viewModel.interestCategories.toMutableList())
-            binding.listView.choiceMode = ListView.CHOICE_MODE_MULTIPLE
+            binding.listView.adapter = ArrayAdapter(requireActivity(), android.R.layout.simple_list_item_single_choice, viewModel.interestCategories.toMutableList())
+            binding.listView.choiceMode = ListView.CHOICE_MODE_SINGLE
         }
 
         when (viewModel.inputState) {
