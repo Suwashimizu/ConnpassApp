@@ -81,7 +81,7 @@ class SearchSettingsPresenter : ISearchSettingsPresenter {
     //region SearchSettingsOutputPort
     override fun complete(error: Throwable?) {
         if (error == null) {
-            router?.close()
+            router?.gotoNewEventList()
             Logger.d("settings save success")
         } else {
             updateViewModel(error)
