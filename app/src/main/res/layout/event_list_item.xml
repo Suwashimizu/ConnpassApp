@@ -42,6 +42,14 @@
 
                 />
 
+            <TextView
+                android:id="@+id/date"
+                style="@style/EventListItem.Date"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/text1"
+                app:layout_constraintTop_toBottomOf="@+id/text2"
+                tools:text="2018-12-15 18:00"
+                />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
