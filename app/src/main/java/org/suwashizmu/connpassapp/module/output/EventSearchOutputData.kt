@@ -1,5 +1,7 @@
 package org.suwashizmu.connpassapp.module.output
 
+import org.threeten.bp.ZonedDateTime
+
 /**
  * Created by KEKE on 2018/10/05.
  * 検索結果の出力用データ
@@ -15,5 +17,6 @@ data class EventSearchOutputData(
                            val title: String,
                            val catch: String,
                            val description: String,
+                           val startedAt: ZonedDateTime,
                            val eventUrl: String)
 }

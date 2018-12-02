@@ -8,6 +8,8 @@ import org.suwashizmu.connpassapp.module.output.EventSearchOutputData
 import org.suwashizmu.connpassapp.module.router.IEventListRouter
 import org.suwashizmu.connpassapp.module.usecase.IEventFetchUseCase
 import org.suwashizmu.connpassapp.module.view.EventListViewModel
+import org.threeten.bp.ZonedDateTime
+import org.threeten.bp.format.DateTimeFormatter
 
 /**
  * Created by KEKE on 2018/10/14.
@@ -52,7 +54,7 @@ class EventListPresenterTest {
 
         val test = presenter.subject.observable.test()
 
-        presenter.complete(EventSearchOutputData(listOf(EventSearchOutputData.OutputEvent(1, "title", "catch", "description", "eventUrl")), null, 100))
+        presenter.complete(EventSearchOutputData(listOf(EventSearchOutputData.OutputEvent(1, "title", "catch", "description", ZonedDateTime.parse("2018/12/01 18:00:00 Asia/Tokyo", DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss VV")), "eventUrl")), null, 100))
 
         test.assertValue { it.hasNextEvents }
     }
@@ -62,8 +64,8 @@ class EventListPresenterTest {
     fun `hasNextEvents is True when currentListSize greater than totalEventCount`() {
 
         presenter.complete(EventSearchOutputData(listOf(
-                EventSearchOutputData.OutputEvent(1, "title", "catch", "description", "eventUrl"),
-                EventSearchOutputData.OutputEvent(2, "title", "catch", "description", "eventUrl")),
+                EventSearchOutputData.OutputEvent(1, "title", "catch", "description", ZonedDateTime.parse("2018/12/01 18:00:00 Asia/Tokyo", DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss VV")), "eventUrl"),
+                EventSearchOutputData.OutputEvent(2, "title", "catch", "description", ZonedDateTime.parse("2018/12/01 18:00:00 Asia/Tokyo", DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss VV")), "eventUrl")),
                 null,
                 2))
 
@@ -117,7 +119,7 @@ class EventListPresenterTest {
     @Test
     fun onItemClick() {
 
-        presenter.onItemClick(EventListViewModel.Event(10, "catch", "title", "eventUrl"))
+        presenter.onItemClick(EventListViewModel.Event(10, "catch", "title", "2018-12-06 20:00", "eventUrl"))
 
         argumentCaptor<Int>().apply {
             verify(mockRouter).gotoEventDetails(capture(),

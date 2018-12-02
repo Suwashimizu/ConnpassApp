@@ -57,7 +57,7 @@ class EventListAdapter(private val itemClickCallback: (event: EventListViewModel
         //TODO diffTool使いたい
         eventList.clear()
         eventList.addAll(viewModel.eventList)
-        
+
         Logger.d("EventListSize:${eventList.size}")
     }
 
@@ -66,6 +66,7 @@ class EventListAdapter(private val itemClickCallback: (event: EventListViewModel
         fun onBind(event: EventListViewModel.Event) {
             binding.text1.text = event.title
             binding.text2.text = event.catch
+            binding.date.text = event.startedAt
         }
     }
 

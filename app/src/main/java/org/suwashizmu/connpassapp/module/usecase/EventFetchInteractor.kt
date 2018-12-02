@@ -38,6 +38,7 @@ class EventFetchInteractor(private val presenter: IEventListPresenter,
                                                 it.title,
                                                 it.catch,
                                                 it.description,
+                                                it.startedAt,
                                                 it.eventUtl
                                         )
                                     },
