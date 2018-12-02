@@ -16,6 +16,7 @@ class EventListPresenter : IEventListPresenter, IEventListController {
             mutableListOf(),
             hasNextEvents = false,
             refreshing = false,
+            loading = true,
             error = null
     )
 
@@ -26,6 +27,10 @@ class EventListPresenter : IEventListPresenter, IEventListController {
     private val pagination: EventFetchInputData = EventFetchInputData(0, 30)
 
     override fun onCreate() {
+
+        viewModel.loading = true
+        subject.update(viewModel)
+
         useCase?.fetchEvent(pagination)
     }
 
@@ -41,6 +46,13 @@ class EventListPresenter : IEventListPresenter, IEventListController {
         router = null
     }
 
+    override fun onRefresh() {
+
+        viewModel.eventList.clear()
+
+        subject.update(viewModel)
+    }
+
     override fun complete(eventList: EventSearchOutputData) {
 
         if (eventList.error == null) {
@@ -54,6 +66,7 @@ class EventListPresenter : IEventListPresenter, IEventListController {
 
         viewModel.error = eventList.error
         viewModel.refreshing = false
+        viewModel.loading = false
 
         subject.update(viewModel)
     }

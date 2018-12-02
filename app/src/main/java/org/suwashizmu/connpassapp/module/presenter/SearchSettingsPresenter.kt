@@ -46,7 +46,7 @@ class SearchSettingsPresenter : ISearchSettingsPresenter {
 
     override fun onInterestItemClick() {
         viewModel.isShowInterestChoiceDialog = true
-        subject.update(viewModel)
+        updateViewModel(null)
         //trueを一度だけ送れば良いのでfalseに戻す
         viewModel = viewModel.copy(isShowInterestChoiceDialog = false)
     }
@@ -54,14 +54,18 @@ class SearchSettingsPresenter : ISearchSettingsPresenter {
     override fun onInterestSelected(interestCategories: Collection<InterestCategory>) {
         Logger.d(interestCategories)
 
-        viewModel.interestCategories = interestCategories
-
-        subject.update(viewModel)
+        //空の時はError
+        if (interestCategories.isEmpty()) {
+            updateViewModel(IllegalStateException("required value"))
+        } else {
+            viewModel.interestCategories = interestCategories
+            updateViewModel(null)
+        }
     }
 
     override fun onAreaSelected(area: Area) {
         viewModel.area = area
-        subject.update(viewModel)
+        updateViewModel(null)
     }
 
     override fun loadSettings() {
@@ -76,10 +80,11 @@ class SearchSettingsPresenter : ISearchSettingsPresenter {
 
     //region SearchSettingsOutputPort
     override fun complete(error: Throwable?) {
-        viewModel.error = error
         if (error == null) {
-            router?.close()
+            router?.gotoNewEventList()
             Logger.d("settings save success")
+        } else {
+            updateViewModel(error)
         }
     }
     //endregion SearchSettingsOutputPort
@@ -92,7 +97,12 @@ class SearchSettingsPresenter : ISearchSettingsPresenter {
         viewModel.areaSource = areaSource
         viewModel.interestCategoriesSource = interestCategoriesSource
 
-        subject.update(viewModel)
+        updateViewModel(null)
     }
     //endregion SettingsOutputPort
+
+    private fun updateViewModel(error: Throwable?) {
+        viewModel.error = error
+        subject.update(viewModel)
+    }
 }

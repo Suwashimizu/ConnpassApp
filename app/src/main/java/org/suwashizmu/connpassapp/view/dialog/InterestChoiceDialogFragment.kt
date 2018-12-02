@@ -33,10 +33,11 @@ class InterestChoiceDialogFragment : androidx.fragment.app.DialogFragment() {
         val searchSettingsFragment = targetFragment as SearchSettingsFragment
         val interestSource: Array<InterestCategory> = arguments!!.getSerializable(KEY_INTEREST_SOURCE) as Array<InterestCategory>
         val currentSelectedItems = arguments!!.getSerializable(KEY_CURRENT) as Array<InterestCategory>
-        val checkedItems = interestSource.map { currentSelectedItems.contains(it) }
+        val checkedItems = interestSource.map { currentSelectedItems.contains(it) }.indexOfFirst { it }
 
         return AlertDialog.Builder(requireActivity())
-                .setMultiChoiceItems(interestSource.map { it.name }.toTypedArray(), checkedItems.toBooleanArray(), null)
+                .setSingleChoiceItems(interestSource.map { it.searchValue }.toTypedArray(), checkedItems, null)
+//                .setMultiChoiceItems(interestSource.map { it.name }.toTypedArray(), checkedItems.toBooleanArray(), null)
                 .setPositiveButton(android.R.string.ok) { _, _ ->
                     val checkedItemPositions = (dialog as AlertDialog).listView.checkedItemPositions
                     //trueのkeyのみ取得する

@@ -16,7 +16,7 @@ class EventListActivity : AppCompatActivity(), KodeinAware {
 
     companion object {
 
-        private const val TAG_EVENT_LIST = "eventList"
+        const val TAG_EVENT_LIST = "eventList"
         private const val TAG_SEARCH_SETTINGS = EventListRouter.TAG_SEARCH_SETTINGS
 
         fun newIntent(context: Context): Intent = Intent(context, EventListActivity::class.java)

@@ -1,8 +1,7 @@
 package org.suwashizmu.connpassapp.module.usecase
 
-import com.nhaarman.mockitokotlin2.check
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.verify
+import com.nhaarman.mockitokotlin2.*
+import io.reactivex.Completable
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 import org.suwashizmu.connpassapp.module.entity.Area
@@ -19,7 +18,9 @@ class SaveSettingsInteractorTest {
 
     private val outputPort: SearchSettingsOutputPort = mock()
     private val areaRepository: AreaRepository = mock()
-    private val interestCategoryRepository: InterestCategoryRepository = mock()
+    private val interestCategoryRepository: InterestCategoryRepository = mock {
+        on { save(any()) } doReturn Completable.complete()
+    }
 
     private val interactor = SaveSettingsInteractor(outputPort, areaRepository, interestCategoryRepository)
 

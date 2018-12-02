@@ -82,6 +82,7 @@ class EventListPresenterTest {
 
         test.assertValue { it.hasNextEvents.not() }
         test.assertValue { it.refreshing.not() }
+        test.assertValue { it.loading.not() }
     }
 
     @Test

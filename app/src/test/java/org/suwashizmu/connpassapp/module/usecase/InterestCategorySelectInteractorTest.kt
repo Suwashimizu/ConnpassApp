@@ -1,6 +1,7 @@
 package org.suwashizmu.connpassapp.module.usecase
 
 import com.nhaarman.mockitokotlin2.*
+import io.reactivex.Completable
 import org.junit.Test
 import org.suwashizmu.connpassapp.module.entity.InterestCategory
 import org.suwashizmu.connpassapp.module.input.InterestCategoryInputData
@@ -14,7 +15,9 @@ import org.suwashizmu.connpassapp.module.repository.InterestCategoryRepository
 class InterestCategorySelectInteractorTest {
 
     private val presenter: IInterestCategoriesPresenter = mock()
-    private val repository: InterestCategoryRepository = mock()
+    private val repository: InterestCategoryRepository = mock {
+        on { save(any()) } doReturn Completable.complete()
+    }
 
     private val interactor = InterestCategorySelectInteractor(presenter, repository)
 
@@ -30,7 +33,7 @@ class InterestCategorySelectInteractorTest {
     fun `select when error`() {
 
         val repository: InterestCategoryRepository = mock {
-            on { save(any()) } doThrow IllegalStateException("not value")
+            on { save(any()) } doReturn Completable.error(IllegalStateException("not value"))
         }
         val interactor = InterestCategorySelectInteractor(presenter, repository)
 

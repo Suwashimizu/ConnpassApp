@@ -23,9 +23,10 @@ class RemoteEventDataSource(private val client: ConnpassService) : EventReposito
     }
 
     override fun findEventList(start: Int, limit: Int, area: Area?, vararg keywordOr: String): Single<EventList> {
+        //orだと地域以外のイベントもリストアップされるためorは使えない
         val query = SearchQuery.build {
-            this.keyword = setOf(area?.value ?: "")
-            this.keywordOr = keywordOr.toSet()
+            this.keyword = setOf(area?.value ?: "").plus(keywordOr)
+//            this.keywordOr = keywordOr.toSet()
             this.start = start
             this.count = limit
         }

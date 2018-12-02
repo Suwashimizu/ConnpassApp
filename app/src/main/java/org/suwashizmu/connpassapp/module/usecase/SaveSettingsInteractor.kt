@@ -16,8 +16,13 @@ class SaveSettingsInteractor(private val outputPort: SearchSettingsOutputPort,
 
         areaRepository.save(inputData.area)
         interestCategoryRepository.save(*inputData.interestCategory.toTypedArray())
-
-        outputPort.complete(null)
-
+                .subscribe(
+                        {
+                            outputPort.complete(null)
+                        },
+                        { error ->
+                            outputPort.complete(error)
+                        }
+                )
     }
 }

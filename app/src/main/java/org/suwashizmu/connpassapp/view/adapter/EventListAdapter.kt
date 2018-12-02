@@ -2,6 +2,7 @@ package org.suwashizmu.connpassapp.view.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import com.orhanobut.logger.Logger
 import org.suwashizmu.connpassapp.databinding.EventListItemBinding
 import org.suwashizmu.connpassapp.databinding.ProgressItemBinding
 import org.suwashizmu.connpassapp.module.view.EventListViewModel
@@ -56,6 +57,8 @@ class EventListAdapter(private val itemClickCallback: (event: EventListViewModel
         //TODO diffTool使いたい
         eventList.clear()
         eventList.addAll(viewModel.eventList)
+        
+        Logger.d("EventListSize:${eventList.size}")
     }
 
     class EventOverviewViewHolder(private val binding: EventListItemBinding) : androidx.recyclerview.widget.RecyclerView.ViewHolder(binding.root) {

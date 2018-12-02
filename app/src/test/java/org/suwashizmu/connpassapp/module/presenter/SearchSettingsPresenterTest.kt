@@ -71,7 +71,7 @@ class SearchSettingsPresenterTest {
     }
 
     @Test
-    fun complete() {
+    fun `complete with SettingsOutputPort`() {
 
         val test = presenter.subject.observable.test()
 
@@ -82,6 +82,13 @@ class SearchSettingsPresenterTest {
 
         test.assertNoErrors()
         assertThat(test.values().last()).isEqualTo(SearchSettingsViewModel(Area.TOKYO, listOf(InterestCategory.AI), listOf(Area.FUKUI), listOf(InterestCategory.KOTLIN)))
+    }
+
+    @Test
+    fun `complete with SearchSettingsOutputPort`() {
+        presenter.complete(null)
+
+        verify(mockRouter).gotoNewEventList()
     }
 
     @Test
