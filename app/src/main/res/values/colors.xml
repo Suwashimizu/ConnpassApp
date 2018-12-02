@@ -7,4 +7,6 @@
 
     <color name="primaryTextColor">#2d2d2d</color>
     <color name="secondaryTextColor">#747474</color>
+
+    <color name="white">#fff</color>
 </resources>
