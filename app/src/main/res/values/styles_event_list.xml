@@ -9,13 +9,13 @@
     <style name="EventListItem">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textAppearance">@style/TextAppearanceListItem</item>
+        <item name="android:textAppearance">@style/TextAppearanceListItem.White</item>
         <item name="android:maxLines">2</item>
         <item name="android:ellipsize">end</item>
     </style>
 
     <style name="EventListItem.Secondary">
-        <item name="android:textAppearance">@style/TextAppearanceListItemSecondary</item>
+        <item name="android:textAppearance">@style/TextAppearanceListItemSecondary.White</item>
         <item name="android:maxLines">2</item>
     </style>
 
@@ -23,7 +23,7 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:drawableStart">@drawable/ic_time_16dp</item>
-        <item name="android:textAppearance">@style/TextAppearanceListItemSecondary</item>
+        <item name="android:textAppearance">@style/TextAppearanceListItemSecondary.White</item>
         <item name="android:drawablePadding">8dp</item>
         <item name="android:background">@drawable/bg_round_rect_dark_red</item>
         <item name="android:paddingStart">6dp</item>
