@@ -28,9 +28,11 @@ class StubEventDataSource : EventRepository {
             waiting = 0
     )
 
+    private val event2 = event.copy(id = event.id + 1)
+
     override fun findById(id: Int): Single<Event> =
             Single.just(event)
 
     override fun findEventList(start: Int, limit: Int, area: Area?, vararg keywordOr: String): Single<EventList> =
-            Single.just(EventList(1, listOf(event)))
+            Single.just(EventList(2, listOf(event, event2)))
 }

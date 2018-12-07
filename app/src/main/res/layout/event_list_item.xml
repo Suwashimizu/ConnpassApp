@@ -5,11 +5,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     >
 
+    <data>
+
+        <variable
+            name="isExpired"
+            type="boolean"/>
+    </data>
+
     <androidx.cardview.widget.CardView
         style="@style/EventListCardStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="4dp"
+        android:background="@{!isExpired ? @color/colorPrimaryLight : @color/white}"
         >
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -24,6 +32,7 @@
                 android:id="@+id/text1"
                 style="@style/EventListItem"
                 android:layout_marginTop="8dp"
+                android:textColor="@{!isExpired ? @color/white : @color/gray_888}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -35,17 +44,22 @@
                 style="@style/EventListItem.Secondary"
                 android:layout_marginTop="8dp"
 
+                android:textColor="@{text1.textColor}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/text1"
-                tools:text="第３回が待ち望まれる\nLT・・60人・・うっ・・頭が・・！.!!!aaaaaaaaaaaaaaaaaaa"
 
+                tools:text="第３回が待ち望まれる\nLT・・60人・・うっ・・頭が・・！.!!!aaaaaaaaaaaaaaaaaaa"
                 />
 
             <TextView
                 android:id="@+id/date"
                 style="@style/EventListItem.Date"
+                android:background="@{!isExpired ? @drawable/bg_round_rect_dark_red : null}"
+                android:drawableStart="@{!isExpired ? @drawable/ic_time_16dp : @drawable/ic_time_gray_16dp}"
+                android:textColor="@{text1.textColor}"
                 app:layout_constraintBottom_toBottomOf="parent"
+
                 app:layout_constraintStart_toStartOf="@+id/text1"
                 app:layout_constraintTop_toBottomOf="@+id/text2"
                 tools:text="2018-12-15 18:00"

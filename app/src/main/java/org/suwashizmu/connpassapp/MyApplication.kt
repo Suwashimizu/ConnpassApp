@@ -6,6 +6,7 @@ import com.orhanobut.logger.Logger
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.generic.bind
+import org.kodein.di.generic.instance
 import org.kodein.di.generic.singleton
 import org.suwashizmu.connpassapp.module.repository.AreaRepository
 import org.suwashizmu.connpassapp.module.repository.EventRepository
@@ -13,6 +14,7 @@ import org.suwashizmu.connpassapp.module.repository.InterestCategoryRepository
 import org.suwashizmu.connpassapp.module.repository.StubEventDataSource
 import org.suwashizmu.connpassapp.module.repository.local.LocalAreaRepository
 import org.suwashizmu.connpassapp.module.repository.local.LocalInterestCategoryRepository
+import org.suwashizmu.connpassapp.module.repository.remote.EventDataSource
 import org.suwashizmu.connpassapp.module.repository.remote.LocalEventDataSource
 import org.suwashizmu.connpassapp.module.repository.remote.RemoteEventDataSource
 import org.suwashizmu.connpassapp.service.api.ConnpassClient
@@ -32,7 +34,7 @@ class MyApplication : Application(), KodeinAware {
 
         //TODO Stubのままリリースしないこと
 //        bind<EventRepository>() with singleton { EventDataSource(instance(), instance()) }
-        bind<EventRepository>() with singleton { StubEventDataSource() }
+        bind<EventRepository>("singleEvent") with singleton { StubEventDataSource() }
     }
 
     override fun onCreate() {
