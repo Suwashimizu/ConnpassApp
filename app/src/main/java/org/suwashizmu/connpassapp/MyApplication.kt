@@ -1,6 +1,7 @@
 package org.suwashizmu.connpassapp
 
 import android.app.Application
+import com.jakewharton.threetenabp.AndroidThreeTen
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
 import org.kodein.di.Kodein
@@ -33,12 +34,13 @@ class MyApplication : Application(), KodeinAware {
         bind<RemoteEventDataSource>() with singleton { RemoteEventDataSource(ConnpassClient.service) }
 
         //TODO Stubのままリリースしないこと
-//        bind<EventRepository>() with singleton { EventDataSource(instance(), instance()) }
+        bind<EventRepository>() with singleton { EventDataSource(instance(), instance()) }
         bind<EventRepository>("singleEvent") with singleton { StubEventDataSource() }
     }
 
     override fun onCreate() {
         super.onCreate()
         Logger.addLogAdapter(AndroidLogAdapter())
+        AndroidThreeTen.init(this)
     }
 }

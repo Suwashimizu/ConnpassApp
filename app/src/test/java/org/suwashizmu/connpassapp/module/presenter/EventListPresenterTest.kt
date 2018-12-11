@@ -119,7 +119,7 @@ class EventListPresenterTest {
     @Test
     fun onItemClick() {
 
-        presenter.onItemClick(EventListViewModel.Event(10, "catch", "title", "2018-12-06 20:00", "eventUrl"))
+        presenter.onItemClick(EventListViewModel.Event(10, "catch", "title", "2018-12-06 20:00", "eventUrl", false))
 
         argumentCaptor<Int>().apply {
             verify(mockRouter).gotoEventDetails(capture(),

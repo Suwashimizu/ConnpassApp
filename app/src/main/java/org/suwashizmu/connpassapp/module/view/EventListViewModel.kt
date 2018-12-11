@@ -15,5 +15,6 @@ data class EventListViewModel(var eventList: MutableList<Event>,
                      val catch: String,
                      val title: String,
                      val startedAt: String,
-                     val eventUrl: String)
+                     val eventUrl: String,
+                     val isExpired: Boolean)
 }

@@ -29,5 +29,6 @@ class EventItemMapperTest {
         assertThat(viewModelEvent.eventUrl).isEqualTo("url")
         assertThat(viewModelEvent.startedAt).isEqualTo("2018-12-01 18:00")
         assertThat(viewModelEvent.title).isEqualTo("title")
+        assertThat(viewModelEvent.isExpired).isTrue()
     }
 }
