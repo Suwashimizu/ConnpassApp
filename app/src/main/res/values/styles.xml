@@ -21,6 +21,9 @@
         <item name="android:textColor">@color/primaryTextColor</item>
     </style>
 
+    <style name="TextAppearanceListItem.White">
+        <item name="android:textColor">@color/white</item>
+    </style>
 
     <style name="TextAppearanceListItem.Small">
         <item name="android:textSize">12sp</item>
@@ -30,6 +33,11 @@
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/secondaryTextColor</item>
     </style>
+
+    <style name="TextAppearanceListItemSecondary.White">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
     <!--TextStyles-->
 
     <style name="AppToolbar" parent="ThemeOverlay.AppCompat.Dark.ActionBar">

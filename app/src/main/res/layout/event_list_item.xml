@@ -5,36 +5,68 @@
     xmlns:tools="http://schemas.android.com/tools"
     >
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <data>
+
+        <variable
+            name="isExpired"
+            type="boolean"/>
+    </data>
+
+    <androidx.cardview.widget.CardView
+        style="@style/EventListCardStyle"
         android:layout_width="match_parent"
-        android:layout_height="128dp"
-        android:paddingEnd="16dp"
-        android:paddingStart="16dp"
-        android:background="?android:attr/selectableItemBackground"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:background="@{!isExpired ? @color/colorPrimaryLight : @color/white}"
         >
 
-        <TextView
-            android:id="@+id/text1"
-            style="@style/EventListItem"
-            android:layout_marginTop="8dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Fukuoka.ktFukuoka.ktFukuoka.ktFukuoka.ktFukuoka.ktFukuoka.ktFukuoka.ktFukuoka.ktFukuoka.kt"
-            />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="128dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            >
 
-        <TextView
-            android:id="@+id/text2"
-            style="@style/EventListItem.Secondary"
-            android:layout_marginTop="8dp"
+            <TextView
+                android:id="@+id/text1"
+                style="@style/EventListItem"
+                android:layout_marginTop="8dp"
+                android:textColor="@{!isExpired ? @color/white : @color/gray_888}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Fukuoka.ktFukuoka.ktFukuoka.ktFukuoka.ktFukuoka.ktFukuoka.ktFukuoka.ktFukuoka.ktFukuoka.kt"
+                />
 
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text1"
-            tools:text="第３回が待ち望まれる\nLT・・60人・・うっ・・頭が・・！.!!!aaaaaaaaaaaaaaaaaaa"
+            <TextView
+                android:id="@+id/text2"
+                style="@style/EventListItem.Secondary"
+                android:layout_marginTop="8dp"
 
-            />
+                android:textColor="@{text1.textColor}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text1"
+
+                tools:text="第３回が待ち望まれる\nLT・・60人・・うっ・・頭が・・！.!!!aaaaaaaaaaaaaaaaaaa"
+                />
+
+            <TextView
+                android:id="@+id/date"
+                style="@style/EventListItem.Date"
+                android:background="@{!isExpired ? @drawable/bg_round_rect_dark_red : null}"
+                android:drawableStart="@{!isExpired ? @drawable/ic_time_16dp : @drawable/ic_time_gray_16dp}"
+                android:textColor="@{text1.textColor}"
+                app:layout_constraintBottom_toBottomOf="parent"
+
+                app:layout_constraintStart_toStartOf="@+id/text1"
+                app:layout_constraintTop_toBottomOf="@+id/text2"
+                tools:text="2018-12-15 18:00"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
 </layout>

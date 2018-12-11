@@ -1,6 +1,7 @@
 package org.suwashizmu.connpassapp
 
 import android.app.Application
+import com.jakewharton.threetenabp.AndroidThreeTen
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
 import org.kodein.di.Kodein
@@ -40,5 +41,6 @@ class MyApplication : Application(), KodeinAware {
     override fun onCreate() {
         super.onCreate()
         Logger.addLogAdapter(AndroidLogAdapter())
+        AndroidThreeTen.init(this)
     }
 }

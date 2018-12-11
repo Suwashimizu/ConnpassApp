@@ -2,6 +2,7 @@ package org.suwashizmu.connpassapp.module.presenter
 
 import org.suwashizmu.connpassapp.module.controller.IEventListController
 import org.suwashizmu.connpassapp.module.input.EventFetchInputData
+import org.suwashizmu.connpassapp.module.mapper.EventItemMapper
 import org.suwashizmu.connpassapp.module.output.EventSearchOutputData
 import org.suwashizmu.connpassapp.module.router.IEventListRouter
 import org.suwashizmu.connpassapp.module.usecase.IEventFetchUseCase
@@ -25,6 +26,8 @@ class EventListPresenter : IEventListPresenter, IEventListController {
     override var router: IEventListRouter? = null
 
     private val pagination: EventFetchInputData = EventFetchInputData(0, 30)
+
+    private val mapper = EventItemMapper()
 
     override fun onCreate() {
 
@@ -56,8 +59,7 @@ class EventListPresenter : IEventListPresenter, IEventListController {
     override fun complete(eventList: EventSearchOutputData) {
 
         if (eventList.error == null) {
-            //TODO Mapperが必要
-            viewModel.eventList.addAll(eventList.eventList.map { EventListViewModel.Event(it.id, it.catch, it.title, it.eventUrl) })
+            viewModel.eventList.addAll(eventList.eventList.map { mapper.toEvent(it) })
             //全件より少なければ未取得のEventがある
             viewModel.hasNextEvents = viewModel.eventList.size < eventList.totalEventCount
 
