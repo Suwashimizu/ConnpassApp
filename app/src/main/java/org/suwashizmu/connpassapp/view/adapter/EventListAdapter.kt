@@ -67,6 +67,9 @@ class EventListAdapter(private val itemClickCallback: (event: EventListViewModel
             binding.text1.text = event.title
             binding.text2.text = event.catch
             binding.date.text = event.startedAt
+            binding.isExpired = event.isExpired
+
+            binding.executePendingBindings()
         }
     }
 
